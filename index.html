@@ -1,195 +1,366 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090909">
-  <meta name="description" content="BGR ESPORTS - Free Fire Bermuda tournament hub.">
-  <title>BGR ESPORTS | Bermuda Tournament Hub</title>
+  <meta name="theme-color" content="#080808">
+  <title>BGR ESPORTS | Bermuda Tournaments</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap');
-
     :root {
-      color-scheme: dark;
-      --red: #ff1744;
-      --bg: #090909;
-      --panel: #141414;
-      --muted: #a1a1aa;
+      --bg: #080808;
+      --card: #121212;
+      --card2: #1a1a1a;
+      --border: #292929;
+      --red: #ff0040;
+      --red2: #ff1a52;
+      --yellow: #ffcc00;
+      --cyan: #00e5ff;
+      --green: #00ff88;
+      --text: #fff;
+      --muted: #999;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: #fff;
+      background:
+        radial-gradient(circle at 15% 10%, #ff004020, transparent 35%),
+        radial-gradient(circle at 90% 60%, #00e5ff0c, transparent 30%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    button, a { -webkit-tap-highlight-color: transparent; }
+    button, input { font: inherit; }
     button { cursor: pointer; }
-    button:focus-visible, a:focus-visible {
-      outline: 2px solid var(--red);
-      outline-offset: 3px;
+    a { color: inherit; text-decoration: none; }
+    .orbit { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
+    .container { width: min(1180px, 92%); margin: auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #080808e8;
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .orbit { font-family: 'Orbitron', sans-serif; }
-
-    .site-header {
-      background: rgba(5,5,5,.94);
-      border-bottom: 1px solid #27272a;
-      backdrop-filter: blur(14px);
-    }
-
-    .brand-mark {
-      display: inline-flex;
+    .nav {
+      min-height: 72px;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      background: var(--red);
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
       border-radius: 12px;
-      box-shadow: 0 0 24px #ff174433;
+      background: linear-gradient(135deg, var(--red), #7a001e);
+      box-shadow: 0 0 22px #ff004044;
+      font: 900 15px 'Orbitron', sans-serif;
     }
 
-    .card {
-      border: 1px solid #292929;
-      background: linear-gradient(145deg,#171717,#101010);
-      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    .brand-name { font: 900 17px 'Orbitron', sans-serif; }
+    .brand-name span { color: var(--red); }
+    .brand-sub { color: var(--muted); font-size: 10px; letter-spacing: 2px; }
+
+    .live-pill {
+      border: 1px solid #00ff8844;
+      border-radius: 30px;
+      padding: 8px 12px;
+      color: var(--green);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .card:hover {
-      border-color: #ff174477;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 35px #0005;
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 9px var(--green);
     }
 
     .hero {
+      position: relative;
+      overflow: hidden;
+      margin: 28px auto;
+      padding: clamp(28px, 6vw, 65px);
+      border: 1px solid #ff004055;
+      border-radius: 24px;
       background:
-        radial-gradient(circle at 85% 20%, #ff17443b, transparent 33%),
-        linear-gradient(120deg,#3b0715,#171010 58%,#090909);
-      border: 1px solid #ff174444;
+        linear-gradient(100deg, #180008f5, #100b0dce 60%, #170007d9),
+        radial-gradient(circle at 85% 50%, #ff004055, transparent 45%);
+      box-shadow: 0 0 35px #ff004015;
     }
 
-    .primary-btn {
-      color: #fff;
-      background: linear-gradient(135deg,#ff1744,#c6002b);
-      transition: filter .2s ease, transform .2s ease;
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: -100%;
+      pointer-events: none;
+      background: linear-gradient(120deg, transparent 45%, #ffffff0b 50%, transparent 55%);
+      animation: shine 7s linear infinite;
     }
 
-    .primary-btn:hover { filter: brightness(1.12); }
-    .primary-btn:active { transform: scale(.98); }
-
-    .mode-btn {
-      flex: 0 0 auto;
-      white-space: nowrap;
-      border: 1px solid #303030;
-      background: #151515;
-      color: #d4d4d8;
-      transition: .2s ease;
-    }
-
-    .mode-btn.active {
-      background: #fff;
-      color: #090909;
-      border-color: #fff;
-    }
-
-    .live-dot { animation: blink 1.3s infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-    .section-title {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 800;
-      letter-spacing: -.03em;
+    @keyframes shine {
+      from { transform: translateX(-30%); }
+      to { transform: translateX(30%); }
     }
 
     .eyebrow {
-      color: #ff607d;
-      font-size: .7rem;
+      display: inline-flex;
+      padding: 7px 11px;
+      border: 1px solid #ff004066;
+      border-radius: 7px;
+      background: #ff004018;
+      color: #ff6b8b;
+      font-size: 10px;
       font-weight: 700;
-      letter-spacing: .16em;
-      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
-    .stat-card {
-      background: #141414;
-      border: 1px solid #292929;
+    .hero h1 {
+      margin: 19px 0 12px;
+      font: 900 clamp(30px, 6vw, 62px)/1.12 'Orbitron', sans-serif;
+    }
+
+ .hero h1 span {
+      color: var(--red);
+      text-shadow: 0 0 28px #ff004055;
+    }
+
+    .hero p {
+      max-width: 540px;
+      color: #bdb5b8;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 25px; }
+
+    .btn {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 17px;
+      color: white;
+      background: var(--card2);
+      font-weight: 700;
+      font-size: 12px;
+      transition: .25s;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      border-color: var(--red);
+      box-shadow: 0 5px 20px #ff004033;
+    }
+
+    .btn:hover { transform: translateY(-2px); border-color: var(--red); }
+    .btn-primary:hover { box-shadow: 0 0 25px #ff004066; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 25px 0 38px;
+    }
+
+    .stat-card, .card {
+      background: linear-gradient(145deg, var(--card), #0e0e0e);
+      border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 16px;
+      transition: .3s;
+    }
+
+    .stat-card { padding: 20px; }
+    .stat-card:hover, .card:hover {
+      border-color: #ff004077;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px #0008, 0 0 18px #ff004012;
+    }
+
+    .stat-label { color: var(--muted); font-size: 11px; }
+    .stat-number { font: 800 25px 'Orbitron', sans-serif; margin-top: 8px; }
+    .stat-number span { color: var(--red); }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 30px 0 17px;
+    }
+
+    .section-title {
+      font: 700 clamp(16px, 3vw, 21px) 'Orbitron', sans-serif;
+      padding-left: 13px;
+      border-left: 4px solid var(--red);
+    }
+
+    .muted { color: var(--muted); font-size: 12px; }
+
+    .filters { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 20px; }
+
+    .mode-btn {
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 9px 14px;
+      color: #bbb;
+      background: #111;
+      font-size: 11px;
+      transition: .25s;
+    }
+
+    .mode-btn:hover, .mode-btn.active {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+      box-shadow: 0 0 17px #ff004033;
+    }
+
+    .tournament-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .tournament-card {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-top {
+      padding: 18px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(110deg, #ff004015, transparent);
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
     }
 
     .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid #333;
-      background: #202020;
-      border-radius: 999px;
-      padding: 4px 9px;
-      color: #d4d4d8;
-      font-size: 10px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: #ff004018;
+      color: #ff6687;
+      font-size: 9px;
       font-weight: 700;
+      letter-spacing: .5px;
     }
 
-    .field {
-      width: 100%;
-      background: #0d0d0d;
-      border: 1px solid #333;
-      color: #fff;
-      padding: 11px 12px;
-      border-radius: 10px;
-      outline: none;
-    }
+    .tag.yellow { background: #ffcc0018; color: var(--yellow); }
+    .tag.cyan { background: #00e5ff18; color: var(--cyan); }
 
-    .field:focus { border-color: var(--red); }
-    .muted { color: var(--muted); }
+    .card-title { font: 700 15px 'Orbitron', sans-serif; margin-bottom: 7px; }
+    .card-description { color: var(--muted); font-size: 11px; }
 
-    .toast {
-      position: fixed;
-      left: 16px;
-      right: 16px;
-      bottom: 20px;
-      z-index: 100;
-      max-width: 480px;
-      margin: auto;
-      padding: 14px 16px;
-      background: #202020;
-      border: 1px solid #454545;
-      border-radius: 14px;
-      box-shadow: 0 18px 60px #000a;
-      font-size: 13px;
-    }
+    .card-body { padding: 18px; }
+    .prize-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 17px; }
+    .small-label { color: var(--muted); font-size: 10px; }
+    .prize-value { color: var(--green); font: 700 17px 'Orbitron', sans-serif; margin-top: 5px; }
+    .fee-value { font-weight: 700; margin-top: 5px; }
+
+    .progress-head { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-bottom: 8px; }
+    .progress { height: 5px; background: #292929; border-radius: 10px; overflow: hidden; margin-bottom: 18px; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--red), #ff7594); border-radius: inherit; }
+
+    .card-actions { display: flex; gap: 9px; }
+    .card-actions .btn { flex: 1; padding: 10px 7px; font-size: 10px; }
 
     .empty-state {
-      padding: 24px 12px;
+      display: none;
+      padding: 35px 15px;
       text-align: center;
-      color: #a1a1aa;
-      border: 1px dashed #333;
+      color: var(--muted);
+      border: 1px dashed var(--border);
       border-radius: 14px;
     }
 
-    .nav-link {
-      color: #a1a1aa;
-      transition: color .2s;
+    .room-panel {
+      margin: 30px 0;
+      padding: 22px;
+      background: linear-gradient(145deg, #111, #090909);
+      border: 1px solid var(--border);
+      border-radius: 16px;
     }
-    .nav-link:hover { color: #fff; }
 
-    .room-placeholder {
-      background: repeating-linear-gradient(
-        135deg,#141414,#141414 10px,#101010 10px,#101010 20px
-      );
+    .room-panel h3 { font: 700 14px 'Orbitron', sans-serif; margin-bottom: 9px; }
+    .room-panel p { color: var(--muted); font-size: 12px; line-height: 1.8; }
+
+    footer {
+      margin-top: 45px;
+      padding: 25px 0;
+      border-top: 1px solid #1a1a1a;
+      background: #050505;
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+      line-height: 2;
+    }
+
+    #toast {
+      position: fixed;
+      z-index: 30;
+      bottom: 20px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 13px 18px;
+      border: 1px solid #ff004066;
+      border-radius: 10px;
+      background: #171013;
+      box-shadow: 0 8px 30px #0008;
+      font-size: 12px;
+      transition: .25s;
+      width: max-content;
+      max-width: 90%;
+    }
+
+    #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 850px) {
+      .tournament-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 560px) {
+      .nav { min-height: 64px; }
+      .brand-name { font-size: 13px; }
+      .brand-sub { font-size: 8px; }
+      .live-pill { font-size: 9px; padding: 7px 9px; }
+      .hero { border-radius: 16px; padding: 26px 20px; }
+      .stats { gap: 8px; }
+      .stat-card { padding: 13px 10px; }
+      .stat-number { font-size: 18px; }
+      .stat-label { font-size: 9px; }
+      .tournament-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: flex-start; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: .01ms !important;
-        scroll-behavior: auto !important;
         transition-duration: .01ms !important;
       }
     }
@@ -197,301 +368,236 @@
 </head>
 
 <body>
-  <!-- HEADER -->
-  <header class="site-header sticky top-0 z-50 px-4 py-3">
-    <div class="max-w-6xl mx-auto flex justify-between items-center gap-3">
-      <a href="#home" class="flex items-center gap-2 min-w-0" aria-label="BGR ESPORTS home">
-        <span class="brand-mark"><i class="fa-solid fa-gamepad text-lg"></i></span>
-        <span class="orbit font-black text-base sm:text-xl whitespace-nowrap">
-          BGR <span class="text-[#ff1744]">ESPORTS</span>
-        </span>
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand" aria-label="BGR Esports home">
+        <div class="brand-mark">BGR</div>
+        <div>
+          <div class="brand-name">BGR <span>ESPORTS</span></div>
+          <div class="brand-sub">COMPETE • DOMINATE</div>
+        </div>
       </a>
-
-      <div class="flex items-center gap-2 sm:gap-3">
-        <span class="text-[10px] sm:text-xs bg-zinc-900 border border-zinc-800 px-2 sm:px-3 py-2 rounded-full whitespace-nowrap">
-          <span class="w-2 h-2 bg-green-500 rounded-full inline-block live-dot mr-1"></span>
-          Tournament Hub
-        </span>
-        <button id="loginBtn" class="primary-btn px-4 sm:px-5 py-2 rounded-full font-bold text-xs sm:text-sm">
-          <i class="fa-regular fa-user mr-1"></i> LOGIN
-        </button>
-      </div>
+      <div class="live-pill"><span class="live-dot"></span> TOURNAMENT HUB</div>
     </div>
   </header>
 
-  <main id="home" class="max-w-6xl mx-auto pb-10">
-    <!-- HERO -->
-    <section class="px-4 mt-5">
-      <div class="hero rounded-3xl p-5 sm:p-8 md:p-10 overflow-hidden relative">
-        <div class="relative z-10 max-w-2xl">
-          <span class="tag border-red-500/30 text-red-300">
-            <i class="fa-solid fa-fire"></i> BERMUDA TOURNAMENT SERIES
-          </span>
-
-          <h1 class="orbit text-3xl sm:text-5xl md:text-6xl font-black mt-4 leading-tight">
-            BERMUDA<br><span class="text-[#ff1744]">DOMINATION</span>
-          </h1>
-
-          <p class="text-sm sm:text-base text-zinc-300 mt-4 max-w-lg">
-            Find your match. Build your squad. Compete for the top spot.
-          </p>
-
-          <div class="flex flex-wrap gap-3 mt-6">
-            <a href="#tournaments" class="primary-btn rounded-full px-5 py-3 text-sm font-bold">
-              Explore Tournaments <i class="fa-solid fa-arrow-right ml-2"></i>
-            </a>
-            <a href="#rules" class="rounded-full px-5 py-3 text-sm font-bold border border-zinc-600 bg-black/30">
-              Tournament Rules
-            </a>
-          </div>
-        </div>
-
-        <i class="fa-solid fa-crosshairs absolute -right-4 -bottom-5 text-[140px] sm:text-[210px] text-red-500/10"
-           aria-hidden="true"></i>
-        <div class="absolute top-5 right-5 hidden sm:block text-right">
-          <p class="eyebrow">BGR SERIES</p>
-          <p class="orbit text-2xl font-black">01 / BMD</p>
-        </div>
+  <main class="container">
+    <section class="hero">
+      <span class="eyebrow">FREE FIRE COMMUNITY</span>
+      <h1 class="orbit">BERMUDA<br><span>DOMINATION</span></h1>
+      <p>Enter the arena. Build your squad. Compete in Bermuda tournaments and prove your skills with BGR ESPORTS.</p>
+      <div class="hero-actions">
+        <a href="#tournaments" class="btn btn-primary">EXPLORE TOURNAMENTS ↗</a>
+        <a href="#room-info" class="btn">ROOM INFORMATION</a>
       </div>
     </section>
 
-    <!-- STATS -->
-    <section class="px-4 mt-5 grid grid-cols-2 md:grid-cols-4 gap-3" aria-label="Tournament information">
+    <section class="stats" aria-label="Tournament information">
       <div class="stat-card">
-        <div class="flex justify-between items-center">
-          <span class="text-xs muted">Game Map</span>
-          <i class="fa-solid fa-map text-[#ff1744]"></i>
-        </div>
-        <p class="orbit text-lg font-bold mt-2">BERMUDA</p>
-        <p class="text-[10px] muted mt-1">Bermuda-focused events</p>
+        <div class="stat-label">AVAILABLE EVENTS</div>
+        <div class="stat-number" id="eventCount">06<span>+</span></div>
       </div>
-
       <div class="stat-card">
-        <div class="flex justify-between items-center">
-          <span class="text-xs muted">Game Modes</span>
-          <i class="fa-solid fa-crosshairs text-[#ff1744]"></i>
-        </div>
-        <p class="orbit text-lg font-bold mt-2">04 MODES</p>
-        <p class="text-[10px] muted mt-1">BR, CS, Lone Wolf, Headshot</p>
+        <div class="stat-label">GAME MODES</div>
+        <div class="stat-number">04<span>+</span></div>
       </div>
-
       <div class="stat-card">
-        <div class="flex justify-between items-center">
-          <span class="text-xs muted">My Matches</span>
-          <i class="fa-solid fa-calendar-check text-[#ff1744]"></i>
-        </div>
-        <p id="myMatchCount" class="orbit text-lg font-bold mt-2">0</p>
-        <p class="text-[10px] muted mt-1">Saved on this device</p>
-      </div>
-
-      <div class="stat-card">
-        <div class="flex justify-between items-center">
-          <span class="text-xs muted">Platform</span>
-          <i class="fa-solid fa-shield-halved text-[#ff1744]"></i>
-        </div>
-        <p class="orbit text-lg font-bold mt-2">BGR HUB</p>
-        <p class="text-[10px] muted mt-1">Tournament frontend</p>
+        <div class="stat-label">COMMUNITY</div>
+        <div class="stat-number">BGR<span>.</span></div>
       </div>
     </section>
 
-    <!-- TOURNAMENTS -->
-    <section id="tournaments" class="px-4 mt-8">
-      <div class="flex flex-wrap justify-between items-end gap-3">
+    <section id="tournaments">
+      <div class="section-head">
         <div>
-          <p class="eyebrow">Choose your battlefield</p>
-          <h2 class="section-title text-xl sm:text-2xl mt-2">TOURNAMENTS</h2>
-          <p class="text-xs muted mt-2">Demo listings until connected to the live tournament database.</p>
+          <div class="muted">FIND YOUR NEXT MATCH</div>
+          <h2 class="section-title" style="margin-top:9px">TOURNAMENTS</h2>
         </div>
-        <span class="tag"><i class="fa-solid fa-map"></i> BERMUDA ONLY</span>
+        <div class="muted">Choose your game mode</div>
       </div>
 
-      <div class="flex gap-2 overflow-x-auto mt-5 pb-2" role="group" aria-label="Filter tournaments">
-        <button type="button" class="mode-btn active px-5 py-2 rounded-full text-sm font-bold" data-filter="all">All</button>
-        <button type="button" class="mode-btn px-5 py-2 rounded-full text-sm font-bold" data-filter="br">Battle Royale</button>
-        <button type="button" class="mode-btn px-5 py-2 rounded-full text-sm font-bold" data-filter="cs">Clash Squad</button>
-        <button type="button" class="mode-btn px-5 py-2 rounded-full text-sm font-bold" data-filter="lw">Lone Wolf</button>
-        <button type="button" class="mode-btn px-5 py-2 rounded-full text-sm font-bold" data-filter="headshot">Headshot</button>
+      <div class="filters" role="group" aria-label="Filter tournaments">
+        <button class="mode-btn active" data-filter="all" aria-pressed="true">ALL EVENTS</button>
+        <button class="mode-btn" data-filter="br" aria-pressed="false">BATTLE ROYALE</button>
+        <button class="mode-btn" data-filter="cs" aria-pressed="false">CLASH SQUAD</button>
+        <button class="mode-btn" data-filter="lw" aria-pressed="false">LONE WOLF</button>
+        <button class="mode-btn" data-filter="headshot" aria-pressed="false">HEADSHOT</button>
       </div>
 
-      <div id="tournamentGrid" class="grid md:grid-cols-2 gap-3 mt-3">
-        <!-- BR SOLO -->
-        <article class="card rounded-2xl p-4 tournament-card" data-mode="br" data-id="br101">
-          <div class="flex justify-between gap-3">
-            <div>
-              <span class="tag"><i class="fa-solid fa-parachute-box text-[#ff1744]"></i> BATTLE ROYALE</span>
-              <h3 class="font-bold mt-3">BR Solo #101</h3>
-              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 05:00 PM · Bermuda</p>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-green-400 font-bold">DEMO LISTING</span>
-              <p class="orbit text-sm font-bold mt-3">52 SLOTS</p>
-              <p class="text-xs muted">Example capacity</p>
-            </div>
+      <div class="tournament-grid" id="tournamentGrid">
+        <article class="card tournament-card" data-mode="br">
+          <div class="card-top">
+            <div class="card-meta"><span class="tag">BATTLE ROYALE</span><span class="tag">#101</span></div>
+            <h3 class="card-title">BR SOLO</h3>
+            <p class="card-description">Individual survival • Bermuda map</p>
           </div>
-          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
-            <span class="text-xs muted">Solo · Bermuda</span>
-            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="br101" data-name="BR Solo #101">JOIN</button>
+          <div class="card-body">
+            <div class="prize-row">
+              <div><div class="small-label">PRIZE POOL</div><div class="prize-value">TBA</div></div>
+              <div><div class="small-label">ENTRY FEE</div><div class="fee-value">TBA</div></div>
+            </div>
+            <div class="progress-head"><span>PLAYER SLOTS</span><span>Details pending</span></div>
+               <div class="progress"><div class="progress-bar" style="width:0%"></div></div>
+            <div class="card-actions"><button class="btn btn-primary register-btn">REGISTER</button><button class="btn details-btn">DETAILS</button></div>
           </div>
         </article>
 
-        <!-- BR SQUAD -->
-        <article class="card rounded-2xl p-4 tournament-card" data-mode="br" data-id="br102">
-          <div class="flex justify-between gap-3">
-            <div>
-              <span class="tag"><i class="fa-solid fa-people-group text-[#ff1744]"></i> BATTLE ROYALE</span>
-              <h3 class="font-bold mt-3">BR Squad #102</h3>
-              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 06:30 PM · Bermuda</p>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-green-400 font-bold">DEMO LISTING</span>
-              <p class="orbit text-sm font-bold mt-3">25 SLOTS</p>
-              <p class="text-xs muted">Example capacity</p>
-            </div>
+        <article class="card tournament-card" data-mode="br">
+          <div class="card-top">
+            <div class="card-meta"><span class="tag">BATTLE ROYALE</span><span class="tag">#102</span></div>
+            <h3 class="card-title">BR SQUAD</h3>
+            <p class="card-description">4-player squad • Bermuda map</p>
           </div>
-          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
-            <span class="text-xs muted">Squad · Bermuda</span>
-            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="br102" data-name="BR Squad #102">JOIN</button>
+          <div class="card-body">
+            <div class="prize-row">
+              <div><div class="small-label">PRIZE POOL</div><div class="prize-value">TBA</div></div>
+              <div><div class="small-label">ENTRY FEE</div><div class="fee-value">TBA</div></div>
+            </div>
+            <div class="progress-head"><span>SQUAD SLOTS</span><span>Details pending</span></div>
+            <div class="progress"><div class="progress-bar" style="width:0%"></div></div>
+            <div class="card-actions"><button class="btn btn-primary register-btn">REGISTER</button><button class="btn details-btn">DETAILS</button></div>
           </div>
         </article>
 
-        <!-- CS RANK -->
-        <article class="card rounded-2xl p-4 tournament-card" data-mode="cs" data-id="cs201">
-          <div class="flex justify-between gap-3">
-            <div>
-              <span class="tag"><i class="fa-solid fa-bomb text-yellow-400"></i> CLASH SQUAD</span>
-              <h3 class="font-bold mt-3">CS Rank #201</h3>
-              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 04:00 PM · Bermuda Dock</p>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-yellow-400 font-bold">4V4</span>
-              <p class="orbit text-sm font-bold mt-3">8 PLAYERS</p>
-              <p class="text-xs muted">Example format</p>
-            </div>
+        <article class="card tournament-card" data-mode="cs">
+          <div class="card-top">
+            <div class="card-meta"><span class="tag yellow">CLASH SQUAD</span><span class="tag">#201</span></div>
+            <h3 class="card-title">CS RANK</h3>
+            <p class="card-description">Tactical rounds • Competitive mode</p>
           </div>
-          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
-            <span class="text-xs muted">Clash Squad</span>
-            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="cs201" data-name="CS Rank #201">JOIN</button>
+          <div class="card-body">
+            <div class="prize-row">
+              <div><div class="small-label">PRIZE POOL</div><div class="prize-value">TBA</div></div>
+              <div><div class="small-label">ENTRY FEE</div><div class="fee-value">TBA</div></div>
+            </div>
+            <div class="progress-head"><span>TEAM SLOTS</span><span>Details pending</span></div>
+            <div class="progress"><div class="progress-bar" style="width:0%"></div></div>
+            <div class="card-actions"><button class="btn btn-primary register-btn">REGISTER</button><button class="btn details-btn">DETAILS</button></div>
           </div>
         </article>
 
-        <!-- CS SQUAD -->
-        <article class="card rounded-2xl p-4 tournament-card" data-mode="cs" data-id="cs202">
-          <div class="flex justify-between gap-3">
-            <div>
-              <span class="tag"><i class="fa-solid fa-bomb text-yellow-400"></i> CLASH SQUAD</span>
-              <h3 class="font-bold mt-3">CS Squad #202</h3>
-              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 07:00 PM · Bermuda</p>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-yellow-400 font-bold">4V4</span>
-              <p class="orbit text-sm font-bold mt-3">8 PLAYERS</p>
-              <p class="text-xs muted">Example format</p>
-            </div>
+        <article class="card tournament-card" data-mode="cs">
+          <div class="card-top">
+            <div class="card-meta"><span class="tag yellow">CLASH SQUAD</span><span class="tag">#202</span></div>
+            <h3 class="card-title">CS SQUAD</h3>
+            <p class="card-description">Team battles • Competitive arena</p>
           </div>
-          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
-            <span class="text-xs muted">Clash Squad</span>
-            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="cs202" data-name="CS Squad #202">JOIN</button>
+          <div class="card-body">
+            <div class="prize-row">
+              <div><div class="small-label">PRIZE POOL</div><div class="prize-value">TBA</div></div>
+              <div><div class="small-label">ENTRY FEE</div><div class="fee-value">TBA</div></div>
+            </div>
+            <div class="progress-head"><span>TEAM SLOTS</span><span>Details pending</span></div>
+            <div class="progress"><div class="progress-bar" style="width:0%"></div></div>
+            <div class="card-actions"><button class="btn btn-primary register-btn">REGISTER</button><button class="btn details-btn">DETAILS</button></div>
           </div>
         </article>
 
-        <!-- LONE WOLF -->
-        <article class="card rounded-2xl p-4 tournament-card" data-mode="lw" data-id="lw301">
-          <div class="flex justify-between gap-3">
-            <div>
-              <span class="tag"><i class="fa-solid fa-skull text-cyan-400"></i> LONE WOLF</span>
-              <h3 class="font-bold mt-3">Lone Wolf 1v1 #301</h3>
-              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 03:00 PM · Bermuda</p>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-cyan-400 font-bold">1V1</span>
-              <p class="orbit text-sm font-bold mt-3">DUEL</p>
-              <p class="text-xs muted">Example format</p>
-            </div>
+        <article class="card tournament-card" data-mode="lw">
+          <div class="card-top">
+            <div class="card-meta"><span class="tag cyan">LONE WOLF</span><span class="tag">#301</span></div>
+            <h3 class="card-title">LONE WOLF 1V1</h3>
+            <p class="card-description">One player versus one player</p>
           </div>
-          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
-            <span class="text-xs muted">Lone Wolf</span>
-            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="lw301" data-name="Lone Wolf 1v1 #301">JOIN</button>
+          <div class="card-body">
+            <div class="prize-row">
+              <div><div class="small-label">PRIZE POOL</div><div class="prize-value">TBA</div></div>
+              <div><div class="small-label">ENTRY FEE</div><div class="fee-value">TBA</div></div>
+            </div>
+            <div class="progress-head"><span>PLAYER SLOTS</span><span>Details pending</span></div>
+            <div class="progress"><div class="progress-bar" style="width:0%"></div></div>
+            <div class="card-actions"><button class="btn btn-primary register-btn">REGISTER</button><button class="btn details-btn">DETAILS</button></div>
           </div>
         </article>
 
-        <!-- HEADSHOT -->
-        <article class="card rounded-2xl p-4 tournament-card" data-mode="headshot" data-id="hs401">
-          <div class="flex justify-between gap-3">
-            <div>
-              <span class="tag border-red-500/40 text-red-300"><i class="fa-solid fa-crosshairs"></i> HEADSHOT SPECIAL</span>
-              <h3 class="font-bold mt-3">Headshot Only #401</h3>
-              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 09:00 PM · Bermuda</p>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-red-400 font-bold">SPECIAL</span>
-              <p class="orbit text-sm font-bold mt-3">HS MODE</p>
-              <p class="text-xs muted">Example ruleset</p>
-            </div>
+        <article class="card tournament-card" data-mode="headshot">
+          <div class="card-top">
+            <div class="card-meta"><span class="tag">HEADSHOT</span><span class="tag">#401</span></div>
+            <h3 class="card-title">HEADSHOT ONLY</h3>
+            <p class="card-description">Precision challenge • Skill competition</p>
           </div>
-          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
-            <span class="text-xs muted">Headshot only</span>
-            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="hs401" data-name="Headshot Only #401">JOIN</button>
+          <div class="card-body">
+            <div class="prize-row">
+              <div><div class="small-label">PRIZE POOL</div><div class="prize-value">TBA</div></div>
+              <div><div class="small-label">ENTRY FEE</div><div class="fee-value">TBA</div></div>
+            </div>
+            <div class="progress-head"><span>PLAYER SLOTS</span><span>Details pending</span></div>
+            <div class="progress"><div class="progress-bar" style="width:0%"></div></div>
+            <div class="card-actions"><button class="btn btn-primary register-btn">REGISTER</button><button class="btn details-btn">DETAILS</button></div>
           </div>
         </article>
       </div>
 
-      <p id="filterEmpty" class="empty-state mt-3 hidden">No tournaments found in this category.</p>
+        <div id="emptyState" class="empty-state">No tournaments found in this category.</div>
     </section>
 
-    <!-- JOIN / MY MATCHES -->
-    <section id="my-matches" class="px-4 mt-9">
-      <div class="flex flex-wrap justify-between items-end gap-3">
-        <div>
-          <p class="eyebrow">Your competition list</p>
-          <h2 class="section-title text-xl mt-2">MY MATCHES</h2>
-        </div>
-        <button id="clearMatchesBtn" type="button" class="text-xs text-zinc-400 underline">Clear saved demo matches</button>
-      </div>
-
-      <div class="flex flex-wrap gap-2 mt-4">
-        <button class="match-tab mode-btn active px-4 py-2 rounded-full text-xs font-bold" data-status="all">All</button>
-        <button class="match-tab mode-btn px-4 py-2 rounded-full text-xs font-bold" data-status="upcoming">Upcoming</button>
-      </div>
-
-      <div id="myMatchesList" class="mt-3">
-        <div class="empty-state">You haven't saved any demo matches yet. Choose a tournament above to try the interface.</div>
-      </div>
-
-      <p class="text-[11px] muted mt-3">
-        Demo note: saved matches are stored only in this browser. They are not official registrations.
-      </p>
+    <section class="room-panel" id="room-info">
+      <h3>ROOM ID & PASSWORD</h3>
+      <p>Room details will appear here when the tournament organizer publishes them. This sample page does not connect to a live tournament database, so no real room credentials are displayed.</p>
     </section>
+  </main>
 
-    <!-- ROOM -->
-    <section class="px-4 mt-9">
-      <div class="card room-placeholder rounded-2xl p-5 sm:p-7 text-center">
-        <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto">
-          <i class="fa-solid fa-lock text-[#ff1744] text-xl"></i>
-        </div>
-        <p class="eyebrow mt-4">Authorized access only</p>
-        <h2 class="section-title text-lg mt-2">ROOM ID / PASSWORD</h2>
-        <p class="text-sm muted mt-2 max-w-lg mx-auto">
-          Room details are not configured on this demo page. In production, they should be released only to approved players before their match.
-        </p>
-        <div class="flex justify-center mt-4">
-          <span class="font-mono text-lg tracking-widest text-zinc-500">•••••• / ••••••</span>
-        </div>
-        <button type="button" id="roomInfoBtn" class="mt-4 border border-zinc-700 bg-zinc-900 px-5 py-2 rounded-full text-xs font-bold">
-          Room access information
-        </button>
-      </div>
-    </section>
+  <footer>
+    <div class="container">
+      <strong class="orbit">BGR ESPORTS</strong><br>
+      Community tournament website • Play fair • Respect every player<br>
+      This is a community project and is not affiliated with Garena.
+    </div>
+  </footer>
 
-    <!-- LEADERBOARD / PROFILE / RULES -->
-    <section class="px-4 mt-9 grid md:grid-cols-3 gap-3">
-      <div id="leaderboard" class="card rounded-2xl p-5">
-        <p class="eyebrow">Community rankings</p>
-        <h3 class="section-title text-sm mt-2">LEADERBOARD</h3>
-        <p class="text-xs muted mt-3">Official leaderboard data is not connected yet.</p>
-        <div class="mt-4 space-y-3 text-sm">
-          <div class="flex justify-between gap-2 border-b border-zinc-800 pb-2">
-            <span class="muted">Rankings</span><span class="font-bold">Pending data</span>
-          </div>
-          <div class="flex justify-between gap-2">
-            <span class="muted">Source</span><span class="text-xs">Verified match results</span>
-  
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const filterButtons = document.querySelectorAll("[data-filter]");
+    const tournamentCards = document.querySelectorAll(".tournament-card");
+    const emptyState = document.getElementById("emptyState");
+    const toast = document.getElementById("toast");
+    let toastTimer;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        let visibleCount = 0;
+
+        filterButtons.forEach(item => {
+          const active = item === button;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+
+        tournamentCards.forEach(card => {
+          const visible = filter === "all" || card.dataset.mode === filter;
+          card.hidden = !visible;
+          if (visible) visibleCount++;
+        });
+
+        emptyState.style.display = visibleCount ? "none" : "block";
+      });
+    });
+
+    document.querySelectorAll(".register-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        showToast("Registration is not connected yet. Connect Firebase and a secure registration flow first.");
+      });
+    });
+
+    document.querySelectorAll(".details-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const card = button.closest(".tournament-card");
+        const name = card.querySelector(".card-title").textContent;
+        showToast(name + ": tournament details have not been configured yet.");
+      });
+    });
+
+    document.getElementById("eventCount").innerHTML =
+      tournamentCards.length + '<span>+</span>';
+  </script>
+</body>
+</html>
