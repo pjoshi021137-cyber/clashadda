@@ -1,577 +1,217 @@
 
-/* ==================================================
-   CLASHADDA — PROFESSIONAL ESPORTS ADMIN DASHBOARD
-   Light theme | Responsive | Existing HTML compatible
-================================================== */
-
-:root {
-  color-scheme: light;
-  --bg: #f4f7fc;
-  --surface: #ffffff;
-  --surface-soft: #f8faff;
-  --text: #182338;
-  --muted: #748096;
-  --primary: #365cf5;
-  --primary-hover: #2447d8;
-  --border: #e5eaf3;
-  --success: #13845b;
-  --radius: 16px;
-  --shadow: 0 5px 24px rgba(28, 44, 78, .055);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  min-height: 100%;
-  background: var(--bg);
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: var(--bg) !important;
-  color: var(--text) !important;
-  font-family: Inter, "Segoe UI", Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-/* Main page layout */
-
-.shell {
-  display: grid;
-  grid-template-columns: 250px minmax(0, 1fr);
-  min-height: 100vh;
-  gap: 0;
-}
-
-/* Sidebar */
-
-aside {
-  position: sticky;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  align-self: start;
-  min-height: 100vh;
-  padding: 30px 18px 22px;
-  background: #fff;
-  border-right: 1px solid var(--border);
-}
-
-.logo {
-  margin: 0 10px;
-  color: #17233b;
-  font-size: 27px;
-  font-weight: 900;
-  letter-spacing: -1.3px;
-}
-
-.logo span {
-  color: var(--primary);
-}
-
-.label {
-  margin: 5px 10px 32px;
-  color: #8792a7 !important;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.8px;
-}
-
-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  min-height: 46px;
-  padding: 12px 14px;
-  border: 1px solid transparent;
-  border-radius: 11px;
-  background: transparent;
-  color: #657188;
-  text-align: left;
-  font-size: 13px;
-  font-weight: 650;
-  transition: background .18s ease, color .18s ease;
-}
-
-.nav:hover {
-  background: #f3f6ff;
-  color: var(--primary);
-}
-
-.nav.active {
-  background: #edf1ff;
-  color: var(--primary);
-  border-color: #e0e7ff;
-}
-
-.asidefoot {
-  margin-top: auto;
-  padding: 18px 10px 0;
-  color: var(--muted);
-  font-size: 11px;
-  border-top: 1px solid var(--border);
-}
-
-/* Main content */
-
-main {
-  min-width: 0;
-  padding: 32px;
-}
-
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--border);
-}
-
-header small {
-  color: var(--primary) !important;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.6px;
-}
-
-h1 {
-  margin: 5px 0 0;
-  color: var(--text) !important;
-  font-size: clamp(25px, 3vw, 32px);
-  line-height: 1.25;
-  letter-spacing: -1px;
-}
-
-h2 {
-  margin: 0 0 20px;
-  color: var(--text) !important;
-  font-size: 18px;
-  font-weight: 750;
-  letter-spacing: -.3px;
-}
-
-p {
-  color: var(--muted);
-}
-
-.muted {
-  color: var(--muted) !important;
-}
-
-small {
-  color: var(--muted);
-}
-
-/* Authentication area */
-
-.auth {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-#userStatus {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-/* Buttons */
-
-button:not(.nav) {
-  padding: 10px 15px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: #fff;
-  color: var(--text);
-  font-weight: 650;
-  transition: background .18s ease, transform .18s ease;
-}
-
-button:not(.nav):hover {
-  background: #f1f4ff;
-}
-
-button[type="submit"],
-#loginBtn {
-  border: 1px solid var(--primary);
-  background: var(--primary);
-  color: #fff;
-}
-
-button[type="submit"]:hover,
-#loginBtn:hover {
-  background: var(--primary-hover);
-  color: #fff;
-}
-
-button.secondary {
-  background: #fff;
-  color: #526078;
-}
-
-/* Hide inactive views and elements */
-
-.hidden,
-.view.hidden {
-  display: none !important;
-}
-
-.view {
-  min-width: 0;
-  animation: appear .2s ease;
-}
-
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Dashboard statistic cards */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-  margin-bottom: 26px;
-}
-
-.stats article {
-  min-width: 0;
-  padding: 22px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.stats article small {
-  display: block;
-  margin-bottom: 13px;
-  font-size: 12px;
-  font-weight: 650;
-}
-
-.stats article strong {
-  display: block;
-  color: var(--text);
-  font-size: clamp(22px, 2.4vw, 30px);
-  font-weight: 800;
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-}
-
-.stats article:last-child strong {
-  color: var(--primary);
-  font-size: 21px;
-}
-
-/* Panels */
-
-.panel {
-  min-width: 0;
-  margin-bottom: 24px;
-  padding: 25px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.panelhead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 8px;
-}
-
-.panelhead h2 {
-  margin-bottom: 10px;
-}
-
-/* Tournament rows */
-
-.rows {
-  min-width: 0;
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 17px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.row:last-child {
-  border-bottom: 0;
-}
-
-.row b {
-  color: var(--text);
-  font-size: 14px;
-}
-
-.row .muted {
-  margin-top: 4px;
-  font-size: 12px;
-}
-
-/* Forms */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px 22px;
-  align-items: end;
-}
-
-.grid label {
-  display: block;
-  min-width: 0;
-  color: #45526a;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.grid input,
-.grid select {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  margin-top: 8px;
-}
-
-.grid button[type="submit"] {
-  align-self: end;
-  min-height: 44px;
-  margin-bottom: 16px;
-}
-
-input,
-select,
-textarea {
-  display: block;
-  width: 100%;
-  min-height: 44px;
-  padding: 11px 13px;
-  border: 1px solid #dce3ef;
-  border-radius: 10px;
-  outline: none;
-  background: #fff;
-  color: var(--text);
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #a0aabd;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(54, 92, 245, .11);
-}
-
-/* Notices and error messages */
-
-.notice {
-  margin: 20px 0;
-  padding: 15px 17px;
-  border: 1px solid #dce5ff;
-  border-radius: 12px;
-  background: #f0f4ff;
-  color: #43547b;
-  font-size: 12px;
-}
-
-.alert {
-  margin-bottom: 22px;
-  padding: 14px 17px;
-  border: 1px solid #f0d59a;
-  border-radius: 12px;
-  background: #fff8e8;
-  color: #825300;
-  overflow-wrap: anywhere;
-}
-
-.alert.hidden {
-  display: none !important;
-}
-
-/* Footer */
-
-footer {
-  margin-top: 35px;
-  padding: 20px 0 5px;
-  border-top: 1px solid var(--border);
-  color: #8b96a9;
-  font-size: 11px;
-  text-align: center;
-}
-
-/* Tablet */
-
-@media (max-width: 1050px) {
-  .shell {
-    grid-template-columns: 215px minmax(0, 1fr);
-  }
-
-  aside {
-    padding-right: 13px;
-    padding-left: 13px;
-  }
-
-  main {
-    padding: 24px;
-  }
-
-  .stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* Mobile */
-
-@media (max-width: 700px) {
-  .shell {
-    display: block;
-  }
-
-  aside {
-    position: static;
-    min-height: auto;
-    padding: 18px 16px;
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .logo {
-    font-size: 24px;
-  }
-
-  .label {
-    margin-bottom: 17px;
-  }
-
-  nav {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
-  }
-
-  .nav {
-    min-height: 42px;
-    padding: 10px;
-    font-size: 12px;
-  }
-
-  .asidefoot {
-    margin-top: 16px;
-    padding-top: 12px;
-  }
-
-  main {
-    padding: 20px 15px;
-  }
-
-  header {
-    align-items: flex-start;
-    margin-bottom: 22px;
-    padding-bottom: 18px;
-  }
-
-  .auth {
-    justify-content: flex-start;
-    width: 100%;
-  }
-
-  #userStatus {
-    max-width: 100%;
-    overflow-wrap: anywhere;
-  }
-
-  .stats {
-    gap: 12px;
-    margin-bottom: 18px;
-  }
-
-  .stats article {
-    padding: 17px;
-  }
-
-  .stats article small {
-    min-height: 30px;
-    font-size: 11px;
-  }
-
-  .stats article strong {
-    font-size: 24px;
-  }
-
-  .panel {
-    padding: 18px;
-    margin-bottom: 17px;
-  }
-
-  .grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 4px;
-  }
-
-  .grid button[type="submit"] {
-    width: 100%;
-  }
-
-  .row {
-    align-items: flex-start;
-  }
-}
-
-/* Accessibility: respect reduced motion */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fc">
+  <meta name="description" content="BGR eSports Free Fire tournament management dashboard">
+  <title>BGR eSports | Tournament Admin</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="logo" href="#" aria-label="BGR eSports home">
+        BGR<span>eSports</span>
+      </a>
+      <p class="label">FREE FIRE OPERATIONS</p>
+
+      <nav aria-label="Admin navigation">
+        <button class="nav active" data-view="overview">◈ Overview</button>
+        <button class="nav" data-view="tournaments">⚔ Tournaments</button>
+        <button class="nav" data-view="registrations">♙ Registrations</button>
+        <button class="nav" data-view="rooms">▣ Room Details</button>
+        <button class="nav" data-view="results">🏆 Results</button>
+      </nav>
+
+      <div class="asidefoot">
+        <span class="status-dot"></span> Tournament Control Center
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <small class="eyebrow">BGR ESPORTS / ADMIN</small>
+          <h1 id="title">Dashboard Overview</h1>
+          <p class="subtitle">Manage tournaments and competitive operations.</p>
+        </div>
+        <div class="auth">
+          <span id="userStatus">Not signed in</span>
+          <button id="loginBtn" class="btn btn-primary">Sign in</button>
+          <button id="logoutBtn" class="btn btn-light hidden">Sign out</button>
+        </div>
+      </header>
+
+      <div id="alert" class="alert hidden" role="status"></div>
+
+      <section id="overview" class="view">
+        <div class="welcome">
+          <div>
+            <span class="welcome-tag">COMPETITIVE GAMING</span>
+            <h2>Welcome to BGR eSports</h2>
+            <p>Your tournament operations, organized in one place.</p>
+          </div>
+          <div class="welcome-mark">BGR<span>+</span></div>
+        </div>
+
+        <div class="stats">
+          <article class="stat-card">
+            <span class="stat-label">Open tournaments</span>
+            <strong id="countT">—</strong>
+            <span class="stat-note">Currently open</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Registrations</span>
+            <strong id="countR">—</strong>
+            <span class="stat-note">Joined players</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Pending review</span>
+            <strong id="countP">—</strong>
+            <span class="stat-note">Awaiting review</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Game category</span>
+            <strong class="game-name">Free Fire</strong>
+            <span class="stat-note">Free Fire / MAX</span>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panelhead">
+            <div>
+              <h2>Recent tournaments</h2>
+              <p class="muted">Review your latest tournament activity.</p>
+            </div>
+            <button class="btn btn-light" data-goto="tournaments">Manage tournaments →</button>
+          </div>
+          <div id="recent" class="rows">
+            <p class="muted">Sign in with an authorized admin account to load data.</p>
+          </div>
+        </article>
+
+        <p class="notice">
+          <strong>Security notice</strong>
+          Admin access requires a verified Firebase account with the appropriate admin permissions.
+        </p>
+      </section>
+
+      <section id="tournaments" class="view hidden">
+        <div class="section-heading">
+          <div>
+            <h2>Tournament management</h2>
+            <p class="muted">Create and review competitive events.</p>
+          </div>
+        </div>
+
+        <article class="panel">
+          <h3>Create tournament</h3>
+          <p class="muted">Fill in the event details below.</p>
+
+          <form id="createForm" class="grid">
+            <label>Tournament name
+              <input id="name" required maxlength="80" placeholder="BGR Booyah Cup">
+            </label>
+            <label>Mode
+              <select id="mode">
+                <option>Solo</option>
+                <option>Duo</option>
+                <option>Squad</option>
+              </select>
+            </label>
+            <label>Map
+              <select id="map">
+                <option>Bermuda</option>
+                <option>Purgatory</option>
+                <option>Kalahari</option>
+                <option>Alpine</option>
+                <option>NexTerra</option>
+              </select>
+            </label>
+            <label>Entry fee (₹)
+              <input id="fee" type="number" min="0" max="100000" value="0" required>
+            </label>
+            <label>Prize pool (₹)
+              <input id="prize" type="number" min="0" max="10000000" value="500" required>
+            </label>
+            <label>Maximum slots
+              <input id="slots" type="number" min="2" max="1000" value="48" required>
+            </label>
+            <label>Start time
+              <input id="startAt" type="datetime-local" required>
+            </label>
+            <div class="form-actions">
+              <button type="reset" class="btn btn-light">Clear form</button>
+              <button type="submit" class="btn btn-primary">+ Create tournament</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="panel">
+          <h3>All tournaments</h3>
+          <div id="tournamentRows" class="rows">
+            <p class="muted">Sign in as an authorized admin to load tournaments.</p>
+          </div>
+        </article>
+      </section>
+
+      <section id="registrations" class="view hidden">
+        <div class="section-heading">
+          <div>
+            <h2>Player registrations</h2>
+            <p class="muted">Review participation and registration status.</p>
+          </div>
+        </div>
+        <article class="panel">
+          <h3>Registration records</h3>
+          <div id="registrationRows" class="rows">
+            <p class="muted">Registration management requires its Firestore workflow to be implemented.</p>
+          </div>
+        </article>
+      </section>
+
+      <section id="rooms" class="view hidden">
+        <div class="section-heading">
+          <div>
+            <h2>Room management</h2>
+            <p class="muted">Control access to private match rooms.</p>
+          </div>
+        </div>
+        <article class="panel">
+          <h3>Room details</h3>
+          <p class="notice">
+            Room IDs and passwords must be accessible only to authorized participants.
+            Secure server-side access controls are required before using real room credentials.
+          </p>
+        </article>
+      </section>
+
+      <section id="results" class="view hidden">
+        <div class="section-heading">
+          <div>
+            <h2>Results & winners</h2>
+            <p class="muted">Manage match outcomes and prize verification.</p>
+          </div>
+        </div>
+        <article class="panel">
+          <h3>Results management</h3>
+          <p class="notice">
+            Verified result publishing and prize payouts require a secure backend and audit trail.
+            This section is a UI starter, not a live payout system.
+          </p>
+        </article>
+      </section>
+
+      <footer>
+        <strong>BGR eSports</strong>
+        <span>Free Fire Tournament Operations</span>
+        <span>Secure admin access required</span>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
