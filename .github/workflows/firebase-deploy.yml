@@ -1,0 +1,21 @@
+name: Deploy ClashAdda to Firebase Hosting
+
+on:
+push:
+branches:
+- main
+
+jobs:
+deploy:
+runs-on: ubuntu-latest
+steps:
+- name: Checkout repository
+uses: actions/checkout@v4
+
+  - name: Deploy to Firebase
+    uses: FirebaseExtended/action-hosting-deploy@v0
+    with:
+      repoToken: ${{ secrets.GITHUB_TOKEN }}
+      firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CLASHADDA_B3E57 }}
+      channelId: live
+      projectId: clashadda-b3e57
