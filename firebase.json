@@ -1,11 +1,12 @@
 
 {
   "hosting": {
-    "public": "bgr-project/web",
+    "public": "web",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "cleanUrls": true
   }
 }
