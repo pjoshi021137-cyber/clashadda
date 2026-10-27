@@ -1,217 +1,497 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f7fc">
-  <meta name="description" content="BGR eSports Free Fire tournament management dashboard">
-  <title>BGR eSports | Tournament Admin</title>
-  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="BGR ESPORTS - Free Fire Bermuda tournament hub.">
+  <title>BGR ESPORTS | Bermuda Tournament Hub</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      color-scheme: dark;
+      --red: #ff1744;
+      --bg: #090909;
+      --panel: #141414;
+      --muted: #a1a1aa;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: #fff;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    button:focus-visible, a:focus-visible {
+      outline: 2px solid var(--red);
+      outline-offset: 3px;
+    }
+
+    .orbit { font-family: 'Orbitron', sans-serif; }
+
+    .site-header {
+      background: rgba(5,5,5,.94);
+      border-bottom: 1px solid #27272a;
+      backdrop-filter: blur(14px);
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: var(--red);
+      border-radius: 12px;
+      box-shadow: 0 0 24px #ff174433;
+    }
+
+    .card {
+      border: 1px solid #292929;
+      background: linear-gradient(145deg,#171717,#101010);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .card:hover {
+      border-color: #ff174477;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px #0005;
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at 85% 20%, #ff17443b, transparent 33%),
+        linear-gradient(120deg,#3b0715,#171010 58%,#090909);
+      border: 1px solid #ff174444;
+    }
+
+    .primary-btn {
+      color: #fff;
+      background: linear-gradient(135deg,#ff1744,#c6002b);
+      transition: filter .2s ease, transform .2s ease;
+    }
+
+    .primary-btn:hover { filter: brightness(1.12); }
+    .primary-btn:active { transform: scale(.98); }
+
+    .mode-btn {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      border: 1px solid #303030;
+      background: #151515;
+      color: #d4d4d8;
+      transition: .2s ease;
+    }
+
+    .mode-btn.active {
+      background: #fff;
+      color: #090909;
+      border-color: #fff;
+    }
+
+    .live-dot { animation: blink 1.3s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .eyebrow {
+      color: #ff607d;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .stat-card {
+      background: #141414;
+      border: 1px solid #292929;
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #333;
+      background: #202020;
+      border-radius: 999px;
+      padding: 4px 9px;
+      color: #d4d4d8;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .field {
+      width: 100%;
+      background: #0d0d0d;
+      border: 1px solid #333;
+      color: #fff;
+      padding: 11px 12px;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .field:focus { border-color: var(--red); }
+    .muted { color: var(--muted); }
+
+    .toast {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 20px;
+      z-index: 100;
+      max-width: 480px;
+      margin: auto;
+      padding: 14px 16px;
+      background: #202020;
+      border: 1px solid #454545;
+      border-radius: 14px;
+      box-shadow: 0 18px 60px #000a;
+      font-size: 13px;
+    }
+
+    .empty-state {
+      padding: 24px 12px;
+      text-align: center;
+      color: #a1a1aa;
+      border: 1px dashed #333;
+      border-radius: 14px;
+    }
+
+    .nav-link {
+      color: #a1a1aa;
+      transition: color .2s;
+    }
+    .nav-link:hover { color: #fff; }
+
+    .room-placeholder {
+      background: repeating-linear-gradient(
+        135deg,#141414,#141414 10px,#101010 10px,#101010 20px
+      );
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <div class="shell">
-    <aside class="sidebar">
-      <a class="logo" href="#" aria-label="BGR eSports home">
-        BGR<span>eSports</span>
+  <!-- HEADER -->
+  <header class="site-header sticky top-0 z-50 px-4 py-3">
+    <div class="max-w-6xl mx-auto flex justify-between items-center gap-3">
+      <a href="#home" class="flex items-center gap-2 min-w-0" aria-label="BGR ESPORTS home">
+        <span class="brand-mark"><i class="fa-solid fa-gamepad text-lg"></i></span>
+        <span class="orbit font-black text-base sm:text-xl whitespace-nowrap">
+          BGR <span class="text-[#ff1744]">ESPORTS</span>
+        </span>
       </a>
-      <p class="label">FREE FIRE OPERATIONS</p>
 
-      <nav aria-label="Admin navigation">
-        <button class="nav active" data-view="overview">◈ Overview</button>
-        <button class="nav" data-view="tournaments">⚔ Tournaments</button>
-        <button class="nav" data-view="registrations">♙ Registrations</button>
-        <button class="nav" data-view="rooms">▣ Room Details</button>
-        <button class="nav" data-view="results">🏆 Results</button>
-      </nav>
-
-      <div class="asidefoot">
-        <span class="status-dot"></span> Tournament Control Center
+      <div class="flex items-center gap-2 sm:gap-3">
+        <span class="text-[10px] sm:text-xs bg-zinc-900 border border-zinc-800 px-2 sm:px-3 py-2 rounded-full whitespace-nowrap">
+          <span class="w-2 h-2 bg-green-500 rounded-full inline-block live-dot mr-1"></span>
+          Tournament Hub
+        </span>
+        <button id="loginBtn" class="primary-btn px-4 sm:px-5 py-2 rounded-full font-bold text-xs sm:text-sm">
+          <i class="fa-regular fa-user mr-1"></i> LOGIN
+        </button>
       </div>
-    </aside>
+    </div>
+  </header>
 
-    <main class="main">
-      <header class="topbar">
+  <main id="home" class="max-w-6xl mx-auto pb-10">
+    <!-- HERO -->
+    <section class="px-4 mt-5">
+      <div class="hero rounded-3xl p-5 sm:p-8 md:p-10 overflow-hidden relative">
+        <div class="relative z-10 max-w-2xl">
+          <span class="tag border-red-500/30 text-red-300">
+            <i class="fa-solid fa-fire"></i> BERMUDA TOURNAMENT SERIES
+          </span>
+
+          <h1 class="orbit text-3xl sm:text-5xl md:text-6xl font-black mt-4 leading-tight">
+            BERMUDA<br><span class="text-[#ff1744]">DOMINATION</span>
+          </h1>
+
+          <p class="text-sm sm:text-base text-zinc-300 mt-4 max-w-lg">
+            Find your match. Build your squad. Compete for the top spot.
+          </p>
+
+          <div class="flex flex-wrap gap-3 mt-6">
+            <a href="#tournaments" class="primary-btn rounded-full px-5 py-3 text-sm font-bold">
+              Explore Tournaments <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
+            <a href="#rules" class="rounded-full px-5 py-3 text-sm font-bold border border-zinc-600 bg-black/30">
+              Tournament Rules
+            </a>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-crosshairs absolute -right-4 -bottom-5 text-[140px] sm:text-[210px] text-red-500/10"
+           aria-hidden="true"></i>
+        <div class="absolute top-5 right-5 hidden sm:block text-right">
+          <p class="eyebrow">BGR SERIES</p>
+          <p class="orbit text-2xl font-black">01 / BMD</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="px-4 mt-5 grid grid-cols-2 md:grid-cols-4 gap-3" aria-label="Tournament information">
+      <div class="stat-card">
+        <div class="flex justify-between items-center">
+          <span class="text-xs muted">Game Map</span>
+          <i class="fa-solid fa-map text-[#ff1744]"></i>
+        </div>
+        <p class="orbit text-lg font-bold mt-2">BERMUDA</p>
+        <p class="text-[10px] muted mt-1">Bermuda-focused events</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="flex justify-between items-center">
+          <span class="text-xs muted">Game Modes</span>
+          <i class="fa-solid fa-crosshairs text-[#ff1744]"></i>
+        </div>
+        <p class="orbit text-lg font-bold mt-2">04 MODES</p>
+        <p class="text-[10px] muted mt-1">BR, CS, Lone Wolf, Headshot</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="flex justify-between items-center">
+          <span class="text-xs muted">My Matches</span>
+          <i class="fa-solid fa-calendar-check text-[#ff1744]"></i>
+        </div>
+        <p id="myMatchCount" class="orbit text-lg font-bold mt-2">0</p>
+        <p class="text-[10px] muted mt-1">Saved on this device</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="flex justify-between items-center">
+          <span class="text-xs muted">Platform</span>
+          <i class="fa-solid fa-shield-halved text-[#ff1744]"></i>
+        </div>
+        <p class="orbit text-lg font-bold mt-2">BGR HUB</p>
+        <p class="text-[10px] muted mt-1">Tournament frontend</p>
+      </div>
+    </section>
+
+    <!-- TOURNAMENTS -->
+    <section id="tournaments" class="px-4 mt-8">
+      <div class="flex flex-wrap justify-between items-end gap-3">
         <div>
-          <small class="eyebrow">BGR ESPORTS / ADMIN</small>
-          <h1 id="title">Dashboard Overview</h1>
-          <p class="subtitle">Manage tournaments and competitive operations.</p>
+          <p class="eyebrow">Choose your battlefield</p>
+          <h2 class="section-title text-xl sm:text-2xl mt-2">TOURNAMENTS</h2>
+          <p class="text-xs muted mt-2">Demo listings until connected to the live tournament database.</p>
         </div>
-        <div class="auth">
-          <span id="userStatus">Not signed in</span>
-          <button id="loginBtn" class="btn btn-primary">Sign in</button>
-          <button id="logoutBtn" class="btn btn-light hidden">Sign out</button>
-        </div>
-      </header>
+        <span class="tag"><i class="fa-solid fa-map"></i> BERMUDA ONLY</span>
+      </div>
 
-      <div id="alert" class="alert hidden" role="status"></div>
+      <div class="flex gap-2 overflow-x-auto mt-5 pb-2" role="group" aria-label="Filter tournaments">
+        <button type="button" class="mode-btn active px-5 py-2 rounded-full text-sm font-bold" data-filter="all">All</button>
+        <button type="button" class="mode-btn px-5 py-2 rounded-full text-sm font-bold" data-filter="br">Battle Royale</button>
+        <button type="button" class="mode-btn px-5 py-2 rounded-full text-sm font-bold" data-filter="cs">Clash Squad</button>
+        <button type="button" class="mode-btn px-5 py-2 rounded-full text-sm font-bold" data-filter="lw">Lone Wolf</button>
+        <button type="button" class="mode-btn px-5 py-2 rounded-full text-sm font-bold" data-filter="headshot">Headshot</button>
+      </div>
 
-      <section id="overview" class="view">
-        <div class="welcome">
-          <div>
-            <span class="welcome-tag">COMPETITIVE GAMING</span>
-            <h2>Welcome to BGR eSports</h2>
-            <p>Your tournament operations, organized in one place.</p>
-          </div>
-          <div class="welcome-mark">BGR<span>+</span></div>
-        </div>
-
-        <div class="stats">
-          <article class="stat-card">
-            <span class="stat-label">Open tournaments</span>
-            <strong id="countT">—</strong>
-            <span class="stat-note">Currently open</span>
-          </article>
-          <article class="stat-card">
-            <span class="stat-label">Registrations</span>
-            <strong id="countR">—</strong>
-            <span class="stat-note">Joined players</span>
-          </article>
-          <article class="stat-card">
-            <span class="stat-label">Pending review</span>
-            <strong id="countP">—</strong>
-            <span class="stat-note">Awaiting review</span>
-          </article>
-          <article class="stat-card">
-            <span class="stat-label">Game category</span>
-            <strong class="game-name">Free Fire</strong>
-            <span class="stat-note">Free Fire / MAX</span>
-          </article>
-        </div>
-
-        <article class="panel">
-          <div class="panelhead">
+      <div id="tournamentGrid" class="grid md:grid-cols-2 gap-3 mt-3">
+        <!-- BR SOLO -->
+        <article class="card rounded-2xl p-4 tournament-card" data-mode="br" data-id="br101">
+          <div class="flex justify-between gap-3">
             <div>
-              <h2>Recent tournaments</h2>
-              <p class="muted">Review your latest tournament activity.</p>
+              <span class="tag"><i class="fa-solid fa-parachute-box text-[#ff1744]"></i> BATTLE ROYALE</span>
+              <h3 class="font-bold mt-3">BR Solo #101</h3>
+              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 05:00 PM · Bermuda</p>
             </div>
-            <button class="btn btn-light" data-goto="tournaments">Manage tournaments →</button>
+            <div class="text-right">
+              <span class="text-[10px] text-green-400 font-bold">DEMO LISTING</span>
+              <p class="orbit text-sm font-bold mt-3">52 SLOTS</p>
+              <p class="text-xs muted">Example capacity</p>
+            </div>
           </div>
-          <div id="recent" class="rows">
-            <p class="muted">Sign in with an authorized admin account to load data.</p>
+          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
+            <span class="text-xs muted">Solo · Bermuda</span>
+            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="br101" data-name="BR Solo #101">JOIN</button>
           </div>
         </article>
 
-        <p class="notice">
-          <strong>Security notice</strong>
-          Admin access requires a verified Firebase account with the appropriate admin permissions.
+        <!-- BR SQUAD -->
+        <article class="card rounded-2xl p-4 tournament-card" data-mode="br" data-id="br102">
+          <div class="flex justify-between gap-3">
+            <div>
+              <span class="tag"><i class="fa-solid fa-people-group text-[#ff1744]"></i> BATTLE ROYALE</span>
+              <h3 class="font-bold mt-3">BR Squad #102</h3>
+              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 06:30 PM · Bermuda</p>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] text-green-400 font-bold">DEMO LISTING</span>
+              <p class="orbit text-sm font-bold mt-3">25 SLOTS</p>
+              <p class="text-xs muted">Example capacity</p>
+            </div>
+          </div>
+          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
+            <span class="text-xs muted">Squad · Bermuda</span>
+            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="br102" data-name="BR Squad #102">JOIN</button>
+          </div>
+        </article>
+
+        <!-- CS RANK -->
+        <article class="card rounded-2xl p-4 tournament-card" data-mode="cs" data-id="cs201">
+          <div class="flex justify-between gap-3">
+            <div>
+              <span class="tag"><i class="fa-solid fa-bomb text-yellow-400"></i> CLASH SQUAD</span>
+              <h3 class="font-bold mt-3">CS Rank #201</h3>
+              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 04:00 PM · Bermuda Dock</p>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] text-yellow-400 font-bold">4V4</span>
+              <p class="orbit text-sm font-bold mt-3">8 PLAYERS</p>
+              <p class="text-xs muted">Example format</p>
+            </div>
+          </div>
+          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
+            <span class="text-xs muted">Clash Squad</span>
+            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="cs201" data-name="CS Rank #201">JOIN</button>
+          </div>
+        </article>
+
+        <!-- CS SQUAD -->
+        <article class="card rounded-2xl p-4 tournament-card" data-mode="cs" data-id="cs202">
+          <div class="flex justify-between gap-3">
+            <div>
+              <span class="tag"><i class="fa-solid fa-bomb text-yellow-400"></i> CLASH SQUAD</span>
+              <h3 class="font-bold mt-3">CS Squad #202</h3>
+              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 07:00 PM · Bermuda</p>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] text-yellow-400 font-bold">4V4</span>
+              <p class="orbit text-sm font-bold mt-3">8 PLAYERS</p>
+              <p class="text-xs muted">Example format</p>
+            </div>
+          </div>
+          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
+            <span class="text-xs muted">Clash Squad</span>
+            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="cs202" data-name="CS Squad #202">JOIN</button>
+          </div>
+        </article>
+
+        <!-- LONE WOLF -->
+        <article class="card rounded-2xl p-4 tournament-card" data-mode="lw" data-id="lw301">
+          <div class="flex justify-between gap-3">
+            <div>
+              <span class="tag"><i class="fa-solid fa-skull text-cyan-400"></i> LONE WOLF</span>
+              <h3 class="font-bold mt-3">Lone Wolf 1v1 #301</h3>
+              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 03:00 PM · Bermuda</p>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] text-cyan-400 font-bold">1V1</span>
+              <p class="orbit text-sm font-bold mt-3">DUEL</p>
+              <p class="text-xs muted">Example format</p>
+            </div>
+          </div>
+          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
+            <span class="text-xs muted">Lone Wolf</span>
+            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="lw301" data-name="Lone Wolf 1v1 #301">JOIN</button>
+          </div>
+        </article>
+
+        <!-- HEADSHOT -->
+        <article class="card rounded-2xl p-4 tournament-card" data-mode="headshot" data-id="hs401">
+          <div class="flex justify-between gap-3">
+            <div>
+              <span class="tag border-red-500/40 text-red-300"><i class="fa-solid fa-crosshairs"></i> HEADSHOT SPECIAL</span>
+              <h3 class="font-bold mt-3">Headshot Only #401</h3>
+              <p class="text-xs muted mt-2"><i class="fa-regular fa-clock mr-1"></i> 09:00 PM · Bermuda</p>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] text-red-400 font-bold">SPECIAL</span>
+              <p class="orbit text-sm font-bold mt-3">HS MODE</p>
+              <p class="text-xs muted">Example ruleset</p>
+            </div>
+          </div>
+          <div class="mt-4 border-t border-zinc-800 pt-3 flex justify-between items-center gap-3">
+            <span class="text-xs muted">Headshot only</span>
+            <button type="button" class="join-btn primary-btn rounded-full px-5 py-2 text-xs font-bold" data-id="hs401" data-name="Headshot Only #401">JOIN</button>
+          </div>
+        </article>
+      </div>
+
+      <p id="filterEmpty" class="empty-state mt-3 hidden">No tournaments found in this category.</p>
+    </section>
+
+    <!-- JOIN / MY MATCHES -->
+    <section id="my-matches" class="px-4 mt-9">
+      <div class="flex flex-wrap justify-between items-end gap-3">
+        <div>
+          <p class="eyebrow">Your competition list</p>
+          <h2 class="section-title text-xl mt-2">MY MATCHES</h2>
+        </div>
+        <button id="clearMatchesBtn" type="button" class="text-xs text-zinc-400 underline">Clear saved demo matches</button>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mt-4">
+        <button class="match-tab mode-btn active px-4 py-2 rounded-full text-xs font-bold" data-status="all">All</button>
+        <button class="match-tab mode-btn px-4 py-2 rounded-full text-xs font-bold" data-status="upcoming">Upcoming</button>
+      </div>
+
+      <div id="myMatchesList" class="mt-3">
+        <div class="empty-state">You haven't saved any demo matches yet. Choose a tournament above to try the interface.</div>
+      </div>
+
+      <p class="text-[11px] muted mt-3">
+        Demo note: saved matches are stored only in this browser. They are not official registrations.
+      </p>
+    </section>
+
+    <!-- ROOM -->
+    <section class="px-4 mt-9">
+      <div class="card room-placeholder rounded-2xl p-5 sm:p-7 text-center">
+        <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto">
+          <i class="fa-solid fa-lock text-[#ff1744] text-xl"></i>
+        </div>
+        <p class="eyebrow mt-4">Authorized access only</p>
+        <h2 class="section-title text-lg mt-2">ROOM ID / PASSWORD</h2>
+        <p class="text-sm muted mt-2 max-w-lg mx-auto">
+          Room details are not configured on this demo page. In production, they should be released only to approved players before their match.
         </p>
-      </section>
-
-      <section id="tournaments" class="view hidden">
-        <div class="section-heading">
-          <div>
-            <h2>Tournament management</h2>
-            <p class="muted">Create and review competitive events.</p>
-          </div>
+        <div class="flex justify-center mt-4">
+          <span class="font-mono text-lg tracking-widest text-zinc-500">•••••• / ••••••</span>
         </div>
+        <button type="button" id="roomInfoBtn" class="mt-4 border border-zinc-700 bg-zinc-900 px-5 py-2 rounded-full text-xs font-bold">
+          Room access information
+        </button>
+      </div>
+    </section>
 
-        <article class="panel">
-          <h3>Create tournament</h3>
-          <p class="muted">Fill in the event details below.</p>
-
-          <form id="createForm" class="grid">
-            <label>Tournament name
-              <input id="name" required maxlength="80" placeholder="BGR Booyah Cup">
-            </label>
-            <label>Mode
-              <select id="mode">
-                <option>Solo</option>
-                <option>Duo</option>
-                <option>Squad</option>
-              </select>
-            </label>
-            <label>Map
-              <select id="map">
-                <option>Bermuda</option>
-                <option>Purgatory</option>
-                <option>Kalahari</option>
-                <option>Alpine</option>
-                <option>NexTerra</option>
-              </select>
-            </label>
-            <label>Entry fee (₹)
-              <input id="fee" type="number" min="0" max="100000" value="0" required>
-            </label>
-            <label>Prize pool (₹)
-              <input id="prize" type="number" min="0" max="10000000" value="500" required>
-            </label>
-            <label>Maximum slots
-              <input id="slots" type="number" min="2" max="1000" value="48" required>
-            </label>
-            <label>Start time
-              <input id="startAt" type="datetime-local" required>
-            </label>
-            <div class="form-actions">
-              <button type="reset" class="btn btn-light">Clear form</button>
-              <button type="submit" class="btn btn-primary">+ Create tournament</button>
-            </div>
-          </form>
-        </article>
-
-        <article class="panel">
-          <h3>All tournaments</h3>
-          <div id="tournamentRows" class="rows">
-            <p class="muted">Sign in as an authorized admin to load tournaments.</p>
+    <!-- LEADERBOARD / PROFILE / RULES -->
+    <section class="px-4 mt-9 grid md:grid-cols-3 gap-3">
+      <div id="leaderboard" class="card rounded-2xl p-5">
+        <p class="eyebrow">Community rankings</p>
+        <h3 class="section-title text-sm mt-2">LEADERBOARD</h3>
+        <p class="text-xs muted mt-3">Official leaderboard data is not connected yet.</p>
+        <div class="mt-4 space-y-3 text-sm">
+          <div class="flex justify-between gap-2 border-b border-zinc-800 pb-2">
+            <span class="muted">Rankings</span><span class="font-bold">Pending data</span>
           </div>
-        </article>
-      </section>
-
-      <section id="registrations" class="view hidden">
-        <div class="section-heading">
-          <div>
-            <h2>Player registrations</h2>
-            <p class="muted">Review participation and registration status.</p>
-          </div>
-        </div>
-        <article class="panel">
-          <h3>Registration records</h3>
-          <div id="registrationRows" class="rows">
-            <p class="muted">Registration management requires its Firestore workflow to be implemented.</p>
-          </div>
-        </article>
-      </section>
-
-      <section id="rooms" class="view hidden">
-        <div class="section-heading">
-          <div>
-            <h2>Room management</h2>
-            <p class="muted">Control access to private match rooms.</p>
-          </div>
-        </div>
-        <article class="panel">
-          <h3>Room details</h3>
-          <p class="notice">
-            Room IDs and passwords must be accessible only to authorized participants.
-            Secure server-side access controls are required before using real room credentials.
-          </p>
-        </article>
-      </section>
-
-      <section id="results" class="view hidden">
-        <div class="section-heading">
-          <div>
-            <h2>Results & winners</h2>
-            <p class="muted">Manage match outcomes and prize verification.</p>
-          </div>
-        </div>
-        <article class="panel">
-          <h3>Results management</h3>
-          <p class="notice">
-            Verified result publishing and prize payouts require a secure backend and audit trail.
-            This section is a UI starter, not a live payout system.
-          </p>
-        </article>
-      </section>
-
-      <footer>
-        <strong>BGR eSports</strong>
-        <span>Free Fire Tournament Operations</span>
-        <span>Secure admin access required</span>
-      </footer>
-    </main>
-  </div>
-
-  <script type="module" src="./app.js"></script>
-</body>
-</html>
+          <div class="flex justify-between gap-2">
+            <span class="muted">Source</span><span class="text-xs">Verified match results</span>
+  
