@@ -1,0 +1,67 @@
+
+name: Set BGR eSports Admin Claim
+
+on:
+  workflow_dispatch:
+    inputs:
+      admin_uid:
+        description: "Firebase Authentication User UID"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  set-admin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set admin custom claim
+        env:
+          ADMIN_UID: ${{ inputs.admin_uid }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CLASHADDA_B3E57 }}
+        run: |
+          set -e
+          mkdir -p /tmp/admin-claim
+          cd /tmp/admin-claim
+          npm init -y >/dev/null
+          npm install firebase-admin
+          cat > set-admin.cjs <<'EOF'
+          const admin = require('firebase-admin');
+
+          const credentials = JSON.parse(
+            process.env.FIREBASE_SERVICE_ACCOUNT
+          );
+
+          admin.initializeApp({
+            credential: admin.credential.cert(credentials)
+          });
+
+          async function main() {
+            const uid = process.env.ADMIN_UID;
+            if (!uid || !/^[A-Za-z0-9_-]{1,128}$/.test(uid)) {
+              throw new Error('Invalid Firebase UID');
+            }
+
+            const user = await admin.auth().getUser(uid);
+            await admin.auth().setCustomUserClaims(uid, {
+              ...(user.customClaims || {}),
+              admin: true
+            });
+
+            console.log('Admin claim set for UID:', uid);
+          }
+
+          main().then(
+            () => process.exit(0),
+            error => {
+              console.error(error.message);
+              process.exit(1);
+            }
+          );
+          EOF
+          node set-admin.cjs
+          
