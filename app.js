@@ -1,0 +1,20 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { firebaseConfig } from "./firebase-config.js";
+
+const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
+const $ = id => document.getElementById(id);
+let currentUser = null, isAdmin = false, cache = [];
+function alertBox(msg){$("alert").textContent=msg;$("alert").classList.remove("hidden")}
+function clearAlert(){$("alert").classList.add("hidden")}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function goto(view){document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));$(view).classList.remove("hidden");document.querySelectorAll(".nav").forEach(x=>x.classList.toggle("active",x.dataset.view===view));$("title").textContent=({overview:"Admin Overview",tournaments:"Tournament Manager",registrations:"Player Registrations",rooms:"Room Details",results:"Results & Winners"})[view]}
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>goto(b.dataset.view));
+document.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>goto(b.dataset.goto));
+$("loginBtn").onclick=async()=>{const email=prompt("Admin email");if(!email)return;const password=prompt("Password");if(!password)return;try{await signInWithEmailAndPassword(auth,email,password)}catch(e){alertBox("Sign in failed: "+e.message)}};
+$("logoutBtn").onclick=()=>signOut(auth);
+onAuthStateChanged(auth,async user=>{currentUser=user;isAdmin=false;$("userStatus").textContent=user?user.email:"Not signed in";$("loginBtn").classList.toggle("hidden",!!user);$("logoutBtn").classList.toggle("hidden",!user);if(!user){alertBox("Sign in to load admin data. Firebase config must be set in web/firebase-config.js.");return}const token=await user.getIdTokenResult(true);isAdmin=token.claims.admin===true;if(!isAdmin){alertBox("Signed in, but this account does not have the admin custom claim. Ask the project owner to grant admin securely.");return}clearAlert();await loadTournaments()});
+async function loadTournaments(){try{const snap=await getDocs(query(collection(db,"tournaments"),orderBy("startAt","asc")));cache=snap.docs.map(d=>({id:d.id,...d.data()}));renderTournaments()}catch(e){alertBox("Could not load tournaments: "+e.message)}}
+function renderTournaments(){const open=cache.filter(t=>t.status==="open").length;$("countT").textContent=open;$("countR").textContent=cache.reduce((a,t)=>a+(t.joinedCount||0),0);$("countP").textContent="—";const html=cache.map(t=>`<div class="row"><div><b>${esc(t.name)}</b><div class="muted">${esc(t.mode)} · ${esc(t.map)} · ${t.startAt?.toDate?.().toLocaleString?.()||"Time pending"}</div></div><div><b>₹${Number(t.prizePool||0).toLocaleString("en-IN")}</b><div class="muted">${esc(t.status||"draft")}</div></div></div>`).join("")||'<p class="muted">No tournaments created yet.</p>';$("tournamentRows").innerHTML=html;$("recent").innerHTML=html}
+$("createForm").onsubmit=async e=>{e.preventDefault();if(!currentUser||!isAdmin){alertBox("Only a verified admin can create tournaments.");return}const name=$("name").value.trim(),fee=Number($("fee").value),prize=Number($("prize").value),maxSlots=Number($("slots").value),startAt=new Date($("startAt").value);if(!name||!Number.isFinite(fee)||!Number.isFinite(prize)||!Number.isInteger(maxSlots)||maxSlots<2||Number.isNaN(startAt.getTime())){alertBox("Check the tournament fields.");return}try{await addDoc(collection(db,"tournaments"),{name,mode:$("mode").value,map:$("map").value,entryFee:fee,prizePool:prize,maxSlots,joinedCount:0,startAt,status:"open",createdAt:serverTimestamp(),createdBy:currentUser.uid});e.target.reset();alertBox("Tournament created.");await loadTournaments()}catch(err){alertBox("Create failed: "+err.message)}};
