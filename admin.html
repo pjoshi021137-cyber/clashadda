@@ -1,0 +1,177 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131c">
+  <title>BGR eSports | Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { margin:0; background:#10131c; color:#f4f5fa; font-family:Arial,sans-serif; }
+    .admin-wrap { max-width:1100px; margin:auto; padding:20px; }
+    .top { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+    .brand { font-size:25px; font-weight:800; }
+    .brand span { color:#ff633d; }
+    .muted { color:#aab0c0; }
+    .panel { background:#191e2b; border:1px solid #30384b; border-radius:14px; padding:18px; margin:18px 0; }
+    .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:12px; }
+    .stat { background:#191e2b; padding:18px; border-radius:12px; border:1px solid #30384b; }
+    .stat strong { display:block; font-size:26px; margin-top:8px; }
+    .nav { display:flex; gap:8px; flex-wrap:wrap; margin:20px 0; }
+    button { background:#ff633d; color:#fff; border:0; padding:11px 15px; border-radius:8px; cursor:pointer; font-weight:700; }
+    button.secondary { background:#30384b; }
+    button:disabled { opacity:.5; cursor:not-allowed; }
+    input,select { box-sizing:border-box; width:100%; margin-top:7px; padding:12px; background:#10131c; color:#fff; border:1px solid #414b62; border-radius:8px; }
+    label { display:block; color:#cbd0dd; font-size:14px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; }
+    .rows { overflow-wrap:anywhere; }
+    .item { padding:13px 0; border-bottom:1px solid #30384b; }
+    .hidden { display:none !important; }
+    .alert { padding:12px; border-radius:8px; background:#30384b; margin:15px 0; overflow-wrap:anywhere; }
+    h1 { font-size:27px; }
+    h2 { font-size:20px; }
+    footer { text-align:center; padding:25px; color:#aab0c0; }
+  </style>
+</head>
+<body>
+<div class="admin-wrap">
+  <header class="top">
+    <div>
+      <div class="brand">BGR <span>eSPORTS</span></div>
+      <p class="muted">Tournament Control Panel</p>
+    </div>
+    <div>
+      <span id="userStatus" class="muted">Checking sign-in…</span>
+      <button id="loginBtn">Sign in</button>
+      <button id="logoutBtn" class="secondary hidden">Sign out</button>
+    </div>
+  </header>
+
+  <div id="alert" class="alert hidden" role="status"></div>
+
+  <nav class="nav">
+    <button data-view="overview">Overview</button>
+    <button data-view="tournaments">Tournaments</button>
+    <button data-view="registrations">Registrations</button>
+    <button data-view="rooms">Room Details</button>
+    <button data-view="results">Results</button>
+  </nav>
+
+  <section id="overview" class="view">
+    <h1>Admin Overview</h1>
+    <div class="stats">
+      <div class="stat">Tournaments<strong id="countT">—</strong></div>
+      <div class="stat">Registrations<strong id="countR">—</strong></div>
+      <div class="stat">Pending review<strong id="countP">—</strong></div>
+    </div>
+    <article class="panel">
+      <h2>Recent tournaments</h2>
+      <div id="recent" class="rows muted">Sign in with an authorized admin account.</div>
+    </article>
+  </section>
+
+  <section id="tournaments" class="view hidden">
+    <article class="panel">
+      <h2>Create Tournament</h2>
+      <form id="createForm" class="grid">
+        <label>Tournament name
+          <input id="name" required maxlength="80" placeholder="BGR Booyah Cup">
+        </label>
+        <label>Mode
+          <select id="mode">
+            <option>Solo</option><option>Duo</option><option>Squad</option>
+          </select>
+        </label>
+        <label>Map
+          <select id="map">
+            <option>Bermuda</option><option>Purgatory</option>
+            <option>Kalahari</option><option>Alpine</option><option>NexTerra</option>
+          </select>
+        </label>
+        <label>Entry fee (₹)
+          <input id="fee" type="number" min="0" max="100000" value="0" required>
+        </label>
+        <label>Prize pool (₹)
+          <input id="prize" type="number" min="0" max="10000000" value="500" required>
+        </label>
+        <label>Maximum slots
+          <input id="slots" type="number" min="2" max="1000" value="48" required>
+        </label>
+        <label>Start time
+          <input id="startAt" type="datetime-local" required>
+        </label>
+        <div><button id="createBtn" type="submit">Create Tournament</button></div>
+      </form>
+    </article>
+    <article class="panel">
+      <h2>All Tournaments</h2>
+      <div id="tournamentRows" class="rows muted">Sign in as admin to load tournaments.</div>
+    </article>
+  </section>
+
+  <section id="registrations" class="view hidden">
+    <article class="panel">
+      <h2>Player Registrations</h2>
+      <p class="muted">Registration management will appear here after its Firestore data structure and admin actions are connected.</p>
+      <div id="registrationRows" class="rows"></div>
+    </article>
+  </section>
+
+  <section id="rooms" class="view hidden">
+    <article class="panel">
+      <h2>Room Details</h2>
+      <p class="muted">Room IDs and passwords must only be delivered to authorized participants. Do not store room passwords in public tournament documents.</p>
+    </article>
+  </section>
+
+  <section id="results" class="view hidden">
+    <article class="panel">
+      <h2>Results & Winners</h2>
+      <p class="muted">Winner verification and prize payout workflows need secure server-side validation before production use.</p>
+    </article>
+  </section>
+
+  <footer>BGR eSports • Admin Panel</footer>
+</div>
+
+<script type="module" src="app.js"></script>
+<script>
+  const alertBox = document.getElementById("alert");
+
+  function showMessage(message) {
+    alertBox.textContent = message;
+    alertBox.classList.remove("hidden");
+  }
+
+  document.querySelectorAll("[data-view]").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".view").forEach(section =>
+        section.classList.add("hidden")
+      );
+      const section = document.getElementById(button.dataset.view);
+      if (section) section.classList.remove("hidden");
+    });
+  });
+
+  document.querySelectorAll("[data-goto]").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelector(`[data-view="${button.dataset.goto}"]`)?.click();
+    });
+  });
+
+  document.getElementById("loginBtn").addEventListener("click", () => {
+    showMessage("Sign-in action must be configured in app.js with Firebase Authentication.");
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    showMessage("Sign-out action must be configured in app.js.");
+  });
+
+  document.getElementById("createForm").addEventListener("submit", event => {
+    event.preventDefault();
+    showMessage("Tournament creation must be handled by the authorized Firebase admin logic in app.js.");
+  });
+</script>
+</body>
+</html>
