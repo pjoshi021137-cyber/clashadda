@@ -17,9 +17,10 @@ jobs:
 
       - name: Check website files
         run: |
-          echo "Checking website directory..."
-          ls -la
-          test -f web/index.html
+          echo "Checking website files..."
+          test -f index.html
+          test -f app.js
+          test -f style.css
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
