@@ -9,16 +9,24 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy to Firebase
+      - name: Check Firebase configuration
+        run: |
+          test -f bgr-project/firebase.json || {
+            echo "ERROR: bgr-project/firebase.json not found"
+            exit 1
+          }
+
+      - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CLASHADDA_B3E57 }}
           channelId: live
           projectId: clashadda-b3e57
-          entryPoint: .
+          entryPoint: ./bgr-project
           
