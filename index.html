@@ -2,107 +2,110 @@
 <html lang="en">
 <head>
 <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#7c3aed">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BGR eSports - 100% FINAL</title>
-<link rel="icon" href="./logo.png" />
+<meta name="theme-color" content="#ffcc00">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BGR eSPORTS - ULTRA PRO MAX 100%</title>
+<link rel="icon" href="./logo.png">
 <style>
-:root{--bg:#0a0a0f;--card:#15151e;--yellow:#ffcc00;--text:#fff;--muted:#888}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;display:flex}
-.sidebar{width:220px;background:#0f0f14;height:100vh;padding:20px;position:fixed;border-right:1px solid #222}
-.sidebar a{display:block;padding:10px;color:var(--muted);text-decoration:none;border-radius:6px;margin:4px 0}
-.sidebar a.active,.sidebar a:hover{background:#1e1e2a;color:var(--yellow)}
-.main{margin-left:260px;padding:20px;width:100%}
-.card{background:var(--card);border:1px solid #222;border-radius:12px;padding:16px;margin:10px 0}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.badge{padding:2px 8px;border-radius:10px;font-size:11px;background:#222}
-.BR{color:#00e5ff}.CS{color:#ff9800}.LW{color:#e91e63}.HS{color:#4caf50}
-table{width:100%;border-collapse:collapse} th{color:var(--muted);font-size:12px;text-align:left;padding:8px} td{padding:10px;border-top:1px solid #222;font-size:13px}
-button{background:var(--yellow);border:0;padding:6px 12px;border-radius:6px;font-weight:600;cursor:pointer;color:#000}
-input,select{background:#0f0f14;border:1px solid #333;color:#fff;padding:8px;border-radius:6px;width:100%;margin:4px 0}
+:root{--bg:#07070a;--card:#12121a;--card2:#1c1c27;--yellow:#ffcc00;--orange:#ff6a00;--text:#fff;--muted:#777;--green:#00ff88}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif}
+.header{position:fixed;top:0;left:0;right:0;background:#0c0c12;border-bottom:1px solid #222;padding:12px 16px;z-index:10;display:flex;justify-content:space-between;align-items:center}
+.main{margin-top:60px;padding:14px;max-width:600px;margin-left:auto;margin-right:auto}
+.card{background:var(--card);border:1px solid #222;border-radius:16px;padding:16px;margin:10px 0}
+.badge{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900}
+.BR{background:#00e5ff;color:#000}.CS{background:#ff9800;color:#000}.LW{background:#ff006a;color:#fff}.HS{background:#00ff88;color:#000}
+.tabs{display:flex;gap:6px;overflow-x:auto}.tab{padding:8px 12px;border-radius:20px;background:#1e1e2a;color:var(--muted);font-size:11px;font-weight:800;cursor:pointer}.tab.active{background:var(--yellow);color:#000}
+input,select,textarea{background:#09090f;border:1px solid #2a2a3a;color:#fff;padding:11px;border-radius:10px;width:100%;margin:5px 0;box-sizing:border-box}
+label{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:800;margin-top:6px;display:block}
+button{border:0;padding:12px;border-radius:12px;font-weight:900;cursor:pointer}.btn-yellow{background:linear-gradient(90deg,var(--yellow),var(--orange));color:#000;width:100%}.btn-dark{background:var(--card2);color:#fff;border:1px solid #333;width:100%;margin-top:6px}
 .hidden{display:none}
 </style>
 </head>
 <body>
-<div class="sidebar">
-<h3 style="color:var(--yellow)">BGR eSPORTS</h3>
-<a class="active" onclick="showPage('dashboard')">Dashboard</a>
-<a onclick="showPage('tournaments')">Tournaments</a>
-<a onclick="showPage('players')">Players</a>
-<a onclick="showPage('rooms')">Room Management</a>
-<a onclick="showPage('results')">Results & Winners</a>
-<a onclick="showPage('wallet')">Wallet & Payments</a>
-<a onclick="showPage('withdraw')">Withdrawals</a>
-<a onclick="showPage('banners')">Banners</a>
-<a onclick="showPage('reports')">Reports</a>
-<a onclick="showPage('settings')">Settings & Security</a>
-<div style="margin-top:30px;font-size:10px;color:#555">Admin ready - UPI<br>Are we? Function wala search?<br>Refund Idempotent - Real proof</div>
-</div>
-
+<div class="header"><div><b style="color:var(--yellow)">BGR eSPORTS</b> <small>ULTRA PRO MAX</small></div><div style="font-size:9px;color:var(--yellow)">piyush021137@fam</div></div>
 <div class="main">
-<!-- DASHBOARD -->
-<div id="page-dashboard">
-<h2>Dashboard <span style="font-size:10px;color:var(--yellow)">BGR eSPORTS - FINAL 100%</span></h2>
-<div class="stats">
-<div class="card"><small>Total tournaments</small><h2 id="totalTournaments">0</h2></div>
-<div class="card"><small>Registered players</small><h2 id="totalPlayers">-</h2></div>
-<div class="card"><small>Pending payments</small><h2 id="pendingPayments">-</h2></div>
-<div class="card"><small>Wallet total</small><h2 id="walletTotal">₹0</h2></div>
-</div>
-<div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
-<div class="card"><b>Recent tournaments</b> <button style="float:right" onclick="showPage('tournaments')">View all</button><div id="recentList" style="margin-top:10px">No tournaments</div></div>
-<div class="card"><b>Quick actions</b><br><br>
-<button onclick="showPage('tournaments')">+ Create Tournament</button><br><br>
-<button onclick="showPage('rooms')">Room ID Add</button><br><br>
-<button onclick="showPage('wallet')">Approve Deposit</button><br><br>
-<button onclick="showPage('withdraw')">Approve Withdraw</button>
-<div style="margin-top:10px">
-<button onclick="filterByMode('all')">All</button>
-<button onclick="filterByMode('BR')">BR</button>
-<button onclick="filterByMode('CS')">CS</button>
-<button onclick="filterByMode('LW')">LW</button>
-<button onclick="filterByMode('HS')">HS</button>
-</div>
-</div>
-</div>
+<div class="tabs"><div class="tab active" onclick="filterMode('ALL',this)">ALL</div><div class="tab" onclick="filterMode('BR',this)">BR</div><div class="tab" onclick="filterMode('CS',this)">CS 1v1/2v2/4v4</div><div class="tab" onclick="filterMode('LW',this)">LW</div><div class="tab" onclick="filterMode('HS',this)">HS</div></div>
+
+<div class="card" style="border-color:var(--yellow)">
+<h3 style="margin:0">🔥 CREATE TOURNAMENT - PRO MAX</h3>
+<label>GAME MODE</label><select id="cMode" onchange="onMode()"><option value="BR">BR - Battle Royale</option><option value="CS">CS - Clash Squad</option><option value="LW">LW - Lone Wolf</option><option value="HS">HS - Headshot</option></select>
+<label>MATCH TYPE - CS me 1v1/2v2/4v4</label><select id="cType" onchange="onType()"></select>
+<div style="display:flex;gap:8px"><div style="flex:1"><label>Team</label><select id="cTeam"></select></div><div style="flex:1"><label>Slots</label><input id="cSlots" type="number"></div></div>
+<input id="cName" placeholder="BGR CS 1v1 ULTRA #1">
+<div style="display:flex;gap:8px"><div style="flex:1"><label>Entry ₹</label><input id="cFee" type="number" value="20"></div><div style="flex:1"><label>Prize ₹</label><input id="cPrize" type="number" value="500"></div><div style="flex:1"><label>Kill ₹</label><input id="cKill" type="number" value="10"></div></div>
+<div style="display:flex;gap:8px"><div style="flex:1"><label>Room ID</label><input id="cRoomId"></div><div style="flex:1"><label>Room Pass</label><input id="cRoomPass"></div></div>
+<input id="cTime" type="datetime-local">
+<button class="btn-yellow" onclick="createFinal()">🚀 CREATE - FIREBASE ONLINE</button>
+<small style="color:var(--muted)">UPI: piyush021137@fam | Room 10 min pehle share hoga</small>
 </div>
 
-<!-- TOURNAMENTS -->
-<div id="page-tournaments" class="hidden">
-<h2>Create tournament</h2>
-<div class="card">
-<input id="tName" placeholder="BGR Booyah Cup">
-<label>Mode</label><select id="tournamentMode"></select>
-<input id="tFee" type="number" placeholder="20">
-<input id="tPrize" type="number" placeholder="500">
-<input id="tSlots" type="number" placeholder="48">
-<select id="tStatus"><option value="upcoming">Upcoming</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option></select>
-<button onclick="saveTournament()">Save tournament</button>
-</div>
-<div class="card"><h3>All tournaments</h3>
-<table><thead><tr><th>Name</th><th>Mode</th><th>Fee</th><th>Prize</th><th>Slots</th><th>Status</th><th>Action</th></tr></thead><tbody id="tTable"></tbody></table>
-</div>
+<div id="tList"></div>
 </div>
 
-<div id="page-players" class="hidden"><div class="card"><h3>Players / Registrations</h3><div id="playersList">Loading...</div></div></div>
-<div id="page-rooms" class="hidden"><div class="card"><h3>Room Management - Private</h3><div id="roomsList">Loading...</div></div></div>
-<div id="page-results" class="hidden"><div class="card"><h3>Results & Winners</h3><div id="resultsList">Loading...</div></div></div>
-<div id="page-wallet" class="hidden"><div class="card"><h3>Wallet & Payments - Deposit Requests</h3><div id="depositList">Loading...</div></div></div>
-<div id="page-withdraw" class="hidden"><div class="card"><h3>Withdrawals</h3><div id="withdrawList">Loading...</div></div></div>
-<div id="page-banners" class="hidden"><div class="card"><h3>Banners</h3><input id="bannerUrl" placeholder="Banner Image URL"><button onclick="saveBanner()">Save Banner</button><div id="bannerList"></div></div></div>
-<div id="page-reports" class="hidden"><div class="card"><h3>Reports</h3><div id="reportsList">Daily Income, Profit etc will be calculated via Cloud Function</div></div></div>
-<div id="page-settings" class="hidden"><div class="card"><h3>Settings & Security</h3><p>Admin: pjosh + Server-side payment only + No client wallet hack</p><button onclick="logout()">Logout</button></div></div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
+  authDomain: "clashadda-b3e57.firebaseapp.com",
+  databaseURL: "https://clashadda-b3e57-default-rtdb.firebaseio.com",
+  projectId: "clashadda-b3e57",
+  storageBucket: "clashadda-b3e57.firebasestorage.app",
+  messagingSenderId: "1046410116766",
+  appId: "1:1046410116766:web:02fa3a28be10e39b28058f",
+  measurementId: "G-60KBXTZKE9"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-</div>
-<script type="module" src="./app.js"></script>
-<script>
-function showPage(p){
- document.querySelectorAll('[id^="page-"]').forEach(el=>el.classList.add('hidden'));
- document.getElementById('page-'+p).classList.remove('hidden');
- document.querySelectorAll('.sidebar a').forEach(a=>a.classList.remove('active'));
- event.target.classList.add('active');
+const typeMap = {
+ BR: [{v:'Solo',slots:48,team:['Solo']},{v:'Duo',slots:24,team:['Duo']},{v:'Squad',slots:12,team:['Squad']}],
+ CS: [{v:'1vs1',slots:16,team:['Solo']},{v:'2vs2',slots:8,team:['Duo']},{v:'4vs4',slots:4,team:['Squad']}],
+ LW: [{v:'1vs1',slots:16,team:['Solo']},{v:'2vs2',slots:8,team:['Duo']}],
+ HS: [{v:'1vs1',slots:12,team:['Solo']},{v:'2vs2',slots:6,team:['Duo']},{v:'4vs4',slots:3,team:['Squad']}]
+};
+window.onMode = function(){
+ const mode=document.getElementById('cMode').value; const tSel=document.getElementById('cType'); tSel.innerHTML='';
+ typeMap[mode].forEach(o=>{let op=document.createElement('option');op.value=o.v;op.text=`${mode} ${o.v}`;op.dataset.slots=o.slots; tSel.appendChild(op);});
+ onType();
 }
+window.onType = function(){
+ const mode=document.getElementById('cMode').value; const type=document.getElementById('cType').value;
+ const d=typeMap[mode].find(x=>x.v===type); if(d){document.getElementById('cSlots').value=d.slots; document.getElementById('cTeam').innerHTML=d.team.map(t=>`<option>${t}</option>`).join('');}
+}
+window.createFinal = async function(){
+ const data={
+  mode:document.getElementById('cMode').value, type:document.getElementById('cType').value,
+  name:document.getElementById('cName').value||'BGR CUP', fee:+document.getElementById('cFee').value,
+  prize:+document.getElementById('cPrize').value, kill:+document.getElementById('cKill').value,
+  slots:+document.getElementById('cSlots').value, team:document.getElementById('cTeam').value,
+  roomId:document.getElementById('cRoomId').value, roomPass:document.getElementById('cRoomPass').value,
+  time:document.getElementById('cTime').value, joined:0, createdAt: serverTimestamp()
+ };
+ await addDoc(collection(db,"tournaments"), data);
+ alert("✅ Firebase me Save Ho Gaya! 100% Online! CS 1v1/2v2/4v4 Ready!");
+}
+let allData=[];
+const q = query(collection(db,"tournaments"), orderBy("createdAt","desc"));
+onSnapshot(q, (snap)=>{
+ allData = snap.docs.map(d=>({id:d.id,...d.data()}));
+ render(allData);
+});
+window.render = function(list){
+ const div=document.getElementById('tList'); div.innerHTML='';
+ if(list.length===0){div.innerHTML='<div class="card" style="text-align:center;color:var(--muted)">No Tournament - Create Kar</div>';return;}
+ list.forEach(t=>{
+  let el=document.createElement('div'); el.className='card'; el.style.borderLeft='4px solid #ffcc00';
+  el.innerHTML=`<div style="display:flex;justify-content:space-between"><span class="badge ${t.mode}">${t.mode} ${t.type} | ${t.team}</span><small>${t.joined||0}/${t.slots} Joined</small></div><h3 style="margin:6px 0">${t.name}</h3><div style="font-size:11px;color:var(--muted)">💰 Prize ₹${t.prize} | 🎯 Kill ₹${t.kill} | 🎫 Entry ₹${t.fee}</div><div style="font-size:11px">⏰ ${t.time||'TBA'} | 🔐 Room: ${t.roomId?'Ready ✅':'TBA'}</div><button class="btn-yellow" onclick="alert('JOIN - UPI piyush021137@fam pe ₹${t.fee} Pay karo! Room ID match se 10 min pehle milega!')">JOIN NOW - ₹${t.fee}</button>`;
+  div.appendChild(el);
+ });
+}
+window.filterMode = function(m,el){
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); el.classList.add('active');
+ if(m==='ALL') render(allData); else render(allData.filter(x=>x.mode===m));
+}
+onMode();
 </script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js')}</script>
 </body>
 </html>
