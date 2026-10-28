@@ -1,111 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#ffcc00">
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BGR eSPORTS - ULTRA PRO MAX 100%</title>
-<link rel="icon" href="./logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BGR Admin - ULTRA PRO MAX Dashboard</title>
 <style>
-:root{--bg:#07070a;--card:#12121a;--card2:#1c1c27;--yellow:#ffcc00;--orange:#ff6a00;--text:#fff;--muted:#777;--green:#00ff88}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif}
-.header{position:fixed;top:0;left:0;right:0;background:#0c0c12;border-bottom:1px solid #222;padding:12px 16px;z-index:10;display:flex;justify-content:space-between;align-items:center}
-.main{margin-top:60px;padding:14px;max-width:600px;margin-left:auto;margin-right:auto}
-.card{background:var(--card);border:1px solid #222;border-radius:16px;padding:16px;margin:10px 0}
-.badge{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900}
+:root{--bg:#08080f;--card:#13131f;--yellow:#ffcc00;--green:#00ff88;--red:#ff2e63;--text:#fff;--muted:#777}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;display:flex}
+.side{width:260px;background:#0a0a14;border-right:1px solid #222;height:100vh;position:fixed;padding:16px}
+.side a{display:block;padding:12px;color:var(--muted);text-decoration:none;border-radius:10px;margin:4px 0;font-weight:700;font-size:13px;cursor:pointer}
+.side a.active{background:var(--yellow);color:#000}
+.main{margin-left:260px;width:calc(100% - 260px);padding:18px}
+.top{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{background:var(--card);border:1px solid #222;border-radius:16px;padding:16px}
+.card h2{margin:6px 0}
+.stat-BR{border-left:4px solid #00e5ff}.stat-CS{border-left:4px solid #ff9800}.stat-EARN{border-left:4px solid var(--green)}.stat-PEND{border-left:4px solid var(--red)}
+table{width:100%;border-collapse:collapse;margin-top:10px} th{font-size:10px;color:var(--muted);text-align:left;padding:10px} td{padding:12px;border-top:1px solid #222;font-size:12px}
+.badge{padding:4px 8px;border-radius:12px;font-size:10px;font-weight:900}
 .BR{background:#00e5ff;color:#000}.CS{background:#ff9800;color:#000}.LW{background:#ff006a;color:#fff}.HS{background:#00ff88;color:#000}
-.tabs{display:flex;gap:6px;overflow-x:auto}.tab{padding:8px 12px;border-radius:20px;background:#1e1e2a;color:var(--muted);font-size:11px;font-weight:800;cursor:pointer}.tab.active{background:var(--yellow);color:#000}
-input,select,textarea{background:#09090f;border:1px solid #2a2a3a;color:#fff;padding:11px;border-radius:10px;width:100%;margin:5px 0;box-sizing:border-box}
-label{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:800;margin-top:6px;display:block}
-button{border:0;padding:12px;border-radius:12px;font-weight:900;cursor:pointer}.btn-yellow{background:linear-gradient(90deg,var(--yellow),var(--orange));color:#000;width:100%}.btn-dark{background:var(--card2);color:#fff;border:1px solid #333;width:100%;margin-top:6px}
-.hidden{display:none}
+button{border:0;padding:10px 14px;border-radius:10px;font-weight:800;cursor:pointer}
+.btn-y{background:var(--yellow);color:#000}.btn-d{background:#222;color:#fff}
+@media(max-width:800px){.side{width:100%;position:relative;height:auto}.main{margin-left:0;width:100%}.top{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<div class="header"><div><b style="color:var(--yellow)">BGR eSPORTS</b> <small>ULTRA PRO MAX</small></div><div style="font-size:9px;color:var(--yellow)">piyush021137@fam</div></div>
-<div class="main">
-<div class="tabs"><div class="tab active" onclick="filterMode('ALL',this)">ALL</div><div class="tab" onclick="filterMode('BR',this)">BR</div><div class="tab" onclick="filterMode('CS',this)">CS 1v1/2v2/4v4</div><div class="tab" onclick="filterMode('LW',this)">LW</div><div class="tab" onclick="filterMode('HS',this)">HS</div></div>
-
-<div class="card" style="border-color:var(--yellow)">
-<h3 style="margin:0">🔥 CREATE TOURNAMENT - PRO MAX</h3>
-<label>GAME MODE</label><select id="cMode" onchange="onMode()"><option value="BR">BR - Battle Royale</option><option value="CS">CS - Clash Squad</option><option value="LW">LW - Lone Wolf</option><option value="HS">HS - Headshot</option></select>
-<label>MATCH TYPE - CS me 1v1/2v2/4v4</label><select id="cType" onchange="onType()"></select>
-<div style="display:flex;gap:8px"><div style="flex:1"><label>Team</label><select id="cTeam"></select></div><div style="flex:1"><label>Slots</label><input id="cSlots" type="number"></div></div>
-<input id="cName" placeholder="BGR CS 1v1 ULTRA #1">
-<div style="display:flex;gap:8px"><div style="flex:1"><label>Entry ₹</label><input id="cFee" type="number" value="20"></div><div style="flex:1"><label>Prize ₹</label><input id="cPrize" type="number" value="500"></div><div style="flex:1"><label>Kill ₹</label><input id="cKill" type="number" value="10"></div></div>
-<div style="display:flex;gap:8px"><div style="flex:1"><label>Room ID</label><input id="cRoomId"></div><div style="flex:1"><label>Room Pass</label><input id="cRoomPass"></div></div>
-<input id="cTime" type="datetime-local">
-<button class="btn-yellow" onclick="createFinal()">🚀 CREATE - FIREBASE ONLINE</button>
-<small style="color:var(--muted)">UPI: piyush021137@fam | Room 10 min pehle share hoga</small>
+<div class="side">
+<h3 style="color:var(--yellow);margin:0">BGR eSPORTS</h3><small style="color:var(--muted)">ULTRA PRO MAX ADMIN</small>
+<br><br>
+<a class="active">📊 Dashboard</a>
+<a>🎮 All Tournaments - BR/CS/LW/HS</a>
+<a>👥 Players - UID + IGN</a>
+<a>🔐 Room ID Share</a>
+<a>💰 Payments - piyush021137@fam</a>
+<a>💸 Withdrawals</a>
+<a>🏆 Results & Winners</a>
+<a>📈 Reports</a>
+<div style="margin-top:20px;background:#111;padding:10px;border-radius:10px;font-size:10px;color:var(--muted)">
+UPI: piyush021137@fam<br>
+CS: 1v1 / 2v2 / 4v4<br>
+BR: Solo/Duo/Squad 48<br>
+LW: 1v1 / 2v2
+</div>
 </div>
 
-<div id="tList"></div>
+<div class="main">
+<h2>Dashboard - Real Pro</h2>
+<div class="top">
+<div class="card stat-BR"><small>Total Tournaments</small><h2 id="tCount">0</h2><small id="tBreak" style="color:var(--muted)">BR:0 CS:0 LW:0 HS:0</small></div>
+<div class="card stat-CS"><small>Total Players Joined</small><h2 id="pCount">0</h2><small style="color:var(--green)">Live</small></div>
+<div class="card stat-EARN"><small>Total Earnings</small><h2 id="eCount">₹0</h2><small>UPI: piyush021137@fam</small></div>
+<div class="card stat-PEND"><small>Pending UPI Verify</small><h2 id="pendCount">0</h2><small style="color:var(--red)">Action Needed</small></div>
+</div>
+
+<div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-top:12px">
+<div class="card">
+<h3 style="margin:0">🔥 Recent Tournaments - CS 1v1/2v2/4v4 + BR + LW + HS</h3>
+<table><thead><tr><th>MODE</th><th>NAME</th><th>ENTRY/PRIZE</th><th>SLOTS</th><th>ACTION</th></tr></thead><tbody id="tBody"></tbody></table>
+</div>
+<div class="card">
+<h3 style="margin:0">👥 Recent Joins</h3>
+<table><thead><tr><th>IGN</th><th>MODE</th><th>STATUS</th></tr></thead><tbody id="pBody"></tbody></table>
+<br>
+<div style="background:#0a0a14;padding:10px;border-radius:10px">
+<b>Quick Actions</b><br><br>
+<button class="btn-y" style="width:100%" onclick="location.href='index.html'">+ CREATE CS 1v1/2v2/4v4</button><br><br>
+<button class="btn-d" style="width:100%">🔐 Share Room ID</button><br><br>
+<button class="btn-d" style="width:100%">✅ Verify UPI Payment</button>
+</div>
+</div>
+</div>
+
+<div class="card" style="margin-top:12px">
+<h3 style="margin:0">📈 Earnings Report - Profit Logic</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:10px">
+<div style="background:#0a0a14;padding:12px;border-radius:10px"><small>Total Collection</small><h2 id="earnTotal">₹0</h2></div>
+<div style="background:#0a0a14;padding:12px;border-radius:10px"><small>Total Prize Given</small><h2 id="prizeTotal">₹0</h2></div>
+<div style="background:#0a0a14;padding:12px;border-radius:10px;border:1px solid var(--green)"><small>NET PROFIT</small><h2 id="profitTotal" style="color:var(--green)">₹0</h2></div>
+</div>
+</div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
   authDomain: "clashadda-b3e57.firebaseapp.com",
-  databaseURL: "https://clashadda-b3e57-default-rtdb.firebaseio.com",
   projectId: "clashadda-b3e57",
   storageBucket: "clashadda-b3e57.firebasestorage.app",
   messagingSenderId: "1046410116766",
-  appId: "1:1046410116766:web:02fa3a28be10e39b28058f",
-  measurementId: "G-60KBXTZKE9"
+  appId: "1:1046410116766:web:02fa3a28be10e39b28058f"
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const typeMap = {
- BR: [{v:'Solo',slots:48,team:['Solo']},{v:'Duo',slots:24,team:['Duo']},{v:'Squad',slots:12,team:['Squad']}],
- CS: [{v:'1vs1',slots:16,team:['Solo']},{v:'2vs2',slots:8,team:['Duo']},{v:'4vs4',slots:4,team:['Squad']}],
- LW: [{v:'1vs1',slots:16,team:['Solo']},{v:'2vs2',slots:8,team:['Duo']}],
- HS: [{v:'1vs1',slots:12,team:['Solo']},{v:'2vs2',slots:6,team:['Duo']},{v:'4vs4',slots:3,team:['Squad']}]
-};
-window.onMode = function(){
- const mode=document.getElementById('cMode').value; const tSel=document.getElementById('cType'); tSel.innerHTML='';
- typeMap[mode].forEach(o=>{let op=document.createElement('option');op.value=o.v;op.text=`${mode} ${o.v}`;op.dataset.slots=o.slots; tSel.appendChild(op);});
- onType();
-}
-window.onType = function(){
- const mode=document.getElementById('cMode').value; const type=document.getElementById('cType').value;
- const d=typeMap[mode].find(x=>x.v===type); if(d){document.getElementById('cSlots').value=d.slots; document.getElementById('cTeam').innerHTML=d.team.map(t=>`<option>${t}</option>`).join('');}
-}
-window.createFinal = async function(){
- const data={
-  mode:document.getElementById('cMode').value, type:document.getElementById('cType').value,
-  name:document.getElementById('cName').value||'BGR CUP', fee:+document.getElementById('cFee').value,
-  prize:+document.getElementById('cPrize').value, kill:+document.getElementById('cKill').value,
-  slots:+document.getElementById('cSlots').value, team:document.getElementById('cTeam').value,
-  roomId:document.getElementById('cRoomId').value, roomPass:document.getElementById('cRoomPass').value,
-  time:document.getElementById('cTime').value, joined:0, createdAt: serverTimestamp()
- };
- await addDoc(collection(db,"tournaments"), data);
- alert("✅ Firebase me Save Ho Gaya! 100% Online! CS 1v1/2v2/4v4 Ready!");
-}
-let allData=[];
-const q = query(collection(db,"tournaments"), orderBy("createdAt","desc"));
-onSnapshot(q, (snap)=>{
- allData = snap.docs.map(d=>({id:d.id,...d.data()}));
- render(allData);
+let tournaments=[], players=[];
+
+onSnapshot(query(collection(db,"tournaments"), orderBy("createdAt","desc")), snap=>{
+  tournaments = snap.docs.map(d=>({id:d.id,...d.data()}));
+  updateDash();
 });
-window.render = function(list){
- const div=document.getElementById('tList'); div.innerHTML='';
- if(list.length===0){div.innerHTML='<div class="card" style="text-align:center;color:var(--muted)">No Tournament - Create Kar</div>';return;}
- list.forEach(t=>{
-  let el=document.createElement('div'); el.className='card'; el.style.borderLeft='4px solid #ffcc00';
-  el.innerHTML=`<div style="display:flex;justify-content:space-between"><span class="badge ${t.mode}">${t.mode} ${t.type} | ${t.team}</span><small>${t.joined||0}/${t.slots} Joined</small></div><h3 style="margin:6px 0">${t.name}</h3><div style="font-size:11px;color:var(--muted)">💰 Prize ₹${t.prize} | 🎯 Kill ₹${t.kill} | 🎫 Entry ₹${t.fee}</div><div style="font-size:11px">⏰ ${t.time||'TBA'} | 🔐 Room: ${t.roomId?'Ready ✅':'TBA'}</div><button class="btn-yellow" onclick="alert('JOIN - UPI piyush021137@fam pe ₹${t.fee} Pay karo! Room ID match se 10 min pehle milega!')">JOIN NOW - ₹${t.fee}</button>`;
-  div.appendChild(el);
- });
+
+onSnapshot(collection(db,"players"), snap=>{
+  players = snap.docs.map(d=>({id:d.id,...d.data()}));
+  updateDash();
+});
+
+function updateDash(){
+  document.getElementById('tCount').innerText = tournaments.length;
+  let br=tournaments.filter(x=>x.mode==='BR').length, cs=tournaments.filter(x=>x.mode==='CS').length, lw=tournaments.filter(x=>x.mode==='LW').length, hs=tournaments.filter(x=>x.mode==='HS').length;
+  document.getElementById('tBreak').innerText = `BR:${br} CS:${cs} LW:${lw} HS:${hs}`;
+  document.getElementById('pCount').innerText = players.length;
+  document.getElementById('pendCount').innerText = players.filter(x=>x.status && x.status.includes('Pending')).length;
+
+  let totalEarn = tournaments.reduce((s,x)=>s+((x.fee||0)*(x.joined||0)),0);
+  // Fallback if joined not tracked, use players length * avg
+  if(totalEarn===0) totalEarn = players.length * 20;
+  document.getElementById('eCount').innerText = '₹'+totalEarn;
+  document.getElementById('earnTotal').innerText = '₹'+totalEarn;
+  let totalPrize = tournaments.reduce((s,x)=>s+(x.prize||0),0);
+  document.getElementById('prizeTotal').innerText = '₹'+totalPrize;
+  document.getElementById('profitTotal').innerText = '₹'+(totalEarn-totalPrize);
+
+  document.getElementById('tBody').innerHTML = tournaments.slice(0,5).map(t=>`<tr><td><span class="badge ${t.mode}">${t.mode} ${t.type||''}</span></td><td>${t.name}</td><td>₹${t.fee} / ₹${t.prize}</td><td>${t.joined||0}/${t.slots}</td><td><button class="btn-d">Manage</button></td></tr>`).join('') || '<tr><td colspan=5>No tournaments yet</td></tr>';
+  document.getElementById('pBody').innerHTML = players.slice(0,5).map(p=>`<tr><td>${p.ign||p.name||'Player'}</td><td><span class="badge ${p.mode?.split(' ')[0]||'BR'}">${p.mode||'BR'}</span></td><td style="color:orange">${p.status||'Pending'}</td></tr>`).join('') || '<tr><td colspan=3>No players</td></tr>';
 }
-window.filterMode = function(m,el){
- document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); el.classList.add('active');
- if(m==='ALL') render(allData); else render(allData.filter(x=>x.mode===m));
-}
-onMode();
 </script>
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js')}</script>
 </body>
 </html>
