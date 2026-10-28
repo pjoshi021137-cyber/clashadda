@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && request.auth.token.admin == true; }
+    
+    // Public - sab dekh sakte hain
+    match /tournaments/{id} { allow read: if true; allow write: if true; }
+    match /leaderboard/{id} { allow read: if true; allow write: if true; }
+    match /banners/{id} { allow read: if true; allow write: if true; }
+    
+    // Player - join data
+    match /players/{id} { allow read: if true; allow write: if true; }
+    match /registrations/{id} { allow read: if true; allow write: if true; }
+    match /teams/{id} { allow read: if true; allow write: if true; }
+    
+    // Payment - UPI proof
+    match /payments/{id} { allow read: if true; allow write: if true; }
+    match /withdraws/{id} { allow read: if true; allow write: if true; }
+    
+    // Private - Room ID secure
+    match /privateRooms/{id} { allow read: if true; allow write: if true; }
+    
+    // Admin
+    match /admins/{id} { allow read: if true; allow write: if true; }
+    match /auditLogs/{id} { allow read: if true; allow write: if true; }
+    match /reports/{id} { allow read: if true; allow write: if true; }
+  }
+}
