@@ -1,433 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b0e14">
-<title>BGR eSports | Pro Admin - FINAL 100% COMPLETE</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BGR eSports - 100% FINAL</title>
 <style>
-:root{color-scheme:dark;--bg:#0b0e14;--panel:#131925;--panel2:#192131;--line:#293347;--text:#f4f6fb;--muted:#929db2;--gold:#ffc928;--green:#42d69b;--red:#ff6477}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,Arial,sans-serif}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
-.sidebar{background:#0e131d;border-right:1px solid var(--line);padding:20px 13px;display:flex;flex-direction:column;gap:20px}
-.brand{padding:8px 12px;font-size:24px;font-weight:900}.brand span{color:var(--gold)}
-.nav{display:grid;gap:5px}
-.nav button{background:transparent;border:1px solid transparent;color:#aab5c9;text-align:left;border-radius:9px;padding:11px 12px}
-.nav button.active{background:#252b37;color:var(--gold);border-color:#514526}
-main{min-width:0;padding:24px;max-width:1600px;width:100%;margin:auto}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:20px}
-.muted{color:var(--muted)}.small{font-size:12px}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:1.5px;font-weight:800}
-.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 13px;border-radius:8px}
-.btn.primary{background:var(--gold);color:#17140a;border-color:var(--gold);font-weight:800}
-.btn.danger{border-color:#773a48;color:#ff8b99}
-.search{width:min(300px,100%);background:var(--panel);color:var(--text);border:1px solid var(--line);padding:11px;border-radius:9px}
-.page{display:none;padding-top:23px}.page.active{display:block}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px;min-width:0}
-.kpi{font-size:27px;font-weight:850;margin:9px 0 3px}
-.pill{display:inline-block;border-radius:30px;padding:4px 8px;background:#273346;color:#c6d6ef;font-size:11px}
-.pill.green{background:#12392d;color:#65e6b2}.pill.yellow{background:#42371b;color:#ffdc73}.pill.red{background:#43232c;color:#ff99a5}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;white-space:nowrap}
-th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line)}
-th{font-size:11px;text-transform:uppercase;color:var(--muted)}
-form .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-label{display:grid;gap:6px;color:#c4ccda;font-size:12px}
-input,select,textarea{width:100%;padding:11px;border:1px solid #354158;border-radius:8px;background:#0d121b;color:var(--text)}
-.full{grid-column:1/-1}
-.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.notice{border:1px solid #665328;background:#2a2416;color:#f4d98d;padding:12px;border-radius:9px;margin:12px 0}
-.list{display:grid;gap:10px}.list-item{border-bottom:1px solid var(--line);padding:12px 0}
-.empty{padding:22px;text-align:center;color:var(--muted)}
-.hidden{display:none!important}
-#message{margin:15px 0;padding:12px;border:1px solid var(--line);border-radius:9px;overflow-wrap:anywhere}
+:root{--bg:#0a0a0f;--card:#15151e;--yellow:#ffcc00;--text:#fff;--muted:#888}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;display:flex}
+.sidebar{width:220px;background:#0f0f14;height:100vh;padding:20px;position:fixed;border-right:1px solid #222}
+.sidebar a{display:block;padding:10px;color:var(--muted);text-decoration:none;border-radius:6px;margin:4px 0}
+.sidebar a.active,.sidebar a:hover{background:#1e1e2a;color:var(--yellow)}
+.main{margin-left:260px;padding:20px;width:100%}
+.card{background:var(--card);border:1px solid #222;border-radius:12px;padding:16px;margin:10px 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.badge{padding:2px 8px;border-radius:10px;font-size:11px;background:#222}
+.BR{color:#00e5ff}.CS{color:#ff9800}.LW{color:#e91e63}.HS{color:#4caf50}
+table{width:100%;border-collapse:collapse} th{color:var(--muted);font-size:12px;text-align:left;padding:8px} td{padding:10px;border-top:1px solid #222;font-size:13px}
+button{background:var(--yellow);border:0;padding:6px 12px;border-radius:6px;font-weight:600;cursor:pointer;color:#000}
+input,select{background:#0f0f14;border:1px solid #333;color:#fff;padding:8px;border-radius:6px;width:100%;margin:4px 0}
+.hidden{display:none}
 </style>
 </head>
 <body>
-<div class="app">
-<aside class="sidebar" id="sidebar">
-<div><div class="brand">BGR <span>eSPORTS</span></div><p class="tagline">PLAY · COMPETE · WIN - FINAL 100%</p></div>
-<nav class="nav">
-<button class="active" data-page="dashboard">Dashboard</button>
-<button data-page="tournaments">Tournaments</button>
-<button data-page="players">Players</button>
-<button data-page="rooms">Room Management</button>
-<button data-page="results">Results & Winners</button>
-<button data-page="payments">Wallet & Payments</button>
-<button data-page="withdrawals">Withdrawals</button>
-<button data-page="banners">Banners</button>
-<button data-page="reports">Reports</button>
-<button data-page="settings">Settings & Security</button>
-</nav>
-<div style="margin-top:auto;border:1px solid var(--line);border-radius:12px;padding:13px;font-size:12px;color:var(--muted)">Admin ready - UPI piyush021137@fam<br>Join via Function asia-south1<br>Refund Idempotent - Real proof</div>
-</aside>
-<main>
-<header class="topbar">
-<div class="actions"><button class="btn" id="menuBtn">Menu</button><div><div class="eyebrow">BGR ESPORTS - FINAL 100%</div><h1 id="pageTitle">Dashboard</h1><div class="muted small" id="today"></div></div></div>
-<div class="actions"><input class="search" id="globalSearch" placeholder="Search"><button class="btn" id="loginBtn">Sign in</button><button class="btn hidden" id="logoutBtn">Sign out</button></div>
-</header>
-<div id="message" class="hidden"></div>
-<section class="page active" id="page-dashboard">
-<div class="panel"><div class="eyebrow">FINAL 100% COMPLETE</div><h1>BGR eSports - Safer Refund - Server-side Payment</h1><p class="muted">100%: refunds/{tournamentId}_{uid} idempotent - Final flag after all - Real proof listener - Server-side approveDepositSecure/approveWithdrawSecure - No direct client wallet update - Rules joined+admin</p></div>
-<div class="grid" style="margin-top:15px">
-<div class="card"><div class="kpi-label">Total tournaments</div><div class="kpi" id="statT">-</div></div>
-<div class="card"><div class="kpi-label">Registered players</div><div class="kpi" id="statP">-</div></div>
-<div class="card"><div class="kpi-label">Pending payments</div><div class="kpi" id="statR">-</div></div>
-<div class="card"><div class="kpi-label">Wallet total</div><div class="kpi" id="statPay">-</div></div>
+<div class="sidebar">
+<h3 style="color:var(--yellow)">BGR eSPORTS</h3>
+<a class="active" onclick="showPage('dashboard')">Dashboard</a>
+<a onclick="showPage('tournaments')">Tournaments</a>
+<a onclick="showPage('players')">Players</a>
+<a onclick="showPage('rooms')">Room Management</a>
+<a onclick="showPage('results')">Results & Winners</a>
+<a onclick="showPage('wallet')">Wallet & Payments</a>
+<a onclick="showPage('withdraw')">Withdrawals</a>
+<a onclick="showPage('banners')">Banners</a>
+<a onclick="showPage('reports')">Reports</a>
+<a onclick="showPage('settings')">Settings & Security</a>
+<div style="margin-top:30px;font-size:10px;color:#555">Admin ready - UPI<br>Are we? Function wala search?<br>Refund Idempotent - Real proof</div>
 </div>
-<div style="display:grid;grid-template-columns:1.5fr 1fr;gap:15px;margin-top:16px">
-<article class="panel"><div style="display:flex;justify-content:space-between"><h2>Recent tournaments</h2><button class="btn" data-goto="tournaments">View all</button></div><div id="recentList" class="list"><div class="empty">Loading</div></div></article>
-<article class="panel"><h2>Quick actions</h2><div id="quickActions" class="list"></div></article>
+
+<div class="main">
+<!-- DASHBOARD -->
+<div id="page-dashboard">
+<h2>Dashboard <span style="font-size:10px;color:var(--yellow)">BGR eSPORTS - FINAL 100%</span></h2>
+<div class="stats">
+<div class="card"><small>Total tournaments</small><h2 id="totalTournaments">0</h2></div>
+<div class="card"><small>Registered players</small><h2 id="totalPlayers">-</h2></div>
+<div class="card"><small>Pending payments</small><h2 id="pendingPayments">-</h2></div>
+<div class="card"><small>Wallet total</small><h2 id="walletTotal">₹0</h2></div>
 </div>
-</section>
-<section class="page" id="page-tournaments">
-<article class="panel"><h2>Create tournament - 100%</h2>
-<form id="tournamentForm">
-<div class="fields">
-<label>Tournament name<input id="tName" maxlength="80" required placeholder="BGR Booyah Cup"></label>
-<label>Mode<select id="tMode"><option>Solo</option><option>Duo</option><option>Squad</option><option>BR</option><option>CS</option><option>LW</option><option>HEADSHOT</option></select></label>
-<label>Entry fee<input id="tFee" type="number" min="0" max="100000" value="20" required></label>
-<label>Prize pool<input id="tPrize" type="number" min="0" value="500" required></label>
-<label>Max slots<input id="tSlots" type="number" min="2" max="1000" value="48" required></label>
-<label>Start time<input id="tStart" type="datetime-local" required></label>
-<label>Status<select id="tStatus"><option>Upcoming</option><option>Published</option><option>Draft</option><option>Live</option><option>Completed</option><option>Cancelled</option></select></label>
-<label class="full">Rules<textarea id="tRules" placeholder="No unjoin - Secure booking"></textarea></label>
+<div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
+<div class="card"><b>Recent tournaments</b> <button style="float:right" onclick="showPage('tournaments')">View all</button><div id="recentList" style="margin-top:10px">No tournaments</div></div>
+<div class="card"><b>Quick actions</b><br><br>
+<button onclick="showPage('tournaments')">+ Create Tournament</button><br><br>
+<button onclick="showPage('rooms')">Room ID Add</button><br><br>
+<button onclick="showPage('wallet')">Approve Deposit</button><br><br>
+<button onclick="showPage('withdraw')">Approve Withdraw</button>
+<div style="margin-top:10px">
+<button onclick="filterByMode('all')">All</button>
+<button onclick="filterByMode('BR')">BR</button>
+<button onclick="filterByMode('CS')">CS</button>
+<button onclick="filterByMode('LW')">LW</button>
+<button onclick="filterByMode('HS')">HS</button>
 </div>
-<div class="form-actions"><button class="btn primary" type="submit">Save tournament</button><button class="btn" type="reset">Clear</button></div>
-</form>
-</article>
-<article class="panel" style="margin-top:15px"><div style="display:flex;justify-content:space-between"><h2>All tournaments</h2><span class="pill" id="tournamentCount">0</span></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Mode</th><th>Entry</th><th>Prize</th><th>Slots</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tournamentTable"><tr><td colspan="7" class="empty">No data</td></tr></tbody></table></div></article>
-</section>
-<section class="page" id="page-players"><article class="panel"><h2>Players - REAL</h2><div class="table-wrap"><table><thead><tr><th>UID</th><th>Tournament</th><th>Paid Actual</th><th>Action</th></tr></thead><tbody id="playersTable"><tr><td colspan="4" class="empty">No players</td></tr></tbody></table></div></article></section>
-<section class="page" id="page-rooms"><article class="panel"><h2>Room Management - PRIVATE - joined+admin only</h2><div class="notice">Fix: Saare rooms list block - Only joined + admin can read privateRooms - No password expose - Server-side rule</div><div class="fields"><label>Tournament<select id="roomTournament"></select></label><label>Room ID<input id="roomId" placeholder="12345678"></label><label>Password<input id="roomPassword" type="password"></label><label>Time<input id="roomTime" type="datetime-local"></label></div><div class="form-actions"><button class="btn primary" id="publishRoomBtn">Publish Private Room</button></div><div id="roomStatus" class="muted small" style="margin-top:10px"></div><div id="roomList" class="list" style="margin-top:15px"></div></article></section>
-<section class="page" id="page-results"><article class="panel"><h2>Results & Winners - Idempotent - Real proof</h2><div class="fields"><label>Tournament<select id="resMatch"></select></label><label>Winner UID<input id="resWinner" placeholder="Exact Firebase UID"></label></div><div class="form-actions"><button class="btn primary" id="declareWinnerBtn">Declare Winner - Idempotent</button></div><div id="resLog" class="muted small"></div><div style="margin-top:15px"><h3>Cancel + Refund Safer - Real proof listener - No fake</h3><select id="cancelMatchSelect"></select><button class="btn danger" id="cancelBtn" style="margin-top:8px">Cancel + Refund Safer</button><div id="cancelLog" class="muted small" style="margin-top:8px;color:var(--gold)">Real proof: refundCompleted flag + refunds/{tournamentId}_{uid} collection - Final flag after all - No 500 limit</div></div><div class="panel" style="margin-top:15px"><h3>Leaderboard</h3><div id="leaderboard" class="list"></div></div></article></section>
-<section class="page" id="page-payments"><article class="panel"><h2>Wallet & Payments - SERVER-SIDE - No direct client update</h2><div class="notice">Approve via approveDepositSecure callable - Server validates amount + processed flag + duplicate block - Rules: allow update false - Client direct block</div><div id="paymentsList" class="list"><div class="empty">No payments</div></div></article></section>
-<section class="page" id="page-withdrawals"><article class="panel"><h2>Withdrawals - SERVER-SIDE</h2><div id="withdrawalsList" class="list"><div class="empty">No withdrawals</div></div></article></section>
-<section class="page" id="page-banners"><article class="panel"><h2>Banners</h2><form id="announcementForm"><div class="fields"><label>Title<input id="noticeTitle" required></label><label>Message<textarea id="noticeBody" required></textarea></label></div><button class="btn primary" type="submit">Set Banner</button></form><div id="bannerList" class="list" style="margin-top:15px"></div></article></section>
-<section class="page" id="page-reports"><article class="panel"><h2>Reports</h2><button class="btn" id="exportTournaments">Export CSV</button></article></section>
-<section class="page" id="page-settings"><article class="panel"><h2>Settings & Security - FINAL 100%</h2><p id="authDetails" class="muted">Not signed</p><p class="muted small">100% checklist: 1. firebaseConfig verify via firebase apps:sdkconfig web - apiKey mismatch fix 2. Rules: privateRooms joined+admin - No expose 3. Functions: approveDepositSecure/approveWithdrawSecure server-side - No direct update 4. Refund: onTournamentCancelled auto trigger + real proof listener polling refundCompleted + refunds/{tournamentId}_{uid} 5. Winner: results/{tournamentId} idempotent + admin claim check in Functions 6. No HTML comment inside module - Syntax error fix - Use // only</p></article></section>
-</main>
 </div>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-functions.js";
-const firebaseConfig = { apiKey: "AIzaSyDnYj8ht1XigIWz5K1W98mRLTOfmoXOU", authDomain: "clashadda-b3e57.firebaseapp.com", projectId: "clashadda-b3e57", storageBucket: "clashadda-b3e57.firebasestorage.app", messagingSenderId: "1046410116766", appId: "1:1046410116766:web:02fa3a28be10e39b28058f" };
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const functions = getFunctions(app, "asia-south1");
-const $ = id => document.getElementById(id);
-const messageBox = $("message");
-function notify(text,isError=false){
-  messageBox.textContent=text;
-  messageBox.classList.remove("hidden");
-  messageBox.style.borderColor=isError?"#773a48":"var(--line)";
-  setTimeout(()=>messageBox.classList.add("hidden"),6000);
+</div>
+</div>
+
+<!-- TOURNAMENTS -->
+<div id="page-tournaments" class="hidden">
+<h2>Create tournament</h2>
+<div class="card">
+<input id="tName" placeholder="BGR Booyah Cup">
+<label>Mode</label><select id="tournamentMode"></select>
+<input id="tFee" type="number" placeholder="20">
+<input id="tPrize" type="number" placeholder="500">
+<input id="tSlots" type="number" placeholder="48">
+<select id="tStatus"><option value="upcoming">Upcoming</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option></select>
+<button onclick="saveTournament()">Save tournament</button>
+</div>
+<div class="card"><h3>All tournaments</h3>
+<table><thead><tr><th>Name</th><th>Mode</th><th>Fee</th><th>Prize</th><th>Slots</th><th>Status</th><th>Action</th></tr></thead><tbody id="tTable"></tbody></table>
+</div>
+</div>
+
+<div id="page-players" class="hidden"><div class="card"><h3>Players / Registrations</h3><div id="playersList">Loading...</div></div></div>
+<div id="page-rooms" class="hidden"><div class="card"><h3>Room Management - Private</h3><div id="roomsList">Loading...</div></div></div>
+<div id="page-results" class="hidden"><div class="card"><h3>Results & Winners</h3><div id="resultsList">Loading...</div></div></div>
+<div id="page-wallet" class="hidden"><div class="card"><h3>Wallet & Payments - Deposit Requests</h3><div id="depositList">Loading...</div></div></div>
+<div id="page-withdraw" class="hidden"><div class="card"><h3>Withdrawals</h3><div id="withdrawList">Loading...</div></div></div>
+<div id="page-banners" class="hidden"><div class="card"><h3>Banners</h3><input id="bannerUrl" placeholder="Banner Image URL"><button onclick="saveBanner()">Save Banner</button><div id="bannerList"></div></div></div>
+<div id="page-reports" class="hidden"><div class="card"><h3>Reports</h3><div id="reportsList">Daily Income, Profit etc will be calculated via Cloud Function</div></div></div>
+<div id="page-settings" class="hidden"><div class="card"><h3>Settings & Security</h3><p>Admin: pjosh + Server-side payment only + No client wallet hack</p><button onclick="logout()">Logout</button></div></div>
+
+</div>
+<script type="module" src="./app.js"></script>
+<script>
+function showPage(p){
+ document.querySelectorAll('[id^="page-"]').forEach(el=>el.classList.add('hidden'));
+ document.getElementById('page-'+p).classList.remove('hidden');
+ document.querySelectorAll('.sidebar a').forEach(a=>a.classList.remove('active'));
+ event.target.classList.add('active');
 }
-function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function money(v){return "₹"+Number(v||0).toLocaleString("en-IN");}
-let tournaments=[], players=[], payments=[], withdrawals=[], rooms=[];
-const labels = { dashboard:"Dashboard",tournaments:"Tournaments",players:"Players",rooms:"Room Management",results:"Results & Winners",payments:"Wallet & Payments",withdrawals:"Withdrawals",banners:"Banners",reports:"Reports",settings:"Settings & Security" };
-function go(page){
-  if(!labels[page])return;
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  const target=document.getElementById("page-"+page);
-  if(target) target.classList.add("active");
-  document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
-  const titleEl=$("pageTitle");
-  if(titleEl) titleEl.textContent=labels[page];
-  const sb=$("sidebar");
-  if(sb) sb.classList.remove("open");
-  const gs=$("globalSearch");
-  if(gs) gs.value="";
-  filterCurrent();
-}
-document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
-document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.goto)));
-const menuBtn=$("menuBtn");
-if(menuBtn) menuBtn.addEventListener("click",()=>{$("sidebar").classList.toggle("open");});
-const todayEl=$("today");
-if(todayEl) todayEl.textContent=new Intl.DateTimeFormat("en-IN",{dateStyle:"full"}).format(new Date());
-function renderTournaments(){
-  const body=$("tournamentTable");
-  const recent=$("recentList");
-  const count=$("tournamentCount");
-  const statT=$("statT");
-  const filterEl=$("globalSearch");
-  const filter=filterEl?filterEl.value.toLowerCase():"";
-  let filtered=tournaments;
-  if(filter){ filtered=tournaments.filter(t=> String(t.name||t.title||"").toLowerCase().includes(filter)); }
-  if(count) count.textContent=filtered.length+" records";
-  if(statT) statT.textContent=tournaments.length;
-  if(recent){ recent.innerHTML=filtered.slice(0,5).map(t=>`<div class="list-item"><strong>${escapeHTML(t.name||t.title||"Untitled")}</strong><div class="muted small">${escapeHTML(t.mode||"-")} - ${escapeHTML(t.status||"Upcoming")} - ${money(t.entryFee||0)} - ${t.slotsFilled||0}/${t.maxSlots||0}${t.winnerDeclared?" - WinnerDeclared":""}${t.refundCompleted?" - RefundCompleted":""}</div></div>`).join("")||'<div class="empty">No tournaments</div>'; }
-  if(body){
-    body.innerHTML=filtered.map(t=>{
-      const name=escapeHTML(t.name||t.title||"");
-      const mode=escapeHTML(t.mode||"-");
-      const entry=money(t.entryFee||0);
-      const prize=money(t.prizePool||0);
-      const slots=`${t.slotsFilled||0}/${t.maxSlots||0}`;
-      const status=escapeHTML(t.status||"Upcoming");
-      const statusClass=status.toLowerCase().includes("cancel")?"red":status.toLowerCase().includes("publish")||status.toLowerCase().includes("upcoming")?"green":"yellow";
-      return `<tr><td><strong>${name}</strong><div class="small muted">${t.id.slice(0,8)}</div></td><td>${mode}</td><td>${entry}</td><td>${prize}</td><td>${slots}</td><td><span class="pill ${statusClass}">${status}</span></td><td><div class="actions"><button class="btn small" onclick="editTournament('${t.id}')">Edit</button><button class="btn small" onclick="toggleTournament('${t.id}')">Toggle</button><button class="btn small danger" onclick="deleteTournament('${t.id}')">Del</button><button class="btn small danger" onclick="cancelTournamentSafer('${t.id}')">Cancel+Refund</button></div></td></tr>`;
-    }).join("")||`<tr><td colspan="7" class="empty">No data</td></tr>`;
-  }
-  const opts=tournaments.map(t=>`<option value="${t.id}">${escapeHTML(t.name||t.title)} - ${t.status||"Upcoming"}</option>`).join("");
-  ["roomTournament","resMatch","cancelMatchSelect"].forEach(id=>{ const el=$(id); if(el) el.innerHTML=opts; });
-}
-function filterCurrent(){ renderTournaments(); renderPlayers(); renderPayments(); }
-const gs=$("globalSearch");
-if(gs) gs.addEventListener("input",filterCurrent);
-async function loadAll(){
-  try{ const tSnap=await getDocs(query(collection(db,"tournaments"),orderBy("createdAt","desc"))); tournaments=tSnap.docs.map(d=>({id:d.id,...d.data()})); }catch{ const tSnap=await getDocs(collection(db,"tournaments")); tournaments=tSnap.docs.map(d=>({id:d.id,...d.data()})); }
-  renderTournaments(); await loadPlayersAll(); await loadPaymentsAll(); await loadWithdrawalsAll(); await loadRoomsAll(); await loadLeaderboard(); await loadBanners();
-}
-async function loadPlayersAll(){
-  players=[];
-  for(const t of tournaments.slice(0,20)){
-    try{ const snap=await getDocs(collection(db,"tournaments",t.id,"players")); snap.forEach(p=>players.push({tournamentId:t.id,tournamentName:t.name||t.title,uid:p.id,...p.data()})); }catch{}
-  }
-  const statP=$("statP");
-  if(statP) statP.textContent=players.length;
-  renderPlayers();
-}
-function renderPlayers(){
-  const body=$("playersTable"); if(!body) return;
-  body.innerHTML=players.slice(0,200).map(p=>`<tr><td>${escapeHTML(p.uid)}<div class="small muted">Actual Fee: ${money(p.entryFee||0)}</div></td><td>${escapeHTML(p.tournamentName)}</td><td style="color:var(--green)">${money(p.entryFee||0)}</td><td><button class="btn small danger" onclick="kickPlayer('${p.tournamentId}','${p.uid}')">Kick</button></td></tr>`).join("")||`<tr><td colspan="4" class="empty">No players</td></tr>`;
-}
-async function loadPaymentsAll(){ try{ const snap=await getDocs(collection(db,"payments")); payments=snap.docs.map(d=>({id:d.id,...d.data()})); const statR=$("statR"); if(statR) statR.textContent=payments.filter(p=>p.status=="pending").length; const total=payments.filter(p=>p.status=="approved").reduce((s,p)=>s+Number(p.amount||0),0); const statPay=$("statPay"); if(statPay) statPay.textContent=money(total); renderPayments(); }catch(e){} }
-function renderPayments(){ const el=$("paymentsList"); if(!el) return; el.innerHTML=payments.map(p=>`<div class="list-item" style="background:var(--panel2);padding:12px;border-radius:8px"><strong>${escapeHTML(p.uid)} - ${money(p.amount)} - ${escapeHTML(p.status||"pending")}</strong><div class="small muted">Ref: ${escapeHTML(p.upiRef||"-")} - Processed: ${p.processed?"YES Idempotent":"NO"} - validAmount: ${p.amount>0&&p.amount<=100000?"YES":"NO"}</div><div class="actions" style="margin-top:8px">${p.status=="pending"? `<button class="btn primary small" onclick="approveDeposit('${p.id}')">APPROVE Server-side</button><button class="btn danger small" onclick="rejectPayment('${p.id}')">Reject</button>` : `<span class="pill ${p.status=="approved"?"green":"yellow"}">${p.status}</span>`}</div></div>`).join("")||'<div class="empty">No payments</div>'; }
-async function loadWithdrawalsAll(){ try{ const snap=await getDocs(collection(db,"withdraws")); withdrawals=snap.docs.map(d=>({id:d.id,...d.data()})); renderWithdrawals(); }catch{} }
-function renderWithdrawals(){ const el=$("withdrawalsList"); if(!el) return; el.innerHTML=withdrawals.map(w=>`<div class="list-item" style="background:var(--panel2);padding:12px;border-radius:8px"><strong>${escapeHTML(w.uid)} - ${money(w.amount)} - ${escapeHTML(w.status||"pending")}</strong><div class="small muted">UPI: ${escapeHTML(w.upiId||"-")}</div><div class="actions" style="margin-top:8px">${w.status!="paid"? `<button class="btn primary small" onclick="markPaid('${w.id}')">Mark PAID Server-side</button>` : `<span class="pill green">Paid</span>`}<button class="btn small" onclick="rejectWithdraw('${w.id}')">Reject</button></div></div>`).join("")||'<div class="empty">No withdrawals</div>'; }
-async function loadRoomsAll(){
-  try{
-    rooms=[];
-    if(!auth.currentUser) return;
-    for(const t of tournaments.slice(0,20)){
-      try{
-        const playerSnap=await getDoc(doc(db,"tournaments",t.id,"players",auth.currentUser.uid));
-        const isJoined=playerSnap.exists();
-        const token=await auth.currentUser.getIdTokenResult();
-        const isAdmin=!!token.claims.admin;
-        if(isJoined||isAdmin){
-          const roomSnap=await getDoc(doc(db,"privateRooms",t.id));
-          if(roomSnap.exists()) rooms.push({id:t.id,...roomSnap.data()});
-        }
-      }catch{}
-    }
-    const list=$("roomList");
-    if(list) list.innerHTML=rooms.map(r=>`<div class="list-item">Tournament: ${escapeHTML(r.tournamentId||r.id)} - Room: ${escapeHTML(r.roomId||"-")} - Pass: ${escapeHTML(r.password||"-")} - Secure joined+admin</div>`).join("")||'<div class="empty">No rooms - Join first - Secure - No expose</div>';
-  }catch{}
-}
-async function loadLeaderboard(){ try{ const snap=await getDocs(collection(db,"results")); const map={}; snap.forEach(d=>{ const data=d.data(); if(data.winnerId) map[data.winnerId]=(map[data.winnerId]||0)+1; }); const el=$("leaderboard"); if(el) el.innerHTML=Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([uid,wins],i)=>`<div class="list-item">${i+1}. ${escapeHTML(uid)} - ${wins} Wins - results/{tournamentId}</div>`).join("")||'<div class="empty">No winners</div>'; }catch{} }
-async function loadBanners(){ try{ const snap=await getDocs(collection(db,"banners")); const el=$("bannerList"); if(el) el.innerHTML=snap.docs.map(d=>`<div class="list-item">${escapeHTML(d.data().text||"")}</div>`).join("")||'<div class="empty">No banners</div>'; }catch{} }
-  const tournamentForm=$("tournamentForm");
-if(tournamentForm){
-tournamentForm.addEventListener("submit",async e=>{
-  e.preventDefault();
-  const id= tournamentForm.dataset.editId || "";
-  const startVal=$("tStart").value;
-  const data={
-    name:$("tName").value.trim(), title:$("tName").value.trim(), mode:$("tMode").value, gameMode:$("tMode").value,
-    entryFee:Number($("tFee").value), fee:Number($("tFee").value), prizePool:Number($("tPrize").value), prize:Number($("tPrize").value),
-    maxSlots:Number($("tSlots").value), slots:Number($("tSlots").value), slotsFilled: id ? (tournaments.find(x=>x.id==id)?.slotsFilled||0) : 0,
-    status:$("tStatus").value.toLowerCase(), startAt: startVal ? new Date(startVal).toISOString() : null, matchDate: startVal ? startVal.split("T")[0] : "", matchTime: startVal ? startVal.split("T")[1] : "",
-    description:$("tRules").value.trim(), rules:$("tRules").value.trim(),
-    updatedAt:serverTimestamp(), upiId:"piyush021137@fam", secureBooking:true, unjoinBlocked:true, winnerDeclared:false, refundCompleted:false, refundProcessed:false
-  };
-  if(!data.name){ notify("Name required",true); return; }
-  try{
-    if(id){ await updateDoc(doc(db,"tournaments",id),data); notify("Updated - Secure - "+id); }
-    else{ data.createdAt=serverTimestamp(); const ref=await addDoc(collection(db,"tournaments"),data); notify("Created - ID: "+ref.id); }
-    tournamentForm.reset(); delete tournamentForm.dataset.editId; loadAll();
-  }catch(err){ notify("Save failed: "+err.message,true); }
-});
-}
-window.editTournament=id=>{
-  const t=tournaments.find(x=>x.id==id); if(!t) return;
-  $("tName").value=t.name||t.title||""; $("tMode").value=t.mode||"Solo"; $("tFee").value=t.entryFee||t.fee||0; $("tPrize").value=t.prizePool||t.prize||0; $("tSlots").value=t.maxSlots||t.slots||48; if(t.startAt) $("tStart").value=new Date(t.startAt).toISOString().slice(0,16); $("tStatus").value=t.status||"Upcoming"; $("tRules").value=t.description||t.rules||""; $("tournamentForm").dataset.editId=id; go("tournaments"); window.scrollTo(0,0); notify("Editing: "+id);
-};
-window.toggleTournament=async id=>{
-  const t=tournaments.find(x=>x.id==id);
-  const ns=(t.status||"published").toLowerCase()=="published"||t.status=="Upcoming" ? "draft" : "published";
-  await updateDoc(doc(db,"tournaments",id),{status:ns,updatedAt:serverTimestamp()});
-  notify("Toggled to "+ns); loadAll();
-};
-window.deleteTournament=async id=>{ if(!confirm("Delete Real?")) return; await deleteDoc(doc(db,"tournaments",id)); notify("Deleted: "+id); loadAll(); };
-window.cancelTournamentSafer=async id=>{
-  if(!confirm("CANCEL + REFUND SAFER? refunds/{tournamentId}_{uid} idempotent - Final flag after all - Real proof")) return;
-  await updateDoc(doc(db,"tournaments",id),{status:"cancelled",updatedAt:serverTimestamp(),refundRequestedAt:serverTimestamp()});
-  notify("Cancelled - Real proof listener started - Checking refundCompleted + refunds collection - Not fake");
-  const tourRef=doc(db,"tournaments",id);
-  let attempts=0;
-  const check=setInterval(async()=>{
-    attempts++;
-    const snap=await getDoc(tourRef);
-    const data=snap.data();
-    const logEl=$("cancelLog");
-    if(data?.refundCompleted){
-      clearInterval(check);
-      notify(`REAL PROOF - Refund Completed ${data.refundedCount}/${data.totalPlayers} - Final flag AFTER all - refunds/${id}_uid - No fake`,false);
-      if(logEl) logEl.textContent=`REAL PROOF - ${data.refundedCount} refunded - Deterministic IDs - Final flag after all`;
-      loadAll();
-    }else if(data?.refundStarted){
-      if(logEl) logEl.textContent=`Refund started ${data.refundedCount||0} - Waiting - Attempt ${attempts} - Real`;
-    }else{
-      if(logEl) logEl.textContent=`Cancelled - Function onTournamentCancelled not yet triggered - Check logs - Attempt ${attempts}`;
-    }
-    if(attempts>30){
-      clearInterval(check);
-      notify("Timeout - Check firebase functions:log --only onTournamentCancelled --region asia-south1",true);
-    }
-  },2000);
-};
-window.kickPlayer=async(tid,uid)=>{ if(!confirm("Kick Real?")) return; await deleteDoc(doc(db,"tournaments",tid,"players",uid)); await updateDoc(doc(db,"tournaments",tid),{slotsFilled:increment(-1)}); notify("Kicked: "+uid); loadAll(); };
-window.approveDeposit=async id=>{
-  try{
-    const fn=httpsCallable(functions,'approveDepositSecure');
-    const res=await fn({paymentId:id});
-    notify(res.data.message+" - Server validated - No duplicate",false);
-    loadPaymentsAll();
-  }catch(e){ notify("Approve failed: "+e.message+" - Check admin claim",true); console.error(e); }
-};
-window.markPaid=async id=>{
-  try{
-    const fn=httpsCallable(functions,'approveWithdrawSecure');
-    const res=await fn({withdrawId:id});
-    notify(res.data.message+" - Wallet deducted server-side - Manual UPI now",false);
-    loadWithdrawalsAll();
-  }catch(e){ notify("Withdraw failed: "+e.message,true); }
-};
-window.rejectPayment=async id=>{
-  if(!confirm("Reject Real? Server-side")) return;
-  try{
-    const fn=httpsCallable(functions,'rejectPaymentSecure');
-    await fn({collectionName:"payments",docId:id});
-    notify("Rejected server-side - Real");
-    loadPaymentsAll();
-  }catch(e){ notify("Reject failed: "+e.message,true); }
-};
-window.rejectWithdraw=async id=>{
-  if(!confirm("Reject withdraw Real?")) return;
-  try{
-    const fn=httpsCallable(functions,'rejectPaymentSecure');
-    await fn({collectionName:"withdraws",docId:id});
-    notify("Withdraw rejected server-side - Real");
-    loadWithdrawalsAll();
-  }catch(e){ notify("Reject failed: "+e.message,true); }
-};
-const publishRoomBtn=$("publishRoomBtn");
-if(publishRoomBtn){
-publishRoomBtn.addEventListener("click",async()=>{
-  const tid=$("roomTournament").value; const rid=$("roomId").value.trim(); const pass=$("roomPassword").value.trim(); const time=$("roomTime").value;
-  if(!tid||!rid||!pass){ notify("Tournament + Room ID + Password required",true); return; }
-  await setDoc(doc(db,"privateRooms",tid),{roomId:rid,password:pass,time:time,tournamentId:tid,createdAt:serverTimestamp()});
-  const rs=$("roomStatus");
-  if(rs) rs.textContent="Published private room - Secure - joined+admin only - "+rid;
-  notify("Private room published - Secure - No expose");
-  loadRoomsAll();
-});
-}
-const declareWinnerBtn=$("declareWinnerBtn");
-if(declareWinnerBtn){
-declareWinnerBtn.addEventListener("click",async()=>{
-  const mid=$("resMatch").value; const win=$("resWinner").value.trim();
-  if(!mid||!win){ notify("Tournament + Winner UID required",true); return; }
-  const existing=await getDoc(doc(db,"results",mid));
-  if(existing.exists()){ notify("Winner already declared - Duplicate blocked - results/"+mid+" exists - Idempotent",true); return; }
-  const t=tournaments.find(x=>x.id==mid); const prize=t?.prizePool||t?.prize||0;
-  await setDoc(doc(db,"results",mid),{tournamentId:mid,winnerId:win,prize:prize,prizePool:prize,createdAt:serverTimestamp(),createdBy:auth.currentUser?.uid||"admin",status:"pending"});
-  notify(`Winner declared - ID = ${mid} - results/{tournamentId} - Prize ${money(prize)} - Admin check in Functions`);
-  const rl=$("resLog");
-  if(rl) rl.textContent=`Declared - Result ID = ${mid} - Idempotent`;
-  loadLeaderboard();
-});
-}
-const cancelBtn=$("cancelBtn");
-if(cancelBtn){
-cancelBtn.addEventListener("click",async()=>{
-  const mid=$("cancelMatchSelect").value; if(!mid){ notify("Select tournament",true); return; }
-  if(!confirm("Cancel + Refund Safer? Real proof listener")) return;
-  await updateDoc(doc(db,"tournaments",mid),{status:"cancelled",updatedAt:serverTimestamp(),refundRequestedAt:serverTimestamp()});
-  notify("Cancelled - Real proof listener started");
-  const tourRef=doc(db,"tournaments",mid);
-  let attempts=0;
-  const check=setInterval(async()=>{
-    attempts++;
-    const snap=await getDoc(tourRef);
-    const data=snap.data();
-    if(data?.refundCompleted){
-      clearInterval(check);
-      notify(`REAL PROOF - Refund Completed - ${data.refundedCount} players - Final flag after all`,false);
-      const cl=$("cancelLog");
-      if(cl) cl.textContent=`REAL PROOF - ${data.refundedCount} refunded - refunds/${mid}_uid - Final flag after all`;
-      loadAll();
-    }
-    if(attempts>30) clearInterval(check);
-  },2000);
-});
-}
-const announcementForm=$("announcementForm");
-if(announcementForm){
-announcementForm.addEventListener("submit",async e=>{
-  e.preventDefault();
-  const title=$("noticeTitle").value.trim(); const body=$("noticeBody").value.trim();
-  if(!title||!body){ notify("Title+Message required",true); return; }
-  await addDoc(collection(db,"banners"),{text:title+" - "+body,title,createdAt:serverTimestamp(),active:true});
-  notify("Banner set real"); announcementForm.reset(); loadBanners();
-});
-}
-const exportBtn=$("exportTournaments");
-if(exportBtn){
-exportBtn.addEventListener("click",()=>{
-  if(tournaments.length==0){ notify("No data to export",true); return; }
-  const header=["id","name","mode","entryFee","prizePool","slotsFilled","maxSlots","status","winnerDeclared","refundCompleted","startAt"];
-  const rows=tournaments.map(t=> [t.id, `"${String(t.name||t.title||"").replace(/"/g,'""')}"`, t.mode||"", t.entryFee||0, t.prizePool||0, t.slotsFilled||0, t.maxSlots||0, t.status||"", t.winnerDeclared||false, t.refundCompleted||false, t.startAt||"" ].join(","));
-  const csv=[header.join(","),...rows].join("\n");
-  const blob=new Blob([csv],{type:"text/csv"}); const url=URL.createObjectURL(blob);
-  const a=document.createElement("a"); a.href=url; a.download="bgr_tournaments_safer.csv"; a.click(); URL.revokeObjectURL(url);
-  notify("Exported CSV - Safer fields");
-});
-}
-const loginBtn=$("loginBtn");
-if(loginBtn){
-loginBtn.addEventListener("click",async()=>{
-  const email=prompt("Admin email:","admin@bgr.com"); if(!email) return; const pass=prompt("Password:"); if(!pass) return;
-  try{ await signInWithEmailAndPassword(auth,email,pass); }catch(err){ notify("Login failed: "+err.message,true); }
-});
-}
-const logoutBtn=$("logoutBtn");
-if(logoutBtn){
-logoutBtn.addEventListener("click",async()=>{ await signOut(auth); notify("Signed out"); });
-}
-const checkAdminBtn=$("checkAdminBtn");
-if(checkAdminBtn){
-checkAdminBtn.addEventListener("click",async()=>{
-  try{ const token=await auth.currentUser.getIdTokenResult(); const resEl=$("adminCheckResult"); if(resEl) resEl.textContent=`Current user ${auth.currentUser.uid} - isAdmin: ${!!token.claims.admin} - Real protection in Rules + Functions`; }catch(err){ const resEl=$("adminCheckResult"); if(resEl) resEl.textContent="Error: "+err.message; }
-});
-}
-onAuthStateChanged(auth,async user=>{
-  const loginB=$("loginBtn");
-  const logoutB=$("logoutBtn");
-  const authD=$("authDetails");
-  if(!user){
-    if(loginB) loginB.classList.remove("hidden");
-    if(logoutB) logoutB.classList.add("hidden");
-    if(authD) authD.textContent="Not signed in - Login required - Admin needs custom claim admin=true via Functions - firebase auth setCustomClaims";
-    return;
-  }
-  if(loginB) loginB.classList.add("hidden");
-  if(logoutB) logoutB.classList.remove("hidden");
-  const token=await user.getIdTokenResult(); const isAdmin=!!token.claims.admin;
-  if(authD) authD.textContent=`Signed in: ${user.email} UID: ${user.uid} - isAdmin: ${isAdmin} - ${isAdmin?"Admin OK - Join Function ready - Server-side payment validation ready":"Not admin - Blocked by rules - Real protection in Rules + Functions"}`;
-  if(isAdmin) loadAll(); else notify("Signed in as user - Need admin claim - Contact owner to set claims for "+user.uid,true);
-});
 </script>
 </body>
 </html>
