@@ -1,24 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BGR x ClashAdda PRO - BR Bermuda</title>
+<title>BGR x CLASHADDA - BR Bermuda Pro</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<link rel="manifest" href="manifest.json">
 </head>
-<body class="bg-[#070a10] text-white p-4">
-<h1 class="text-3xl font-black text-center mt-10">BGR x CLASHADDA <span class="text-green-400">LIVE</span></h1>
-<p class="text-center text-xs mt-2 text-gray-400">BR Bermuda Only | All Ages | Per Kill + Win | Auto Wallet | UPI: piyush021137@fam</p>
-<div id="box" class="max-w-2xl mx-auto mt-10"></div>
+<body class="bg-[#070a10] text-white min-h-screen">
+<header class="sticky top-0 z-40 bg-black/90 p-3 border-b border-white/10 flex justify-between">
+<div><b>BGR x CLASHADDA</b> <span class="text-green-400">BR BERMUDA ONLY</span><br><small class="text-[11px] text-gray-400">48 Slots Lock | Game Name Only | UPI: piyush021137@fam</small></div>
+<div class="flex gap-2"><a href="payment.html" class="bg-white/10 px-3 py-2 rounded text-xs">Wallet</a><a href="admin.html" class="bg-yellow-400 text-black px-3 py-2 rounded text-xs font-bold">ADMIN</a></div>
+</header>
+<div class="max-w-5xl mx-auto p-3">
+<div id="notif" class="hidden bg-blue-600/20 border border-blue-500/30 p-3 rounded-xl text-sm mb-3"></div>
+<div class="grid grid-cols-3 gap-2 text-[11px] mb-3">
+<div class="bg-white/5 p-2 rounded">Deposit W: <b id="depW">₹0</b> (No Withdraw)</div>
+<div class="bg-green-500/10 p-2 rounded border border-green-500/20">Win W: <b id="winW">₹0</b> (Withdraw)</div>
+<div class="bg-white/5 p-2 rounded">Game Name: <b id="myName">-</b></div>
+</div>
+<div id="matches" class="grid md:grid-cols-2 gap-3"></div>
+</div>
+
+<div id="joinModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50"><div class="bg-[#151b27] w-full max-w-md p-5 rounded-xl"><h2 class="font-bold">Join - Only Game Name</h2><p class="text-[11px] text-gray-400">Ek baar name dala to change nahi hoga. 48 full ke baad entry band.</p><input id="gName" placeholder="Game Name ex: BGR_KING" class="w-full bg-black p-3 rounded mt-3"><div id="jInfo" class="text-xs mt-2"></div><div class="flex gap-2 mt-4"><button onclick="closeJ()" class="flex-1 bg-white/10 py-3 rounded">Cancel</button><button onclick="doJoin()" class="flex-1 bg-green-500 text-black py-3 rounded font-black">Pay & Join</button></div></div></div>
+
+<script src="firebase-config.js"></script>
 <script>
-const cfg={apiKey:"AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",authDomain:"clashadda-b3e57.firebaseapp.com",projectId:"clashadda-b3e57"};
-firebase.initializeApp(cfg);const db=firebase.firestore();firebase.auth().signInAnonymously();
-db.collection("tournaments").onSnapshot(s=>{
- let h="";s.forEach(d=>{let m=d.data();h+=`<div class="bg-white/5 border border-white/10 p-4 rounded-xl mt-4"><b>${m.name||m.title||'BR Bermuda Match'} ✏️</b><br>Pool: ₹${m.prizePool||0} | Per Kill: ₹${m.perKill||0} | Fee: ₹${m.fee||0}<br>Players: ${m.joined||0}/${m.maxPlayers||48} | Map: Bermuda<br><button class="bg-green-500 text-black px-4 py-2 rounded mt-2 font-bold">JOIN</button> <button class="bg-yellow-500 text-black px-4 py-2 rounded mt-2">✏️ Manage Kills/Win/Pay</button></div>`});
- document.getElementById("box").innerHTML=h||'<div class="text-center mt-10 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl">No Match Yet<br><small>Admin Dashboard se ADD MATCH karo - Fir yaha dikhega<br>1. Add Match (Prize, Per Kill, Fee, Room ID/Pass)<br>2. Pencil ✏️ -> Player List -> Kills input -> Win input -> PAY = Auto Wallet Transfer<br>3. Cancel = Auto Refund<br>4. YT/WhatsApp Link, Notification, Active Players, Wallet</small></div>';
-});
+const db=firebase.firestore();let cur=null,curMatch=null;
+firebase.auth().signInAnonymously().onAuthStateChanged(u=>{cur=u;if(u){db.collection("users").doc(u.uid).onSnapshot(d=>{let x=d.data()||{};depW.innerText='₹'+(x.depositWallet||0);winW.innerText='₹'+(x.winWallet||0);myName.innerText=x.gameName||'-';});}});
+db.collection("notifications").orderBy("at","desc").limit(1).onSnapshot(s=>{s.forEach(d=>{let n=d.data();notif.innerText='📢 '+n.message+' | Room ID: '+n.roomId+' Pass: '+n.roomPass+' (Copy available)';notif.classList.remove('hidden');})});
+db.collection("tournaments").orderBy("createdAt","desc").onSnapshot(s=>{let h="";s.forEach(doc=>{let m=doc.data();let full=(m.joined||0)>=48;h+=`<div class="bg-white/[0.06] border ${full?'border-red-500/40':'border-white/10'} p-4 rounded-xl"><div class="flex justify-between"><b>${m.title}</b><span class="text-[10px] px-2 py-1 rounded ${m.status=='cancelled'?'bg-red-600':'bg-green-600'}">${m.status} ${full?'FULL':''}</span></div><div class="text-[12px] text-gray-400 mt-2">📅 ${m.date||''} 🕒 ${m.matchTime||''}<br>Map: Bermuda | ${m.joined||0}/48 | Pool ₹${m.prizePool} | PerKill ₹${m.perKill} | Fee ₹${m.fee}</div><div class="flex gap-2 mt-3"><button onclick="openJ('${doc.id}',${m.fee||0},${full})" class="flex-1 ${full?'bg-gray-600':'bg-green-500 text-black'} py-2 rounded font-bold text-sm">${full?'FULL':'JOIN - Game Name Only'}</button><button onclick="copyR('${m.roomId}','${m.roomPass}')" class="bg-white/10 px-3 py-2 rounded text-xs">Copy ID/Pass</button></div></div>`});matches.innerHTML=h||'No Match';});
+function openJ(id,fee,full){if(full){alert('48 Full - Entry band');return;}curMatch=id;jInfo.innerText='Fee ₹'+fee+' Deposit Wallet se cutega';joinModal.classList.remove('hidden');joinModal.classList.add('flex');}
+function closeJ(){joinModal.classList.add('hidden');}
+async function doJoin(){let g=gName.value.trim();if(g.length<3){alert('Game Name min 3');return;}let uid=cur.uid;let ud=(await db.collection("users").doc(uid).get()).data()||{};if(ud.banned){alert('Banned');return;}if(ud.gameName && ud.gameName!==g){alert('Name lock hai! Tumhara: '+ud.gameName);return;}let md=(await db.collection("tournaments").doc(curMatch).get()).data();if((md.joined||0)>=48){alert('Full');return;}let ex=await db.collection("registrations").where("tournamentId","==",curMatch).where("uid","==",uid).get();if(!ex.empty){alert('Already Joined');return;}if((ud.depositWallet||0)<(md.fee||0)){alert('Deposit Wallet me paisa nahi - piyush021137@fam pe deposit karo');return;}await db.collection("users").doc(uid).set({gameName:g,depositWallet:firebase.firestore.FieldValue.increment(-(md.fee||0))},{merge:true});await db.collection("registrations").add({tournamentId:curMatch,uid,gameName:g,kills:0,winAmount:0,joinedAt:new Date(),status:'joined'});await db.collection("tournaments").doc(curMatch).update({joined:firebase.firestore.FieldValue.increment(1)});await db.collection("transactions").add({uid,gameName:g,type:'join_fee',amount:md.fee,matchId:curMatch,at:new Date(),status:'verified'});closeJ();alert('Joined!');}
+function copyR(id,pass){navigator.clipboard.writeText('ID:'+id+' Pass:'+pass);alert('Copied ID:'+id+' Pass:'+pass);}
 </script>
 </body>
 </html>
