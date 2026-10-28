@@ -1,3 +1,4 @@
+// FINAL FIXED - No double init
 const firebaseConfig = {
   apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
   authDomain: "clashadda-b3e57.firebaseapp.com",
@@ -8,4 +9,6 @@ const firebaseConfig = {
   appId: "1:1046410116766:web:02fa3a28be10e39b28058f",
   measurementId: "G-60KBXTZKE9"
 };
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
