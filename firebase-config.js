@@ -1,5 +1,4 @@
-// BGR eSPORTS - Firebase Config - clashadda-b3e57
-export const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
   authDomain: "clashadda-b3e57.firebaseapp.com",
   databaseURL: "https://clashadda-b3e57-default-rtdb.firebaseio.com",
@@ -9,5 +8,4 @@ export const firebaseConfig = {
   appId: "1:1046410116766:web:02fa3a28be10e39b28058f",
   measurementId: "G-60KBXTZKE9"
 };
-export const UPI_ID = "piyush021137@fam";
-export const ADMIN_EMAIL = "admin@bgr.com";
+firebase.initializeApp(firebaseConfig);
