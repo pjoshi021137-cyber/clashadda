@@ -3,10 +3,11 @@
   "short_name": "BGR eSPORTS",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#07070a",
+  "background_color": "#08080f",
   "theme_color": "#ffcc00",
+  "description": "BR, CS 1v1/2v2/4v4, LW, HS - Solo/Duo/Squad - UPI: piyush021137@fam - Anti-cheat, Auto Scoring, Room Security, Leaderboard, Wallet, Referral, Sponsor, Season Pass",
   "icons": [
-    {"src": "./logo.png","sizes": "192x192","type": "image/png"},
-    {"src": "./logo.png","sizes": "512x512","type": "image/png"}
+    { "src": "./logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "./logo.png", "sizes": "512x512", "type": "image/png" }
   ]
 }
