@@ -1,41 +1,197 @@
+
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BGR x CLASHADDA - BR Bermuda Pro</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>ClashAdda | Player</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  background:#080d19;color:white;
+  font-family:Arial,sans-serif;padding:18px
+}
+.container{
+  width:100%;max-width:390px;
+  background:#151e30;border:1px solid #293750;
+  border-radius:18px;padding:28px;
+  box-shadow:0 15px 45px #0008
+}
+.logo{text-align:center;font-size:30px;font-weight:900;color:#ffb52e}
+.subtitle{text-align:center;color:#aab7ca;margin:10px 0 25px}
+h2{text-align:center;font-size:20px}
+input{
+  width:100%;padding:14px;margin:8px 0;
+  border-radius:9px;border:1px solid #40516c;
+  background:#0b1425;color:white;font-size:15px
+}
+button{
+  width:100%;padding:14px;margin-top:12px;
+  border:0;border-radius:9px;background:#ffb52e;
+  color:#111;font-weight:bold;font-size:15px
+}
+button.secondary{background:#293750;color:white}
+button:disabled{opacity:.5}
+#message{text-align:center;font-size:13px;color:#ffcf75;line-height:1.5}
+#dashboard{display:none;text-align:center}
+.small{color:#aab7ca;font-size:13px}
+</style>
 </head>
-<body class="bg-[#070a10] text-white min-h-screen">
-<header class="sticky top-0 z-40 bg-black/90 p-3 border-b border-white/10 flex justify-between">
-<div><b>BGR x CLASHADDA</b> <span class="text-green-400">BR BERMUDA ONLY</span><br><small class="text-[11px] text-gray-400">48 Slots Lock | Game Name Only | UPI: piyush021137@fam</small></div>
-<div class="flex gap-2"><a href="payment.html" class="bg-white/10 px-3 py-2 rounded text-xs">Wallet</a><a href="admin.html" class="bg-yellow-400 text-black px-3 py-2 rounded text-xs font-bold">ADMIN</a></div>
-</header>
-<div class="max-w-5xl mx-auto p-3">
-<div id="notif" class="hidden bg-blue-600/20 border border-blue-500/30 p-3 rounded-xl text-sm mb-3"></div>
-<div class="grid grid-cols-3 gap-2 text-[11px] mb-3">
-<div class="bg-white/5 p-2 rounded">Deposit W: <b id="depW">₹0</b> (No Withdraw)</div>
-<div class="bg-green-500/10 p-2 rounded border border-green-500/20">Win W: <b id="winW">₹0</b> (Withdraw)</div>
-<div class="bg-white/5 p-2 rounded">Game Name: <b id="myName">-</b></div>
-</div>
-<div id="matches" class="grid md:grid-cols-2 gap-3"></div>
+
+<body>
+<div class="container">
+
+  <div class="logo">CLASHADDA</div>
+  <p class="subtitle">Free Fire Tournament Platform</p>
+
+  <section id="authSection">
+    <h2 id="heading">Player Login</h2>
+
+    <input id="name" type="text"
+      placeholder="Player Name (for registration)"
+      autocomplete="name">
+
+    <input id="email" type="email"
+      placeholder="Email Address"
+      autocomplete="email">
+
+    <input id="password" type="password"
+      placeholder="Password"
+      autocomplete="current-password">
+
+    <button id="loginBtn">PLAYER LOGIN</button>
+    <button id="registerBtn" class="secondary">
+      CREATE PLAYER ACCOUNT
+    </button>
+
+    <p id="message">Welcome to ClashAdda!</p>
+    <p class="small">
+      Use your own account. Keep your password private.
+    </p>
+  </section>
+
+  <section id="dashboard">
+    <h2>Welcome to ClashAdda!</h2>
+    <p id="playerEmail"></p>
+    <p class="small">Your account is signed in.</p>
+    <button id="logoutBtn">LOGOUT</button>
+  </section>
+
 </div>
 
-<div id="joinModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50"><div class="bg-[#151b27] w-full max-w-md p-5 rounded-xl"><h2 class="font-bold">Join - Only Game Name</h2><p class="text-[11px] text-gray-400">Ek baar name dala to change nahi hoga. 48 full ke baad entry band.</p><input id="gName" placeholder="Game Name ex: BGR_KING" class="w-full bg-black p-3 rounded mt-3"><div id="jInfo" class="text-xs mt-2"></div><div class="flex gap-2 mt-4"><button onclick="closeJ()" class="flex-1 bg-white/10 py-3 rounded">Cancel</button><button onclick="doJoin()" class="flex-1 bg-green-500 text-black py-3 rounded font-black">Pay & Join</button></div></div></div>
+<script type="module">
 
-<script src="firebase-config.js"></script>
-<script>
-const db=firebase.firestore();let cur=null,curMatch=null;
-firebase.auth().signInAnonymously().onAuthStateChanged(u=>{cur=u;if(u){db.collection("users").doc(u.uid).onSnapshot(d=>{let x=d.data()||{};depW.innerText='₹'+(x.depositWallet||0);winW.innerText='₹'+(x.winWallet||0);myName.innerText=x.gameName||'-';});}});
-db.collection("notifications").orderBy("at","desc").limit(1).onSnapshot(s=>{s.forEach(d=>{let n=d.data();notif.innerText='📢 '+n.message+' | Room ID: '+n.roomId+' Pass: '+n.roomPass+' (Copy available)';notif.classList.remove('hidden');})});
-db.collection("tournaments").orderBy("createdAt","desc").onSnapshot(s=>{let h="";s.forEach(doc=>{let m=doc.data();let full=(m.joined||0)>=48;h+=`<div class="bg-white/[0.06] border ${full?'border-red-500/40':'border-white/10'} p-4 rounded-xl"><div class="flex justify-between"><b>${m.title}</b><span class="text-[10px] px-2 py-1 rounded ${m.status=='cancelled'?'bg-red-600':'bg-green-600'}">${m.status} ${full?'FULL':''}</span></div><div class="text-[12px] text-gray-400 mt-2">📅 ${m.date||''} 🕒 ${m.matchTime||''}<br>Map: Bermuda | ${m.joined||0}/48 | Pool ₹${m.prizePool} | PerKill ₹${m.perKill} | Fee ₹${m.fee}</div><div class="flex gap-2 mt-3"><button onclick="openJ('${doc.id}',${m.fee||0},${full})" class="flex-1 ${full?'bg-gray-600':'bg-green-500 text-black'} py-2 rounded font-bold text-sm">${full?'FULL':'JOIN - Game Name Only'}</button><button onclick="copyR('${m.roomId}','${m.roomPass}')" class="bg-white/10 px-3 py-2 rounded text-xs">Copy ID/Pass</button></div></div>`});matches.innerHTML=h||'No Match';});
-function openJ(id,fee,full){if(full){alert('48 Full - Entry band');return;}curMatch=id;jInfo.innerText='Fee ₹'+fee+' Deposit Wallet se cutega';joinModal.classList.remove('hidden');joinModal.classList.add('flex');}
-function closeJ(){joinModal.classList.add('hidden');}
-async function doJoin(){let g=gName.value.trim();if(g.length<3){alert('Game Name min 3');return;}let uid=cur.uid;let ud=(await db.collection("users").doc(uid).get()).data()||{};if(ud.banned){alert('Banned');return;}if(ud.gameName && ud.gameName!==g){alert('Name lock hai! Tumhara: '+ud.gameName);return;}let md=(await db.collection("tournaments").doc(curMatch).get()).data();if((md.joined||0)>=48){alert('Full');return;}let ex=await db.collection("registrations").where("tournamentId","==",curMatch).where("uid","==",uid).get();if(!ex.empty){alert('Already Joined');return;}if((ud.depositWallet||0)<(md.fee||0)){alert('Deposit Wallet me paisa nahi - piyush021137@fam pe deposit karo');return;}await db.collection("users").doc(uid).set({gameName:g,depositWallet:firebase.firestore.FieldValue.increment(-(md.fee||0))},{merge:true});await db.collection("registrations").add({tournamentId:curMatch,uid,gameName:g,kills:0,winAmount:0,joinedAt:new Date(),status:'joined'});await db.collection("tournaments").doc(curMatch).update({joined:firebase.firestore.FieldValue.increment(1)});await db.collection("transactions").add({uid,gameName:g,type:'join_fee',amount:md.fee,matchId:curMatch,at:new Date(),status:'verified'});closeJ();alert('Joined!');}
-function copyR(id,pass){navigator.clipboard.writeText('ID:'+id+' Pass:'+pass);alert('Copied ID:'+id+' Pass:'+pass);}
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+  signOut
+} from
+"https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+// CLASHADDA FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
+  authDomain: "clashadda-b3e57.firebaseapp.com",
+  databaseURL: "https://clashadda-b3e57-default-rtdb.firebaseio.com",
+  projectId: "clashadda-b3e57",
+  storageBucket: "clashadda-b3e57.firebasestorage.app",
+  messagingSenderId: "1046410116766",
+  appId: "1:1046410116766:web:02fa3a28be10e39b28058f",
+  measurementId: "G-60KBXTZKE9"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const $ = id => document.getElementById(id);
+
+function showMessage(message){
+  $("message").textContent = message;
+}
+
+$("loginBtn").addEventListener("click", async () => {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+
+  if(!email || !password){
+    showMessage("Enter your email and password.");
+    return;
+  }
+
+  $("loginBtn").disabled = true;
+  showMessage("Logging in...");
+
+  try{
+    await signInWithEmailAndPassword(auth,email,password);
+    showMessage("Login successful!");
+  }catch(error){
+    showMessage("Login failed: " + error.message);
+  }finally{
+    $("loginBtn").disabled = false;
+  }
+});
+
+$("registerBtn").addEventListener("click", async () => {
+  const name = $("name").value.trim();
+  const email = $("email").value.trim();
+  const password = $("password").value;
+
+  if(!name || !email || !password){
+    showMessage("Enter your name, email and password.");
+    return;
+  }
+
+  if(password.length < 6){
+    showMessage("Password must be at least 6 characters.");
+    return;
+  }
+
+  $("registerBtn").disabled = true;
+  showMessage("Creating your account...");
+
+  try{
+    const result = await createUserWithEmailAndPassword(
+      auth,email,password
+    );
+
+    await updateProfile(result.user,{
+      displayName:name
+    });
+
+    showMessage("Account created successfully!");
+  }catch(error){
+    showMessage("Registration failed: " + error.message);
+  }finally{
+    $("registerBtn").disabled = false;
+  }
+});
+
+$("logoutBtn").addEventListener("click", async () => {
+  await signOut(auth);
+});
+
+onAuthStateChanged(auth,user => {
+  if(user){
+    $("authSection").style.display = "none";
+    $("dashboard").style.display = "block";
+    $("playerEmail").textContent =
+      user.displayName || user.email;
+  }else{
+    $("authSection").style.display = "block";
+    $("dashboard").style.display = "none";
+  }
+});
+
 </script>
 </body>
 </html>
