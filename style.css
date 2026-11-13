@@ -1,3 +1,108 @@
-:root{--bg:#08080f;--card:#13131f;--y:#ffcc00;--o:#ff6a00;--g:#00ff88;--m:#888}
-body{margin:0;background:var(--bg);color:#fff;font-family:Inter,sans-serif}
-.card{background:var(--card);border:1px solid #222;border-radius:16px;padding:14px}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at top, #32145c 0%, transparent 55%),
+    linear-gradient(145deg, #070710, #101020 55%, #080812);
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 24px;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #19152b, #10101c);
+  border: 1px solid #7043a8;
+  box-shadow: 0 18px 55px #000a,
+              0 0 25px #873bff22;
+}
+
+.logo {
+  text-align: center;
+  font-size: 31px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffc64b;
+  text-shadow: 0 0 18px #ffb52e55;
+}
+
+.subtitle {
+  text-align: center;
+  color: #b9aecb;
+  font-size: 13px;
+  margin: 12px 0 28px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  margin: 9px 0;
+  border-radius: 12px;
+  border: 1px solid #493967;
+  outline: none;
+  background: #0b0a15;
+  color: white;
+  font-size: 15px;
+}
+
+input:focus {
+  border-color: #b16cff;
+  box-shadow: 0 0 12px #963fff33;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 13px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(100deg, #ffc64b, #ff9f24);
+  color: #17101f;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #29213c;
+  color: white;
+  border: 1px solid #63458c;
+}
+
+button:disabled {
+  opacity: .5;
+}
+
+#message {
+  text-align: center;
+  color: #ffd27b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+#dashboard {
+  display: none;
+  text-align: center;
+}
+
+.small {
+  color: #b9aecb;
+  font-size: 13px;
+}
