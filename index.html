@@ -3,90 +3,184 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1020">
-<title>ClashAdda | Player</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d19">
+<title>BGR eSports | Player Dashboard</title>
 
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  background:#080d19;color:white;
-  font-family:Arial,sans-serif;padding:18px
-}
-.container{
-  width:100%;max-width:390px;
-  background:#151e30;border:1px solid #293750;
-  border-radius:18px;padding:28px;
-  box-shadow:0 15px 45px #0008
-}
-.logo{text-align:center;font-size:30px;font-weight:900;color:#ffb52e}
-.subtitle{text-align:center;color:#aab7ca;margin:10px 0 25px}
-h2{text-align:center;font-size:20px}
-input{
-  width:100%;padding:14px;margin:8px 0;
-  border-radius:9px;border:1px solid #40516c;
-  background:#0b1425;color:white;font-size:15px
-}
-button{
-  width:100%;padding:14px;margin-top:12px;
-  border:0;border-radius:9px;background:#ffb52e;
-  color:#111;font-weight:bold;font-size:15px
-}
-button.secondary{background:#293750;color:white}
+body{margin:0;background:#080d19;color:#fff;font-family:Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer;border:0;border-radius:9px;padding:12px;font-weight:bold}
+input{width:100%;padding:12px;margin:7px 0;background:#0b1425;color:white;border:1px solid #40516c;border-radius:8px}
+.hidden{display:none!important}
+header{background:#111827;padding:16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #293750}
+.logo{font-size:21px;font-weight:900;color:#ffb52e}
+.container{max-width:1000px;margin:auto;padding:15px}
+.card{background:#151e30;border:1px solid #293750;border-radius:13px;padding:15px;margin:12px 0}
+.muted{color:#aab7ca;font-size:13px}
+.gold{color:#ffb52e}
+.primary{background:#ffb52e;color:#111}
+.secondary{background:#293750;color:white}
+.danger{background:#b91c1c;color:white}
+.success{background:#15803d;color:white}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:15px 0}
+.tabs button{background:#202c40;color:white;font-size:12px}
+.tabs button.active{background:#ffb52e;color:#111}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.match{background:#0b1425;border:1px solid #34445d;padding:13px;border-radius:10px;margin:10px 0}
+.badge{display:inline-block;padding:4px 8px;border-radius:6px;background:#293750;font-size:11px}
+#message{color:#ffcf75;text-align:center;font-size:13px;min-height:20px}
 button:disabled{opacity:.5}
-#message{text-align:center;font-size:13px;color:#ffcf75;line-height:1.5}
-#dashboard{display:none;text-align:center}
-.small{color:#aab7ca;font-size:13px}
 </style>
 </head>
 
 <body>
+<header>
+  <div>
+    <div class="logo">BGR eSPORTS</div>
+    <small class="muted">FREE FIRE TOURNAMENT</small>
+  </div>
+  <button id="logoutBtn" class="danger hidden">LOGOUT</button>
+</header>
+
 <div class="container">
 
-  <div class="logo">CLASHADDA</div>
-  <p class="subtitle">Free Fire Tournament Platform</p>
+<!-- LOGIN / REGISTER -->
+<section id="authSection" class="card">
+  <h2 id="authHeading">Player Login</h2>
+  <input id="name" placeholder="Player Name (registration)">
+  <input id="email" type="email" placeholder="Email Address">
+  <input id="password" type="password" placeholder="Password">
+  <button id="loginBtn" class="primary">PLAYER LOGIN</button>
+  <button id="registerBtn" class="secondary">CREATE ACCOUNT</button>
+  <p id="message">Welcome to BGR eSports!</p>
+  <p class="muted">Keep your password private.</p>
+</section>
 
-  <section id="authSection">
-    <h2 id="heading">Player Login</h2>
+<!-- DASHBOARD -->
+<section id="dashboard" class="hidden">
+  <div class="card">
+    <h2>Welcome, <span id="welcomeName" class="gold"></span></h2>
+    <p class="muted" id="playerEmail"></p>
+    <div class="grid">
+      <div>
+        <small class="muted">TEST COIN BALANCE</small>
+        <h2 class="gold"><span id="coinBalance">0</span> Coins</h2>
+      </div>
+      <div>
+        <small class="muted">ACCOUNT STATUS</small>
+        <h3 id="accountStatus">Active</h3>
+      </div>
+    </div>
+  </div>
 
-    <input id="name" type="text"
-      placeholder="Player Name (for registration)"
-      autocomplete="name">
+  <nav class="tabs">
+    <button class="active" data-tab="home">HOME</button>
+    <button data-tab="profile">PROFILE</button>
+    <button data-tab="matches">MATCHES</button>
+    <button data-tab="wallet">WALLET</button>
+    <button data-tab="history">HISTORY</button>
+    <button data-tab="support">SUPPORT</button>
+  </nav>
 
-    <input id="email" type="email"
-      placeholder="Email Address"
-      autocomplete="email">
-
-    <input id="password" type="password"
-      placeholder="Password"
-      autocomplete="current-password">
-
-    <button id="loginBtn">PLAYER LOGIN</button>
-    <button id="registerBtn" class="secondary">
-      CREATE PLAYER ACCOUNT
-    </button>
-
-    <p id="message">Welcome to ClashAdda!</p>
-    <p class="small">
-      Use your own account. Keep your password private.
-    </p>
+  <!-- HOME -->
+  <section id="tab-home" class="tab">
+    <div class="card">
+      <h3>🏆 BGR eSports</h3>
+      <p class="muted">Join tournaments, view match details and track your results.</p>
+      <button class="primary" data-goto="matches">VIEW TOURNAMENTS</button>
+    </div>
+    <div class="card">
+      <h3>📢 Announcements</h3>
+      <div id="notifications" class="muted">Loading announcements...</div>
+    </div>
+    <div class="card">
+      <h3>📋 My Recent Matches</h3>
+      <div id="recentMatches" class="muted">Loading...</div>
+    </div>
   </section>
 
-  <section id="dashboard">
-    <h2>Welcome to ClashAdda!</h2>
-    <p id="playerEmail"></p>
-    <p class="small">Your account is signed in.</p>
-    <button id="logoutBtn">LOGOUT</button>
+  <!-- PROFILE -->
+  <section id="tab-profile" class="tab hidden">
+    <div class="card">
+      <h3>👤 Player Profile</h3>
+      <label class="muted">Game Name</label>
+      <input id="gameName" placeholder="Enter Free Fire Name">
+      <label class="muted">Game UID</label>
+      <input id="gameUid" placeholder="Enter Free Fire UID">
+      <button id="saveProfile" class="primary">SAVE PROFILE</button>
+      <p id="profileMessage" class="muted"></p>
+    </div>
   </section>
 
+  <!-- MATCHES -->
+  <section id="tab-matches" class="tab hidden">
+    <div class="card">
+      <h3>🎮 Available Tournaments</h3>
+      <p class="muted">Match entry is a registration request. No real-money payment is collected here.</p>
+      <div id="matchList">Loading tournaments...</div>
+    </div>
+  </section>
+
+  <!-- WALLET -->
+  <section id="tab-wallet" class="tab hidden">
+    <div class="card">
+      <h3>💎 Test Coin Wallet</h3>
+      <h2 class="gold"><span id="walletCoins">0</span> Coins</h2>
+      <p class="muted">TEST MODE ONLY — These are non-cash points, not money.</p>
+    </div>
+
+    <div class="card">
+      <h3>➕ Deposit Test Coins</h3>
+      <p class="muted">Minimum request: 10 test coins.</p>
+      <input id="depositAmount" type="number" min="10" placeholder="Enter amount (minimum 10)">
+      <button id="depositBtn" class="primary">SEND DEPOSIT REQUEST</button>
+      <p class="muted">Coins are added only after Owner approval.</p>
+    </div>
+
+    <div class="card">
+      <h3>➖ Withdraw Test Coins</h3>
+      <p class="muted">Minimum request: 50 test coins.</p>
+      <input id="withdrawAmount" type="number" min="50" placeholder="Enter amount (minimum 50)">
+      <button id="withdrawBtn" class="secondary">SEND WITHDRAW REQUEST</button>
+      <p class="muted">This is only a test request. No money or UPI transfer is made.</p>
+    </div>
+
+    <div class="card">
+      <h3>⏳ My Pending Requests</h3>
+      <div id="myRequests" class="muted">Loading...</div>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section id="tab-history" class="tab hidden">
+    <div class="card">
+      <h3>📜 Transaction History</h3>
+      <div id="transactionHistory">Loading...</div>
+    </div>
+    <div class="card">
+      <h3>🎯 Match History</h3>
+      <div id="matchHistory">Loading...</div>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section id="tab-support" class="tab hidden">
+    <div class="card">
+      <h3>🎧 Customer Support</h3>
+      <input id="supportSubject" placeholder="Subject">
+      <input id="supportMessage" placeholder="Write your message">
+      <button id="supportBtn" class="primary">SUBMIT SUPPORT TICKET</button>
+      <p id="supportStatus" class="muted"></p>
+    </div>
+  </section>
+</section>
 </div>
 
 <script type="module">
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 
 import {
   getAuth,
@@ -95,10 +189,24 @@ import {
   updateProfile,
   onAuthStateChanged,
   signOut
-} from
-"https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-// CLASHADDA FIREBASE CONFIG
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  collection,
+  query,
+  where,
+  onSnapshot,
+  getDocs,
+  serverTimestamp,
+  limit
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+/* SAME FIREBASE PROJECT AS YOUR ADMIN PANEL */
 const firebaseConfig = {
   apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
   authDomain: "clashadda-b3e57.firebaseapp.com",
@@ -106,92 +214,494 @@ const firebaseConfig = {
   projectId: "clashadda-b3e57",
   storageBucket: "clashadda-b3e57.firebasestorage.app",
   messagingSenderId: "1046410116766",
-  appId: "1:1046410116766:web:02fa3a28be10e39b28058f",
+  appId: "1:6410116766:web:02fa3a28be10e39b28058f",
   measurementId: "G-60KBXTZKE9"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 const $ = id => document.getElementById(id);
 
-function showMessage(message){
-  $("message").textContent = message;
+let currentUser = null;
+let userData = {};
+let unsubscribers = [];
+
+function message(text){
+  $("message").textContent = text;
 }
 
-$("loginBtn").addEventListener("click", async () => {
-  const email = $("email").value.trim();
-  const password = $("password").value;
+function escapeHTML(value=""){
+  return String(value).replace(/[&<>"']/g,char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",
+    '"':"&quot;","'":"&#039;"
+  }[char]));
+}
 
-  if(!email || !password){
-    showMessage("Enter your email and password.");
-    return;
-  }
+function showTab(name){
+  document.querySelectorAll(".tab").forEach(el=>el.classList.add("hidden"));
+  $("tab-"+name).classList.remove("hidden");
 
-  $("loginBtn").disabled = true;
-  showMessage("Logging in...");
+  document.querySelectorAll("[data-tab]").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.tab===name);
+  });
+}
 
-  try{
-    await signInWithEmailAndPassword(auth,email,password);
-    showMessage("Login successful!");
-  }catch(error){
-    showMessage("Login failed: " + error.message);
-  }finally{
-    $("loginBtn").disabled = false;
-  }
+document.querySelectorAll("[data-tab]").forEach(btn=>{
+  btn.addEventListener("click",()=>showTab(btn.dataset.tab));
 });
 
-$("registerBtn").addEventListener("click", async () => {
-  const name = $("name").value.trim();
-  const email = $("email").value.trim();
-  const password = $("password").value;
+document.querySelectorAll("[data-goto]").forEach(btn=>{
+  btn.addEventListener("click",()=>showTab(btn.dataset.goto));
+});
 
-  if(!name || !email || !password){
-    showMessage("Enter your name, email and password.");
+function clearListeners(){
+  unsubscribers.forEach(fn=>fn());
+  unsubscribers=[];
+}
+
+/* REGISTER */
+$("registerBtn").addEventListener("click",async()=>{
+  const name=$("name").value.trim();
+  const email=$("email").value.trim();
+  const password=$("password").value;
+
+  if(!name||!email||!password){
+    message("Enter name, email and password.");
     return;
   }
 
-  if(password.length < 6){
-    showMessage("Password must be at least 6 characters.");
+  if(password.length<6){
+    message("Password must contain at least 6 characters.");
     return;
   }
 
-  $("registerBtn").disabled = true;
-  showMessage("Creating your account...");
+  $("registerBtn").disabled=true;
+  message("Creating account...");
 
   try{
-    const result = await createUserWithEmailAndPassword(
+    const result=await createUserWithEmailAndPassword(
       auth,email,password
     );
 
-    await updateProfile(result.user,{
-      displayName:name
-    });
+    await updateProfile(result.user,{displayName:name});
 
-    showMessage("Account created successfully!");
+    await setDoc(doc(db,"users",result.user.uid),{
+      email,
+      gameName:name,
+      testCoins:0,
+      createdAt:serverTimestamp()
+    },{merge:true});
+
+    message("Account created!");
   }catch(error){
-    showMessage("Registration failed: " + error.message);
+    message(error.message);
   }finally{
-    $("registerBtn").disabled = false;
+    $("registerBtn").disabled=false;
   }
 });
 
-$("logoutBtn").addEventListener("click", async () => {
+/* LOGIN */
+$("loginBtn").addEventListener("click",async()=>{
+  const email=$("email").value.trim();
+  const password=$("password").value;
+
+  if(!email||!password){
+    message("Enter email and password.");
+    return;
+  }
+
+  $("loginBtn").disabled=true;
+  message("Logging in...");
+
+  try{
+    await signInWithEmailAndPassword(auth,email,password);
+    message("Login successful!");
+  }catch(error){
+    message(error.message);
+  }finally{
+    $("loginBtn").disabled=false;
+  }
+});
+
+/* LOGOUT */
+$("logoutBtn").addEventListener("click",async()=>{
+  clearListeners();
   await signOut(auth);
 });
 
-onAuthStateChanged(auth,user => {
-  if(user){
-    $("authSection").style.display = "none";
-    $("dashboard").style.display = "block";
-    $("playerEmail").textContent =
-      user.displayName || user.email;
-  }else{
-    $("authSection").style.display = "block";
-    $("dashboard").style.display = "none";
+/* AUTH STATE */
+onAuthStateChanged(auth,async user=>{
+  clearListeners();
+  currentUser=user;
+
+  if(!user){
+    $("authSection").classList.remove("hidden");
+    $("dashboard").classList.add("hidden");
+    $("logoutBtn").classList.add("hidden");
+    return;
+  }
+
+  $("authSection").classList.add("hidden");
+  $("dashboard").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden");
+
+  const userRef=doc(db,"users",user.uid);
+  const userSnap=await getDoc(userRef);
+
+  if(!userSnap.exists()){
+    await setDoc(userRef,{
+      email:user.email||"",
+      gameName:user.displayName||"Player",
+      testCoins:0,
+      createdAt:serverTimestamp()
+    },{merge:true});
+  }
+
+  listenToUser();
+  listenToMatches();
+  listenToTransactions();
+  listenToNotifications();
+  listenToRegistrations();
+});
+
+/* USER PROFILE AND WALLET */
+function listenToUser(){
+  const ref=doc(db,"users",currentUser.uid);
+
+  const unsub=onSnapshot(ref,snap=>{
+    userData=snap.data()||{};
+
+    const name=userData.gameName||currentUser.displayName||"Player";
+    const coins=Number(userData.testCoins||0);
+
+    $("welcomeName").textContent=name;
+    $("playerEmail").textContent=currentUser.email||"";
+    $("coinBalance").textContent=coins;
+    $("walletCoins").textContent=coins;
+    $("gameName").value=name;
+    $("gameUid").value=userData.gameUid||"";
+
+    $("accountStatus").textContent=userData.banned?"Banned":"Active";
+  });
+
+  unsubscribers.push(unsub);
+}
+
+/* SAVE PROFILE */
+$("saveProfile").addEventListener("click",async()=>{
+  if(!currentUser)return;
+
+  const gameName=$("gameName").value.trim();
+  const gameUid=$("gameUid").value.trim();
+
+  if(!gameName||!gameUid){
+    $("profileMessage").textContent="Enter Game Name and UID.";
+    return;
+  }
+
+  try{
+    await setDoc(doc(db,"users",currentUser.uid),{
+      gameName,gameUid
+    },{merge:true});
+
+    $("profileMessage").textContent="Profile saved!";
+  }catch(error){
+    $("profileMessage").textContent=error.message;
   }
 });
 
+/* TOURNAMENT LIST */
+function listenToMatches(){
+  const unsub=onSnapshot(collection(db,"tournaments"),snap=>{
+    const matches=[];
+
+    snap.forEach(d=>{
+      matches.push({id:d.id,...d.data()});
+    });
+
+    matches.sort((a,b)=>
+      String(a.date||"").localeCompare(String(b.date||""))
+    );
+
+    let html="";
+
+    matches.forEach(m=>{
+      html+=`
+        <div class="match">
+          <b>${escapeHTML(m.title||"Tournament")}</b>
+          <span class="badge">${escapeHTML(m.status||"upcoming")}</span>
+          <p class="muted">
+            Date: ${escapeHTML(m.date||"TBA")} |
+            Time: ${escapeHTML(m.matchTime||"TBA")}
+          </p>
+          <p class="muted">
+            Map: ${escapeHTML(m.map||"Bermuda")} |
+            Slots: ${Number(m.joined||0)}/${Number(m.maxPlayers||48)}
+          </p>
+          <p class="gold">
+            Prize: ${Number(m.prizePool||0)} |
+            Entry Fee: ${Number(m.fee||0)}
+          </p>
+          <button class="primary joinMatch"
+            data-id="${escapeHTML(m.id)}">
+            REQUEST TO JOIN
+          </button>
+        </div>`;
+    });
+
+    $("matchList").innerHTML=html||"No tournaments available.";
+  });
+
+  unsubscribers.push(unsub);
+}
+
+/* JOIN REQUEST — NO AUTOMATIC COIN OR MONEY DEDUCTION */
+$("matchList").addEventListener("click",async event=>{
+  const btn=event.target.closest(".joinMatch");
+  if(!btn||!currentUser)return;
+
+  const matchId=btn.dataset.id;
+  const gameName=$("gameName").value.trim();
+  const gameUid=$("gameUid").value.trim();
+
+  if(!gameName||!gameUid){
+    alert("Complete your player profile first.");
+    showTab("profile");
+    return;
+  }
+
+  btn.disabled=true;
+
+  try{
+    const matchRef=doc(db,"tournaments",matchId);
+    const matchSnap=await getDoc(matchRef);
+
+    if(!matchSnap.exists())throw new Error("Match not found.");
+
+    const match=matchSnap.data();
+
+    if(match.status!=="upcoming")
+      throw new Error("This match is not open for joining.");
+
+    const existing=await getDocs(query(
+      collection(db,"registrations"),
+      where("uid","==",currentUser.uid),
+      where("tournamentId","==",matchId)
+    ));
+
+    if(!existing.empty)
+      throw new Error("You already requested this match.");
+
+    await addDoc(collection(db,"registrations"),{
+      uid:currentUser.uid,
+      gameName,
+      gameUid,
+      tournamentId:matchId,
+      kills:0,
+      winAmount:0,
+      paid:false,
+      requestStatus:"pending",
+      createdAt:serverTimestamp()
+    });
+
+    alert("Join request submitted.");
+  }catch(error){
+    alert(error.message);
+  }finally{
+    btn.disabled=false;
+  }
+});
+
+/* DEPOSIT TEST REQUEST */
+$("depositBtn").addEventListener("click",async()=>{
+  if(!currentUser)return;
+
+  const amount=Number($("depositAmount").value);
+
+  if(!Number.isInteger(amount)||amount<10){
+    alert("Minimum deposit request is 10 test coins.");
+    return;
+  }
+
+  try{
+    await addDoc(collection(db,"transactions"),{
+      uid:currentUser.uid,
+      gameName:userData.gameName||currentUser.displayName||"Player",
+      type:"test_deposit",
+      amount,
+      status:"pending",
+      at:serverTimestamp()
+    });
+
+    $("depositAmount").value="";
+    alert("Request submitted. Coins will be added only after Owner approval.");
+  }catch(error){
+    alert(error.message);
+  }
+});
+
+/* WITHDRAW TEST REQUEST */
+$("withdrawBtn").addEventListener("click",async()=>{
+  if(!currentUser)return;
+
+  const amount=Number($("withdrawAmount").value);
+  const balance=Number(userData.testCoins||0);
+
+  if(!Number.isInteger(amount)||amount<50){
+    alert("Minimum withdraw request is 50 test coins.");
+    return;
+  }
+
+  if(amount>balance){
+    alert("Insufficient test coin balance.");
+    return;
+  }
+
+  try{
+    await addDoc(collection(db,"transactions"),{
+      uid:currentUser.uid,
+      gameName:userData.gameName||currentUser.displayName||"Player",
+      type:"test_withdraw",
+      amount,
+      status:"pending",
+      at:serverTimestamp()
+    });
+
+    $("withdrawAmount").value="";
+    alert("Test withdraw request submitted for Owner review.");
+  }catch(error){
+    alert(error.message);
+  }
+});
+
+/* TRANSACTION HISTORY AND REQUEST STATUS */
+function listenToTransactions(){
+  const q=query(
+    collection(db,"transactions"),
+    where("uid","==",currentUser.uid)
+  );
+
+  const unsub=onSnapshot(q,snap=>{
+    const items=[];
+
+    snap.forEach(d=>items.push({id:d.id,...d.data()}));
+
+    items.sort((a,b)=>{
+      const ta=a.at?.toMillis?.()||0;
+      const tb=b.at?.toMillis?.()||0;
+      return tb-ta;
+    });
+
+    let history="";
+    let requests="";
+
+    items.forEach(t=>{
+      const type=escapeHTML(t.type||"transaction");
+      const status=escapeHTML(t.status||"pending");
+      const amount=Number(t.amount||0);
+
+      const row=`
+        <div class="match">
+          <b>${type}</b>
+          <p>${amount} Test Coins</p>
+          <span class="badge">${status}</span>
+        </div>`;
+
+      history+=row;
+
+      if(["pending","approved_test","rejected"].includes(t.status)){
+        requests+=row;
+      }
+    });
+
+    $("transactionHistory").innerHTML=history||"No transactions yet.";
+    $("myRequests").innerHTML=requests||"No requests yet.";
+  });
+
+  unsubscribers.push(unsub);
+}
+
+/* NOTIFICATIONS */
+function listenToNotifications(){
+  const unsub=onSnapshot(
+    query(collection(db,"notifications"),limit(20)),
+    snap=>{
+      const items=[];
+
+      snap.forEach(d=>items.push(d.data()));
+
+      items.reverse();
+
+      $("notifications").innerHTML=items.map(n=>`
+        <div class="match">
+          ${escapeHTML(n.message||"Announcement")}
+        </div>
+      `).join("")||"No announcements.";
+    }
+  );
+
+  unsubscribers.push(unsub);
+}
+
+/* MATCH REGISTRATION HISTORY */
+function listenToRegistrations(){
+  const q=query(
+    collection(db,"registrations"),
+    where("uid","==",currentUser.uid)
+  );
+
+  const unsub=onSnapshot(q,snap=>{
+    let html="";
+
+    snap.forEach(d=>{
+      const r=d.data();
+
+      html+=`
+        <div class="match">
+          <b>${escapeHTML(r.gameName||"Player")}</b>
+          <p class="muted">Match ID: ${escapeHTML(r.tournamentId||"")}</p>
+          <span class="badge">${escapeHTML(r.requestStatus||"registered")}</span>
+        </div>`;
+    });
+
+    $("recentMatches").innerHTML=html||"No match requests yet.";
+    $("matchHistory").innerHTML=html||"No match history yet.";
+  });
+
+  unsubscribers.push(unsub);
+}
+
+/* SUPPORT */
+$("supportBtn").addEventListener("click",async()=>{
+  if(!currentUser)return;
+
+  const subject=$("supportSubject").value.trim();
+  const messageText=$("supportMessage").value.trim();
+
+  if(!subject||!messageText){
+    $("supportStatus").textContent="Enter subject and message.";
+    return;
+  }
+
+  try{
+    await addDoc(collection(db,"support"),{
+      uid:currentUser.uid,
+      gameName:userData.gameName||currentUser.displayName||"Player",
+      subject,
+      message:messageText,
+      at:serverTimestamp(),
+      status:"open"
+    });
+
+    $("supportSubject").value="";
+    $("supportMessage").value="";
+    $("supportStatus").textContent="Support ticket submitted.";
+  }catch(error){
+    $("supportStatus").textContent=error.message;
+  }
+});
 </script>
 </body>
 </html>
