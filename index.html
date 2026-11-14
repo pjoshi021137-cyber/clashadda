@@ -2,467 +2,839 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="appTitle">BGR_ESPORTS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BGR ESPORTS - Free Fire Tournament | Daily Cash Prizes</title>
+<meta name="description" content="BGR Esports - India's Best Free Fire Tournament App. Daily Cash Prizes, Instant Withdrawal.">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQkdSIEVzcG9ydHMifQ==">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{ --bg:#080808; --card:#1a1a1a; --btn:#FFA500; --text:#ffffff; --muted:#bbbbbb; --border:#3a3a3a; --accent:#FFA500; --success:#1faa55; --danger:#b52b2b; --info:#2563eb; }
-body.light{ --bg:#f5f5f5; --card:#ffffff; --text:#111111; --muted:#666666; --border:#dddddd; }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:14px;padding-bottom:120px}
-h1{font-size:28px;margin:0} h2,h3{color:var(--accent)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:18px;margin:14px 0}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0B0D12;--card:#15181F;--card2:#1D212B;--red:#FF2D20;--red2:#FF4D42;--green:#00C853;--gold:#FFC107;--blue:#2196F3;--purple:#9C27B0;--text:#fff;--muted:#9AA0AE;--border:#262A35;--radius:16px}
+body{background:var(--bg);color:var(--text);padding-bottom:95px;overflow-x:hidden}
+::-webkit-scrollbar{width:0}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(11,13,18,.95);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#FF2D20,#B71C1C);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 15px rgba(255,45,32,.4)}
+.logo b{font-family:'Poppins';font-size:19px;letter-spacing:.3px;line-height:1}
+.logo span{font-size:11px;color:var(--muted);display:block;font-weight:500}
+.wallet-pill{background:var(--card);border:1px solid var(--border);padding:7px 10px 7px 12px;border-radius:50px;display:flex;gap:8px;align-items:center;font-weight:700;font-size:14px;cursor:pointer}
+.wallet-pill i{width:24px;height:24px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:#000;font-style:normal}
+.wallet-pill .add{background:var(--green);color:#fff;padding:2px 8px;border-radius:50px;font-size:11px}
+.banner{margin:14px 16px;background:linear-gradient(135deg,#FF2D20,#7B0D0D);border-radius:20px;padding:20px;position:relative;overflow:hidden}
+.banner::after{content:'🔥';position:absolute;right:10px;top:10px;font-size:70px;opacity:.15}
+.banner h2{font-family:'Poppins';font-size:25px;line-height:1.15}
+.banner p{font-size:13px;opacity:.92;margin:6px 0 12px}
+.banner-btn{background:#fff;color:#000;padding:10px 18px;border-radius:50px;font-weight:800;font-size:13px;border:none;cursor:pointer}
+.countdown{display:flex;gap:8px;margin-top:14px}
+.cd{background:rgba(0,0,0,.4);padding:7px 11px;border-radius:10px;text-align:center;min-width:58px}
+.cd b{font-size:17px;display:block}
+.cd span{font-size:10px;opacity:.8}
+.section{padding:0 16px;margin-top:20px}
+.section h3{font-size:16px;font-family:'Poppins';display:flex;justify-content:space-between;align-items:center}
+.section h3 a{font-size:12px;color:var(--red);text-decoration:none;font-weight:600}
+.t-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:14px;margin-top:12px;display:flex;gap:12px;position:relative}
+.t-img{width:74px;height:74px;border-radius:14px;background:linear-gradient(135deg,#2A2E3A,#1A1D26);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;border:1px solid var(--border)}
+.t-info{flex:1;min-width:0}
+.t-info h4{font-size:15px;line-height:1.3}
+.t-info p{font-size:12px;color:var(--muted);margin:4px 0}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0}
+.tag{font-size:11px;background:var(--card2);border:1px solid var(--border);padding:4px 9px;border-radius:50px}
+.tag.live{background:var(--red);color:#fff;border:none;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.price{font-weight:800;font-size:16px}
+.price small{color:var(--muted);font-weight:400;font-size:12px}
+.btn-join{background:var(--red);color:#fff;border:none;padding:11px 18px;border-radius:50px;font-weight:700;font-size:13px;width:100%;margin-top:9px;cursor:pointer}
+.btn-join:disabled{background:#333;color:#888}
+.btn-join.green{background:var(--green)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#12151C;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:10px 0 16px;z-index:100}
+.nav-item{text-align:center;font-size:11px;color:var(--muted);cursor:pointer;flex:1;position:relative}
+.nav-item.active{color:var(--red)}
+.nav-item div{font-size:21px}
+.nav-badge{position:absolute;top:-2px;right:22px;background:var(--red);color:#fff;font-size:9px;padding:2px 5px;border-radius:50px;font-weight:800}
+input,select,textarea{width:100%;padding:13px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:#fff;outline:none;font-size:14px;margin-top:10px}
+input:focus{border-color:var(--red)}
+.btn-main{width:100%;background:var(--red);color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800;font-size:15px;margin-top:12px;cursor:pointer}
+.btn-main:disabled{opacity:.6}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.hide{display:none!important}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.modal-box{background:var(--card);width:100%;max-width:480px;border-radius:22px 22px 0 0;padding:20px;padding-bottom:30px;max-height:85vh;overflow-y:auto}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:11px 18px;border-radius:50px;font-weight:700;font-size:13px;z-index:999;box-shadow:0 10px 30px rgba(0,0,0,.4);display:none}
+.splash{position:fixed;inset:0;background:#0B0D12;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.splash-logo{font-size:80px;animation:bounce 1s infinite}
+@keyframes bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.badge-vip{background:var(--gold);color:#000;font-size:10px;padding:2px 7px;border-radius:50px;font-weight:800}
+.badge-verified{background:var(--green);color:#fff;font-size:10px;padding:2px 7px;border-radius:50px;font-weight:700}
 </style>
 </head>
 <body>
-<div style="display:flex;gap:12px;align-items:center">
-<div id="appLogo" style="width:58px;height:58px;border-radius:50%;background:#FFA500;display:flex;align-items:center;justify-content:center;font-size:28px">🎮</div>
-<div style="flex:1"><h1 id="appNameDisplay">BGR_ESPORTS</h1><p class="muted" id="appDomainDisplay">bgr-esports.web.app</p></div>
-<button id="themeToggleBtn" onclick="toggleTheme()" style="width:48px">🌙</button>
+
+<div class="toast" id="toast"></div>
+
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="splash-logo">🔥</div>
+  <h1 style="font-family:'Poppins';font-size:28px;margin-top:12px">BGR <span style="color:var(--red)">ESPORTS</span></h1>
+  <p style="color:var(--muted);font-size:13px;margin-top:4px">Free Fire Tournament • Daily Cash Prizes</p>
+  <p style="margin-top:20px;font-size:12px;color:var(--muted)">Loading...</p>
 </div>
-<div id="message"></div>
-<style>
-input,select,textarea{width:100%;padding:14px;margin:8px 0;border-radius:12px;border:1px solid #555;background:#222;color:#fff;font-size:15px}
-input::placeholder{color:#999}
-input[type=checkbox]{width:20px;height:20px}
-button{width:100%;padding:14px;margin:8px 0;border-radius:12px;border:none;font-size:15px;font-weight:800;background:var(--btn);color:#000;cursor:pointer}
-.danger{background:var(--danger);color:#fff} .green{background:var(--success);color:#fff} .blue{background:var(--info);color:#fff} .orange{background:orange;color:#000} .purple{background:#a855f7;color:#fff}
-.item{background:#0f0f0f;border:1px solid #333;padding:14px;border-radius:12px;margin:10px 0} .muted{color:var(--muted);font-size:12px}
-.flex{display:flex;gap:8px} .flex button{flex:1}
-.screen{display:none} .screen.active{display:block} .tab{display:none} .tab.active{display:block}
-.tabs{display:flex;gap:6px;flex-wrap:wrap} .tabs button{width:auto;padding:9px 12px;font-size:13px}
-.bottom{position:fixed;bottom:0;left:0;right:0;display:flex;background:#111;border-top:1px solid #333;z-index:99} .bottom button{background:none;color:#fff;font-size:13px} .bottom button.active{color:var(--btn)}
-.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:bold} .live{background:red;color:#fff} .up{background:orange;color:#000} .done{background:green;color:#fff} .vip{background:gold;color:#000} .u18{background:#00bfff;color:#fff} .adult{background:#1faa55;color:#fff}
-.banner{width:100%;border-radius:16px;background:linear-gradient(135deg,#FFA500,#FF2D95);padding:18px;margin:12px 0;color:#000;text-align:center} .banner h2{color:#000;margin:0} .count{font-size:22px;font-weight:900}
-</style>
-<div class="banner"><h2>🔥 MEGA WEEKLY - ₹10,000 PRIZE</h2><p style="margin:6px 0">Aaj 8 PM - Solo Mega Match | 18- & 18+ Dono Khel Sakte Hain</p><div class="count" id="countdown">00 : 00 : 00</div></div>
-<div id="loginScreen" class="screen active">
-<div class="card"><h2>LOGIN / REGISTER</h2>
-<input id="loginEmail" placeholder="Owner Email"><input id="loginPass" type="password" placeholder="Owner Password"><button onclick="ownerLogin()">OWNER LOGIN</button><hr>
-<input id="phone" placeholder="Mobile Number"><input id="gameName" placeholder="Free Fire Game Name"><input id="ffUid" placeholder="Free Fire UID"><input id="ffLevel" type="number" placeholder="FF Level 40+">
-<label class="muted">Apni Age Group Chuno:</label>
-<select id="ageGroup" onchange="checkAge()"><option value="Under 18">Under 18 - 18 se kam</option><option value="18+">18+ - 18 ya usse zyada</option></select>
-<div id="u18Box" style="background:#0f0f0f;border:1px solid #00bfff;border-radius:12px;padding:12px;margin:8px 0">
-<p style="margin:0;font-size:13px">🔵 <b>Under 18 - Parent Consent Zaruri Hai</b><br><span class="muted">Tu 18 se kam hai to bhi khel sakta hai, bas tick kar ki Mummy/Papa ko pata hai.</span></p>
-<div style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="parentConsent"><span style="font-size:13px">Mere Parents ko pata hai, main unki permission se khel raha hu ✅</span></div>
-<input id="parentPhone" placeholder="Parent ka Mobile Number (Optional)">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo" onclick="showPage('home')"><div class="logo-icon">🔥</div><div><b>BGR ESPORTS</b><span>Free Fire • Pro Tournament</span></div></div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <div style="font-size:20px;position:relative;cursor:pointer" onclick="showPage('noti')">🔔<span id="notiDot" class="hide" style="position:absolute;top:0;right:0;width:8px;height:8px;background:var(--red);border-radius:50%"></span></div>
+    <div class="wallet-pill" onclick="showPage('wallet')"><i>🪙</i> <span id="coinTop">0</span> <span class="add">+ Add</span></div>
+  </div>
 </div>
-<div id="adultBox" style="display:none;background:#0f0f0f;border:1px solid #1faa55;border-radius:12px;padding:12px;margin:8px 0"><p style="margin:0;font-size:13px">🟢 <b>18+ Verified</b><br><span class="muted">Tu Adult hai, tujhe direct sab milega - Withdraw, VIP, Custom sab.</span></p></div>
-<input id="teamCode" placeholder="Team Code (Optional)"><input id="refCodeInput" placeholder="Referral Code (Optional) - 10 Coins Bonus"><button class="green" onclick="playerLogin()">PLAYER LOGIN / REGISTER</button><p class="muted">✅ Under 18 bhi khel sakta hai - Parent Consent ke saath. ✅ 18+ bhi khel sakta hai. Level 40+. 1 UID = 1 Account.</p></div>
-<div class="card"><h3>📞 Support</h3><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-<button class="green" onclick="openLink('whatsapp')">💬 WhatsApp</button><button class="blue" onclick="openLink('telegram')">✈️ Telegram</button><button style="background:#E1306C;color:#fff" onclick="openLink('instagram')">📸 Instagram</button><button style="background:#FF0000;color:#fff" onclick="openLink('youtube')">▶️ YouTube</button><button style="background:#333;color:#fff" onclick="openLink('email')">📧 Email</button><button onclick="openLink('website')">🌐 Website</button>
-</div></div>
-<div class="card"><h3>📢 Announcements</h3><div id="annHome">Loading...</div></div>
-<div class="card"><h3>🏆 Leaderboard</h3><div id="leaderHome">Loading...</div></div>
+
+<!-- LOGIN -->
+<div id="page-login" class="section">
+  <div style="text-align:center;padding:18px 0 8px">
+    <div style="font-size:55px">🎮</div>
+    <h2 style="font-family:'Poppins';font-size:26px;margin-top:8px">Welcome to BGR</h2>
+    <p style="color:var(--muted);font-size:13px;margin-top:6px;line-height:1.5">India's Most Trusted Free Fire Tournament App<br>Daily Cash Prizes • Instant Withdrawal • 24x7 Support</p>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px">Login / Register</h3>
+    <p style="font-size:12px;color:var(--muted);margin-top:4px">Naya ho? Bas details bharo, account ban jayega + 20 Coins Bonus</p>
+    <input id="loginPhone" type="tel" placeholder="📱 Mobile Number (10 Digit)" maxlength="10" inputmode="numeric">
+    <input id="loginName" placeholder="🎮 Free Fire Game Name (UID wala naam)">
+    <input id="loginFFUID" placeholder="🆔 Free Fire UID (Optional)">
+    <input id="loginPass" type="password" placeholder="🔒 Password (Min 4 Digit)">
+    <input id="loginRefer" placeholder="🎁 Referral Code (Optional) - Extra 10 Coins">
+    <button class="btn-main" id="loginBtn" onclick="proLogin()">CONTINUE →</button>
+    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:12px">By continuing you agree to Terms & Privacy Policy • 18+ Only</p>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:14px;text-align:center">
+    <div class="card" style="flex:1;padding:13px"><b style="color:var(--gold)">₹10,000+</b><br><span style="font-size:11px;color:var(--muted)">Daily Prizes</span></div>
+    <div class="card" style="flex:1;padding:13px"><b style="color:var(--green)">1 Lakh+</b><br><span style="font-size:11px;color:var(--muted)">Players</span></div>
+    <div class="card" style="flex:1;padding:13px"><b>⚡ Instant</b><br><span style="font-size:11px;color:var(--muted)">Withdraw</span></div>
+  </div>
+  <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:16px">Admin ho? <b style="color:var(--red);cursor:pointer" onclick="showAdminLogin()">Admin Login →</b></p>
+</div> <!-- HOME -->
+<div id="page-home" class="hide">
+  <div class="banner">
+    <p style="background:#fff;color:#000;display:inline-block;padding:3px 9px;border-radius:50px;font-size:11px;font-weight:800">🔴 LIVE NOW</p>
+    <h2 id="bannerTitle">MEGA WEEKLY<br>₹10,000 PRIZE POOL</h2>
+    <p>Free Fire Full Map • Solo • 48 Slots Only • Per Kill ₹20</p>
+    <button class="banner-btn" onclick="scrollToLive()">Join Now →</button>
+    <div class="countdown">
+      <div class="cd"><b id="cdH">00</b><span>HOURS</span></div>
+      <div class="cd"><b id="cdM">00</b><span>MINS</span></div>
+      <div class="cd"><b id="cdS">00</b><span>SECS</span></div>
+    </div>
+  </div>
+
+  <!-- QUICK MENU -->
+  <div style="display:flex;gap:10px;padding:0 16px;margin-top:14px;overflow-x:auto">
+    <div onclick="showPage('wallet')" style="min-width:78px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center;cursor:pointer"><div style="font-size:22px">💰</div><span style="font-size:11px">Add Coins</span></div>
+    <div onclick="openSpin()" style="min-width:78px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center;cursor:pointer"><div style="font-size:22px">🎡</div><span style="font-size:11px">Spin Win</span></div>
+    <div onclick="showPage('refer')" style="min-width:78px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center;cursor:pointer"><div style="font-size:22px">🎁</div><span style="font-size:11px">Refer Earn</span></div>
+    <div onclick="showPage('leader')" style="min-width:78px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center;cursor:pointer"><div style="font-size:22px">🏆</div><span style="font-size:11px">Leaderboard</span></div>
+    <div onclick="showPage('support')" style="min-width:78px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center;cursor:pointer"><div style="font-size:22px">💬</div><span style="font-size:11px">Support</span></div>
+    <div onclick="showPage('noti')" style="min-width:78px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center;cursor:pointer"><div style="font-size:22px">📢</div><span style="font-size:11px">Notices</span></div>
+  </div>
+
+  <!-- DAILY REWARD STRIP -->
+  <div id="dailyStrip" class="section"><div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:linear-gradient(90deg,#1D212B,#2A1A00)"><span>🎁 <b>Daily Reward</b><br><span style="font-size:11px;color:var(--muted)">Roz login karo, free coins pao</span></span><button class="btn-main" style="width:auto;margin:0;padding:9px 16px;font-size:12px" onclick="claimDaily()">Claim</button></div></div>
+
+  <div class="section"><h3>🔴 Live Tournaments <a href="#">View All →</a></h3><div id="liveList"></div></div>
+  <div class="section"><h3>⏰ Upcoming Tournaments</h3><div id="upcomingList"></div></div>
+  <div class="section"><h3>✅ Completed / Results</h3><div id="completedList"></div></div>
+  <div class="section"><h3>🏆 Top Players This Week</h3><div id="leaderboardHome" class="card" style="margin-top:12px"></div></div>
 </div>
-<div id="playerScreen" class="screen">
-<div class="card"><h3>🔥 <span class="appNameText">BGR_ESPORTS</span> <span id="vipBadge"></span> <span id="ageBadge"></span></h3><p>Coins: <b id="coinBalance">0</b> | <span id="playerInfo"></span> | Wallet: <b id="walletBalance">0</b></p><p id="appNotice">Aaj 8 PM Mega Match</p><p class="muted">Mera Referral Code: <b id="myRefCode">...</b> | Earning: <b id="myRefEarn">0</b> Coins</p><div class="flex"><button class="blue" onclick="copyRef()">COPY REFERRAL LINK</button><button class="purple" onclick="claimDaily()">🎁 DAILY REWARD</button></div></div>
-<div class="card"><h3>🎡 SPIN WHEEL - Daily Free Spin</h3><div style="font-size:60px;text-align:center">🎡</div><button class="orange" onclick="spinWheel()">SPIN KARO - FREE COIN JITO</button><p class="muted" id="spinResult">Aaj ka spin bacha hai.</p></div>
-<div class="card"><h3>📞 Support</h3><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"><button class="green" onclick="openLink('whatsapp')">💬 WhatsApp</button><button class="blue" onclick="openLink('telegram')">✈️ Telegram</button><button style="background:#E1306C;color:#fff" onclick="openLink('instagram')">📸 Instagram</button><button style="background:#FF0000;color:#fff" onclick="openLink('youtube')">▶️ YouTube</button><button style="background:#333;color:#fff" onclick="openLink('email')">📧 Email</button><button onclick="openLink('website')">🌐 Website</button></div></div>
-<div class="card"><h3>🔔 My Notifications</h3><div id="notifHome">Loading...</div></div>
-<div class="card"><h3>💰 ONLINE PAID CUSTOM - Apna Khud Ka Banao</h3><p class="muted">Tu khud apna Paid Custom bana sakta hai. Fee dega, Room banega, Admin Approve karega, fir sab join karenge.</p><input id="customTitle" placeholder="Custom Title - Ex: Mera Solo Room"><input id="customFee" type="number" placeholder="Entry Fee Coins - Ex: 30"><input id="customPrize" type="number" placeholder="Prize Pool Coins - Ex: 500"><input id="customSlots" type="number" placeholder="Slots - Ex: 48"><select id="customMode"><option>Solo</option><option>Duo</option><option>Squad</option><option>Lone Wolf</option></select><input id="customDate" type="date"><input id="customTime" type="time"><button class="purple" onclick="createCustomTournament()">CREATE CUSTOM - PAID 🛒</button><p class="muted">Custom Fee: 20 Coins Admin Charge katega.</p><div id="myCustomList"></div></div>
-<div class="card"><h3>🏆 Tournaments</h3><div class="flex"><button onclick="filterMode('All')">All</button><button onclick="filterMode('Solo')">Solo</button><button onclick="filterMode('Duo')">Duo</button><button onclick="filterMode('Squad')">Squad</button><button onclick="filterMode('Lone Wolf')">Lone Wolf</button><button onclick="filterMode('Custom')">Custom</button></div><input id="searchTour" placeholder="Tournament Search..." oninput="renderTournaments()"><div id="tournamentList">Loading...</div></div>
-<div class="card"><h3>👥 My Team</h3><div id="myTeam">Loading...</div><input id="createTeamName" placeholder="New Team Name"><button class="blue" onclick="createTeam()">CREATE TEAM</button><input id="joinTeamCode" placeholder="Team Code"><button onclick="joinTeam()">JOIN TEAM</button></div>
-<div class="card"><h3>💬 Live Chat</h3><div id="chatBox" style="max-height:220px;overflow:auto;background:#0f0f0f;border:1px solid #333;border-radius:10px;padding:10px">Loading...</div><input id="chatMsg" placeholder="Kuch likho..."><button class="blue" onclick="sendChat()">SEND CHAT</button></div>
-<div class="card"><h3>🏆 Leaderboard</h3><div id="leaderPlayer">Loading...</div></div>
+
+<!-- OTHER PAGES -->
+<div id="page-wallet" class="hide section"><h3>My Wallet</h3><div id="walletBox" style="margin-top:12px"></div></div>
+<div id="page-my" class="hide section"><h3>🎮 My Matches</h3><div id="myMatchesBox" style="margin-top:12px"></div></div>
+<div id="page-profile" class="hide section"><h3>My Profile</h3><div id="profileBox" style="margin-top:12px"></div></div>
+<div id="page-leader" class="hide section"><h3>🏆 Leaderboard</h3><div id="leaderFull" style="margin-top:12px"></div></div>
+<div id="page-refer" class="hide section"><h3>🎁 Refer & Earn</h3><div id="referBox" style="margin-top:12px"></div></div>
+<div id="page-noti" class="hide section"><h3>📢 Notices & Updates</h3><div id="notiBox" style="margin-top:12px"></div></div>
+<div id="page-support" class="hide section"><h3>💬 Support</h3><div id="supportBox" style="margin-top:12px"></div></div>
+<div id="page-admin" class="hide section"><h3>👑 Admin Panel</h3><div id="adminBox" style="margin-top:12px"></div></div>
+
+<!-- TOURNAMENT DETAIL MODAL -->
+<div id="detailModal" class="modal hide"><div class="modal-box"><div id="detailContent"></div><button class="btn-main" style="background:#333" onclick="closeModal('detailModal')">Close</button></div></div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav" id="bottomNav" style="display:none">
+  <div class="nav-item active" onclick="showPage('home',this)"><div>🏠</div>Home</div>
+  <div class="nav-item" onclick="showPage('wallet',this)"><div>👛</div>Wallet</div>
+  <div class="nav-item" onclick="showPage('my',this)"><div>🎮</div>My Match <span id="myBadge" class="nav-badge hide">0</span></div>
+  <div class="nav-item" onclick="showPage('leader',this)"><div>🏆</div>Rank</div>
+  <div class="nav-item" onclick="showPage('profile',this)"><div>👤</div>Profile</div>
 </div>
-<div id="matchesScreen" class="screen">
-<div class="card"><h3>🎮 My Matches - Room ID Yahi Milega</h3><div id="myMatches">Loading...</div></div>
-<div class="card"><h3>📺 Live Stream</h3><p class="muted">Live Stream Link Admin dalega.</p><button class="blue" onclick="openLink('youtube')">▶️ WATCH LIVE ON YOUTUBE</button></div>
-<div class="card"><h3>📜 My Results</h3><div id="myHistory">Loading...</div></div>
-<div class="card"><h3>📸 Upload Proof</h3><input id="proofFile" type="file" accept="image/*"><input id="proofNote" placeholder="Kills / Place likho"><button onclick="uploadProof()">UPLOAD PROOF</button><div id="myProofs"></div></div>
-</div>
-<div id="walletScreen" class="screen">
-<div class="card"><h3>💰 Deposit Request - Online Paid</h3><p class="muted">UPI: <b id="upiDisplay">Loading...</b> | Payment: <b id="payMode">UPI</b></p><input id="depAmount" type="number" placeholder="Rs Kitne Bheje?"><input id="depCoins" type="number" placeholder="Coins Kitne Chahiye?"><input id="depUtr" placeholder="UTR ID"><input id="depCoupon" placeholder="Coupon Code - Ex: BGR50"><input id="depSSFile" type="file" accept="image/*"><button onclick="submitDeposit()">DEPOSIT REQUEST BHEJO</button><p class="muted">Coupon se extra coins. Fail pe auto rollback.</p></div>
-<div class="card"><h3>🏧 Withdrawal Request</h3><p class="muted" id="withdrawNote">18+ ko direct UPI pe, Under 18 ko Parent UPI pe.</p><input id="withCoins" type="number" placeholder="Coins - Min 100"><input id="withUpi" placeholder="Tumhara / Parent ka UPI"><input id="withName" placeholder="UPI Name"><button class="green" onclick="submitWithdraw()">WITHDRAW REQUEST BHEJO</button></div>
-<div class="card"><h3>👑 VIP / Season Pass</h3><p class="muted">VIP lo - Entry Fee me 20% Discount + Gold Badge</p><div class="flex"><button class="orange" onclick="buyVIP('weekly')">VIP WEEKLY - 99 Coins</button><button class="purple" onclick="buyVIP('monthly')">VIP MONTHLY - 299 Coins</button></div><p id="vipStatus" class="muted">VIP Status: Free Player</p></div>
-<div class="card"><h3>💳 My Wallet</h3><div id="walletInfo">Loading...</div></div>
-<div class="card"><h3>📜 Transactions</h3><div id="txnHistory">Loading...</div></div>
-<div class="card"><h3>💸 My Deposit / Withdraw Status</h3><div id="myDepWith">Loading...</div></div>
-</div>
-<div id="profileScreen" class="screen">
-<div class="card"><h3>👤 My Profile</h3><p id="profileInfo"></p><input id="editGameName" placeholder="New Game Name"><button onclick="updateProfile()">EDIT PROFILE</button><button class="danger" onclick="doLogout()">LOGOUT</button></div>
-<div class="card"><h3>📞 Support</h3><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"><button class="green" onclick="openLink('whatsapp')">💬 WhatsApp</button><button class="blue" onclick="openLink('telegram')">✈️ Telegram</button><button style="background:#E1306C;color:#fff" onclick="openLink('instagram')">📸 Instagram</button><button style="background:#FF0000;color:#fff" onclick="openLink('youtube')">▶️ YouTube</button><button style="background:#333;color:#fff" onclick="openLink('email')">📧 Email</button><button onclick="openLink('website')">🌐 Website</button></div></div>
-<div class="card"><h3>🎧 Support Ticket</h3><input id="supSubject" placeholder="Problem?"><textarea id="supMsg" placeholder="Pura likho..."></textarea><button class="blue" onclick="sendSupport()">SUPPORT KO BHEJO</button><div id="mySupport"></div></div>
-</div>
-<div id="adminScreen" class="screen">
-<div class="card"><h2>OWNER DASHBOARD - <span id="liveClock"></span></h2><p id="ownerEmail"></p><p class="muted">Phone se hi sab chalao.</p>
-<div class="flex"><button onclick="loadAllAdmin()">🔄 REFRESH</button><button onclick="exportCSV()">📥 EXPORT CSV</button><button class="danger" onclick="doLogout()">LOGOUT</button></div>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
-<div style="background:#0f0f0f;border:1px solid #333;padding:12px;border-radius:12px;text-align:center">Total Players<br><strong id="cUsers" style="color:var(--accent);font-size:19px">0</strong></div>
-<div style="background:#0f0f0f;border:1px solid #333;padding:12px;border-radius:12px;text-align:center">Live<br><strong id="cLive" style="color:var(--accent);font-size:19px">0</strong></div>
-<div style="background:#0f0f0f;border:1px solid #333;padding:12px;border-radius:12px;text-align:center">Pending<br><strong id="cPending" style="color:var(--accent);font-size:19px">0</strong></div>
-<div style="background:#0f0f0f;border:1px solid #333;padding:12px;border-radius:12px;text-align:center">Collection<br><strong id="cCollection" style="color:var(--accent);font-size:19px">0</strong></div>
-<div style="background:#0f0f0f;border:1px solid #333;padding:12px;border-radius:12px;text-align:center">Payouts<br><strong id="cPayout" style="color:var(--accent);font-size:19px">0</strong></div>
-<div style="background:#0f0f0f;border:1px solid #333;padding:12px;border-radius:12px;text-align:center">Total Coins<br><strong id="cCoins" style="color:var(--accent);font-size:19px">0</strong></div>
-<div style="background:#0f0f0f;border:1px solid #333;padding:12px;border-radius:12px;text-align:center">Under 18<br><strong id="cU18" style="color:var(--accent);font-size:19px">0</strong></div>
-<div style="background:#0f0f0f;border:1px solid #333;padding:12px;border-radius:12px;text-align:center">18+<br><strong id="cAdult" style="color:var(--accent);font-size:19px">0</strong></div>
-<div style="background:#0f0f0f;border:1px solid #333;padding:12px;border-radius:12px;text-align:center">Custom Paid<br><strong id="cCustom" style="color:var(--accent);font-size:19px">0</strong></div>
-</div></div>
-<div class="card tabs">
-<button onclick="showAdminTab('aT')">🏆 Tournament</button><button onclick="showAdminTab('aM')">🎮 Matches</button><button onclick="showAdminTab('aTeam')">👥 Teams</button><button onclick="showAdminTab('aD')">💰 Deposit</button><button onclick="showAdminTab('aW')">🏧 Withdraw</button><button onclick="showAdminTab('aP')">👥 Users</button><button onclick="showAdminTab('aR')">📋 Reg + Results</button><button onclick="showAdminTab('aB')">📢 Ann + Support</button><button onclick="showAdminTab('aExtra')">🎁 Coupon + Custom</button><button onclick="showAdminTab('aTheme')">🎨 Theme</button><button onclick="showAdminTab('aSet')">⚙️ Settings</button>
-</div>
-<div id="aT" class="tab active"><div class="card"><h3>CREATE TOURNAMENT - Official</h3><input id="tTitle" placeholder="Title"><input id="tMap" placeholder="Map - Bermuda / Purgatory"><input id="tDate" type="date"><input id="tTime" type="time"><select id="tMode"><option>Solo</option><option>Duo</option><option>Squad</option><option>Lone Wolf</option><option>Custom</option></select><input id="tSlots" type="number" placeholder="Max Players"><input id="tFee" type="number" placeholder="Entry Fee"><input id="tPrize" type="number" placeholder="Prize Pool"><input id="tPerKill" type="number" placeholder="Per Kill"><input id="tFirst" type="number" placeholder="1st Prize"><input id="tSecond" type="number" placeholder="2nd Prize"><input id="tThird" type="number" placeholder="3rd Prize"><input id="tBanner" placeholder="Banner Image Link"><input id="tStream" placeholder="YouTube Live Link"><select id="tStatus"><option value="upcoming">Upcoming</option><option value="live">LIVE</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select><textarea id="tRules" placeholder="Rules..."></textarea><button onclick="createTournament()">CREATE</button></div><div class="card"><h3>ALL TOURNAMENTS</h3><div id="adminTourList">Loading...</div></div></div>
-<div id="aM" class="tab"><div class="card"><h3>🎮 MATCHES - Room</h3><input id="mTourId" placeholder="Tournament ID"><input id="mTitle" placeholder="Match Title"><input id="mRoomId" placeholder="Room ID - Private"><input id="mRoomPass" placeholder="Room Password - Private"><input id="mSlot" placeholder="Slot / Time"><button class="blue" onclick="createMatch()">CREATE MATCH + ROOM</button></div><div id="matchList">Loading...</div><div class="card"><h3>💬 Live Chat Monitor</h3><div id="adminChat">Loading...</div></div></div>
-<div id="aTeam" class="tab"><div class="card"><h3>👥 TEAMS</h3><div id="teamList">Loading...</div></div></div>
-<div id="aD" class="tab"><div class="card"><h3>💰 depositRequests</h3><div id="depositList">Loading...</div></div></div>
-<div id="aW" class="tab"><div class="card"><h3>🏧 withdrawalRequests</h3><div id="withdrawList">Loading...</div></div></div>
-<div id="aP" class="tab">
-<div class="card"><h3>👥 users - Ban / Coin / VIP / Age Filter</h3><div class="flex"><button onclick="filterAge('All')">All</button><button onclick="filterAge('Under 18')">Under 18</button><button onclick="filterAge('18+')">18+</button></div><input id="searchPlayer" placeholder="Search Name / UID" oninput="loadAllAdmin()"><div id="playerList">Loading...</div></div>
-<div class="card"><h3>🛡️ adminRoles</h3><input id="newAdminUid" placeholder="User UID"><select id="newAdminRole"><option value="admin">admin - Sab kuch</option><option value="moderator">moderator - Sirf Matches</option><option value="support">support - Sirf Support</option><option value="manager">manager - Deposit/Withdraw</option></select><button onclick="makeAdmin()">MAKE TEAM MEMBER</button><div id="adminRoleList"></div></div>
-</div>
-<div id="aR" class="tab"><div class="card"><h3>📋 registrations + Waiting List</h3><div id="regList">Loading...</div></div><div class="card"><h3>🏆 ADD RESULT - Prize AUTO</h3><input id="resTId" placeholder="Tournament ID"><input id="resUid" placeholder="Player Game UID"><input id="resKills" type="number" placeholder="Kills"><input id="resPlace" type="number" placeholder="Placement"><input id="resPrize" type="number" placeholder="Prize Coins"><button class="green" onclick="addResult()">ADD RESULT + AUTO PRIZE</button></div><div class="card"><h3>🏆 AUTO PRIZE 1st/2nd/3rd Ek Saath</h3><input id="autoTId" placeholder="Tournament ID"><input id="auto1" placeholder="1st Place UID"><input id="auto2" placeholder="2nd Place UID"><input id="auto3" placeholder="3rd Place UID"><button class="purple" onclick="autoPrize()">AUTO DISTRIBUTE PRIZE</button></div><div class="card"><h3>💸 REFUND - AUTO</h3><input id="refundTId" placeholder="Tournament ID"><input id="refundFee" type="number" placeholder="Fee"><button class="orange" onclick="doRefund()">SABKO AUTO REFUND</button></div><div class="card"><h3>🏆 Leaderboard</h3><div id="leaderAdmin">Loading...</div></div></div>
-<div id="aB" class="tab"><div class="card"><h3>📢 announcements</h3><input id="bTitle" placeholder="Title"><textarea id="bMsg" placeholder="Message"></textarea><button class="blue" onclick="sendAnnouncement()">SEND TO ALL</button><div id="annList"></div></div><div class="card"><h3>🎧 supportTickets</h3><div id="supportList">Loading...</div></div><div class="card"><h3>📸 Match Proofs</h3><div id="proofList">Loading...</div></div></div>
-<div id="aExtra" class="tab">
-<div class="card"><h3>💰 ONLINE PAID CUSTOM - Approve / Reject</h3><p class="muted">Players ne jo Paid Custom banaye hain, yahan Approve karo. Approve hote hi sabko dikhega.</p><div id="customAdminList">Loading...</div></div>
-<div class="card"><h3>🎁 COUPON CODE BANAO</h3><input id="cpCode" placeholder="Code - Ex: BGR50"><input id="cpBonus" type="number" placeholder="Extra Coins - Ex: 50"><input id="cpMin" type="number" placeholder="Min Deposit Coins"><button class="green" onclick="createCoupon()">CREATE COUPON</button><div id="couponList"></div></div>
-<div class="card"><h3>🪪 KYC Requests</h3><div id="kycList">Loading...</div></div>
-<div class="card"><h3>👑 VIP Users</h3><div id="vipList">Loading...</div></div>
-<div class="card"><h3>🔗 Referrals</h3><div id="refList">Loading...</div></div>
-</div>
-<div id="aTheme" class="tab">
-<div class="card"><h3>🎨 Make It Look Like Yours</h3><div class="flex"><button onclick="applyTheme('bgr')">🔥 BGR</button><button onclick="applyTheme('neon')">💚 Neon</button><button onclick="applyTheme('royal')">👑 Royal</button><button onclick="applyTheme('pink')">💖 Pink</button><button onclick="applyTheme('purple')">💜 Purple</button><button onclick="applyTheme('dark')">⚫ Dark</button></div></div>
-<div class="card"><h3>🎨 12 Colour Controls</h3>
-<div style="display:flex;gap:8px;align-items:center"><span style="flex:1">Background</span><input type="color" id="cBg" value="#080808" oninput="setColor('--bg',this.value)"></div>
-<div style="display:flex;gap:8px;align-items:center"><span style="flex:1">Cards</span><input type="color" id="cCard" value="#1a1a1a" oninput="setColor('--card',this.value)"></div>
-<div style="display:flex;gap:8px;align-items:center"><span style="flex:1">Buttons</span><input type="color" id="cBtn" value="#FFA500" oninput="setColor('--btn',this.value)"></div>
-<div style="display:flex;gap:8px;align-items:center"><span style="flex:1">Text</span><input type="color" id="cText" value="#ffffff" oninput="setColor('--text',this.value)"></div>
-<div style="display:flex;gap:8px;align-items:center"><span style="flex:1">Accent</span><input type="color" id="cAccent" value="#FFA500" oninput="setColor('--accent',this.value)"></div>
-<button class="green" onclick="saveTheme()">SAVE MY THEME</button></div>
-<div class="card"><h3>🏷️ App Name & Web Address</h3><input id="appNameInput" placeholder="Apna App Name"><input id="appDomainInput" placeholder="Apna Web Address"><input id="appLogoInput" placeholder="Logo Emoji"><button onclick="saveBranding()">SAVE BRANDING</button></div>
-</div>
-<div id="aSet" class="tab">
-<div class="card"><h3>📞 Support Links</h3><input id="linkWhatsapp" placeholder="WhatsApp - https://wa.me/91..."><input id="linkTelegram" placeholder="Telegram - https://t.me/..."><input id="linkInstagram" placeholder="Instagram"><input id="linkYoutube" placeholder="YouTube"><input id="linkEmail" placeholder="Email"><input id="linkWebsite" placeholder="Website"><button class="green" onclick="saveSupportLinks()">SAVE SUPPORT LINKS</button></div>
-<div class="card"><h3>⚙️ systemSettings - Age + Payment</h3><input id="sMinWithdraw" type="number" placeholder="Min Withdraw 100"><input id="sUpi" placeholder="Your UPI ID"><select id="sPayMode"><option value="UPI">UPI</option><option value="Payment Gateway">Payment Gateway - Razorpay / PhonePe</option></select><input id="sWhatsapp" placeholder="WhatsApp Number"><input id="sNotice" placeholder="App Notice"><input id="sMinLevel" type="number" placeholder="Min Level 40"><label class="muted">Under 18 Allowed?</label><select id="sAllowU18"><option value="yes">Yes - Parent Consent ke saath</option><option value="no">No - Sirf 18+</option></select><button onclick="saveSettings()">SAVE SETTINGS</button></div>
-<div class="card"><h3>📜 transactions</h3><div id="txnList">Loading...</div></div>
-<div class="card"><h3>📜 auditLogs</h3><div id="auditList">Loading...</div></div>
-</div>
-</div>
-<div class="bottom" id="playerNav" style="display:none">
-<button id="navHome" class="active" onclick="showPlayerScreen('playerScreen','navHome')">🏠 Home</button>
-<button id="navMatches" onclick="showPlayerScreen('matchesScreen','navMatches')">🎮 Matches</button>
-<button id="navWallet" onclick="showPlayerScreen('walletScreen','navWallet')">💰 Wallet</button>
-<button id="navProfile" onclick="showPlayerScreen('profileScreen','navProfile')">👤 Profile</button>
-</div>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 <script>
-// ===== APNA FIREBASE CONFIG YAHAN DALO =====
+// ===== TERA FIREBASE - CLASHADDA =====
 const firebaseConfig = {
-  apiKey: "AIzaSyXXXXXXXXXXXXXXX",
-  authDomain: "YOUR-PROJECT.firebaseapp.com",
-  projectId: "YOUR-PROJECT-ID",
-  storageBucket: "YOUR-PROJECT.appspot.com",
-  messagingSenderId: "000000000000",
-  appId: "1:000000000000:web:xxxxxxxxxxxx"
+  apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
+  authDomain: "clashadda-b3e57.firebaseapp.com",
+  databaseURL: "https://clashadda-b3e57-default-rtdb.firebaseio.com",
+  projectId: "clashadda-b3e57",
+  storageBucket: "clashadda-b3e57.firebasestorage.app",
+  messagingSenderId: "1046410116766",
+  appId: "1:1046410116766:web:02fa3a28be10e39b28058f",
+  measurementId: "G-60KBXTZKE9"
 };
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth(), db=firebase.firestore(), storage=firebase.storage();
-const OWNER_UID="PASTE_OWNER_UID_HERE";
-let me=null, myData=null, currentFilter='All', currentTheme={};
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+const OWNER_UID = "LMPbpNrgbpOSTd4xglwfAbZlGXE2";
+let me=null, myData=null, allTournaments=[];
 
-// ADMIN CHECK - Sabse Pehle
-async function isAdmin(){ if(!me) return false; if(me.uid===OWNER_UID) return true; let d=await db.collection('adminRoles').doc(me.uid).get(); return d.exists; }
-async function getRole(){ if(me.uid===OWNER_UID) return 'owner'; let d=await db.collection('adminRoles').doc(me.uid).get(); return d.exists?d.data().role:'player'; }
+function toast(msg){ let t=document.getElementById('toast'); t.innerText=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',2500); }
+function showPage(p,el){
+  ['login','home','wallet','my','profile','leader','refer','noti','support','admin'].forEach(x=>{ let e=document.getElementById('page-'+x); if(e) e.classList.add('hide'); });
+  let target=document.getElementById('page-'+p); if(target) target.classList.remove('hide');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+  if(p!=='login') document.getElementById('bottomNav').style.display='flex';
+  window.scrollTo(0,0);
+  if(p==='wallet') loadWalletPro();
+  if(p==='my') loadMyMatches();
+  if(p==='profile') loadProfilePro();
+  if(p==='leader') loadLeaderFull();
+  if(p==='refer') loadRefer();
+  if(p==='noti') loadNotices();
+  if(p==='support') loadSupport();
+  if(p==='admin') loadAdmin();
+}
+function closeModal(id){ document.getElementById(id).classList.add('hide'); }
+function scrollToLive(){ document.getElementById('liveList').scrollIntoView({behavior:'smooth'}); }
+function updateCD(){
+  let now=new Date(); let target=new Date(); target.setDate(now.getDate()+((7-now.getDay())%7||7)); target.setHours(20,0,0,0);
+  let diff=target-now; if(diff<0) diff=0;
+  let h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+  let hh=document.getElementById('cdH'); if(hh){ hh.innerText=String(h).padStart(2,'0'); document.getElementById('cdM').innerText=String(m).padStart(2,'0'); document.getElementById('cdS').innerText=String(s).padStart(2,'0'); }
+}
+setInterval(updateCD,1000); updateCD();
+setTimeout(()=>{ document.getElementById('splash').style.display='none'; },1500);
 
-// ===== AUTH =====
-async function doLogin(){
-  try{ let e=document.getElementById('loginEmail').value, p=document.getElementById('loginPass').value;
-  let r=await auth.signInWithEmailAndPassword(e,p); await afterLogin(r.user); }
-  catch(err){ alert("Login Fail: "+err.message); }
+// ===== LOGIN =====
+async function proLogin(){
+  let phone=document.getElementById('loginPhone').value.trim();
+  let gameName=document.getElementById('loginName').value.trim();
+  let ffuid=document.getElementById('loginFFUID').value.trim();
+  let pass=document.getElementById('loginPass').value.trim();
+  let refer=document.getElementById('loginRefer').value.trim();
+  if(phone.length!==10) return toast("10 Digit Mobile Daalo");
+  if(!gameName) return toast("Game Name Daalo");
+  if(pass.length<4) return toast("4 Digit Password Daalo");
+  let email=phone+"@bgr.com";
+  let btn=document.getElementById('loginBtn'); btn.innerText="Please Wait..."; btn.disabled=true;
+  try{
+    let cred;
+    try{ cred=await auth.signInWithEmailAndPassword(email,pass); }
+    catch(e){
+      if(e.code==='auth/user-not-found'||e.code==='auth/invalid-credential'||e.code==='auth/invalid-login-credentials'){
+        cred=await auth.createUserWithEmailAndPassword(email,pass);
+        let myCode="BGR"+phone.slice(-4)+Math.floor(Math.random()*90+10);
+        await db.collection('users').doc(cred.user.uid).set({phone,gameName,ffuid,email,coins:20,bonusCoins:20,totalKills:0,totalWins:0,totalMatches:0,totalEarnings:0,referralCode:myCode,referredBy:refer||"",kycStatus:"pending",isBanned:false,isVIP:false,lastDaily:"",spinLeft:1,language:"Hindi",createdAt:new Date(),lastLogin:new Date()});
+        if(refer){
+          let q=await db.collection('users').where('referralCode','==',refer).get();
+          q.forEach(async d=>{ await db.collection('users').doc(d.id).update({coins:firebase.firestore.FieldValue.increment(10)}); await db.collection('referrals').add({from:cred.user.uid,to:d.id,coins:10,createdAt:new Date()}); });
+        }
+        toast("🎉 Welcome! 20 Coins Bonus Mila");
+      } else throw e;
+    }
+    me=cred.user; await loadPlayerPro();
+  }catch(err){ toast(err.message); btn.innerText="CONTINUE →"; btn.disabled=false; }
 }
-async function doSignup(){
-  try{ let name=document.getElementById('regName').value, game=document.getElementById('regGame').value, email=document.getElementById('regEmail').value, pass=document.getElementById('regPass').value, phone=document.getElementById('regPhone').value, dob=document.getElementById('regDob').value, age=calcAge(dob), ref=document.getElementById('regRef').value;
-  if(!name||!game||!email||!pass||!dob) return alert("Sab bharo");
-  let set=await db.collection('systemSettings').doc('main').get(); let allowU18=set.exists?(set.data().allowU18||'yes'):'yes';
-  if(age<13) return alert("13 se kam allowed nahi"); if(age<18 && allowU18==='no') return alert("Sirf 18+ allowed");
-  let r=await auth.createUserWithEmailAndPassword(email,pass);
-  let bonus = age>=18 ? 0 : 0;
-  await db.collection('users').doc(r.user.uid).set({name,gameName:game,email,phone,dob,age,ageGroup:age>=18?'18+':'Under 18',coins:0,totalKills:0,totalWins:0,totalMatches:0,totalEarnings:0,referralCode:'BGR'+r.user.uid.slice(0,6).toUpperCase(),referredBy:ref||'',kycStatus:'pending',isBanned:false,vipUntil:null,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-  if(ref){ let q=await db.collection('users').where('referralCode','==',ref).get(); if(!q.empty){ let d=q.docs[0]; await d.ref.update({coins:firebase.firestore.FieldValue.increment(20)}); await db.collection('referrals').add({from:r.user.uid,to:d.id,coins:20,createdAt:new Date()}); } }
-  alert("Account Ban Gaya! Login Karo"); showScreen('loginScreen'); }catch(err){ alert(err.message); }
+async function loadPlayerPro(){
+  if(!me) return;
+  let doc=await db.collection('users').doc(me.uid).get(); if(!doc.exists) return;
+  myData=doc.data();
+  if(myData.isBanned) return alert("Account Banned Hai. Support se baat karo.");
+  await db.collection('users').doc(me.uid).update({lastLogin:new Date()});
+  document.getElementById('coinTop').innerText=myData.coins||0;
+  showPage('home'); loadTournamentsPro(); loadLeaderboardPro(); loadMyMatchesCount();
 }
-function calcAge(dob){ let b=new Date(dob), n=new Date(), a=n.getFullYear()-b.getFullYear(); if(n.getMonth()<b.getMonth()||(n.getMonth()===b.getMonth()&&n.getDate()<b.getDate())) a--; return a; }
-async function doLogout(){ await auth.signOut(); location.reload(); }
-async function afterLogin(user){ me=user; let d=await db.collection('users').doc(user.uid).get(); myData=d.exists?d.data():null; if(!myData) myData={name:user.email,gameName:'Player',coins:0}; let admin=await isAdmin(); if(admin){ showScreen('adminScreen'); loadAllAdmin(); } else { showScreen('playerScreen'); document.getElementById('playerNav').style.display='flex'; loadPlayer(); } }
-auth.onAuthStateChanged(async u=>{ if(u){ me=u; let d=await db.collection('users').doc(u.uid).get(); myData=d.exists?d.data():null; let a=await isAdmin(); if(a){ showScreen('adminScreen'); loadAllAdmin(); } else { showScreen('playerScreen'); document.getElementById('playerNav').style.display='flex'; loadPlayer(); } } });
-</script>
-<script>
-function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-function showPlayerScreen(id,nav){ showScreen(id); document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active')); document.getElementById(nav).classList.add('active'); if(id==='matchesScreen') loadMyMatches(); if(id==='walletScreen') loadWallet(); if(id==='profileScreen') loadProfile(); }
-function showAdminTab(id){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+auth.onAuthStateChanged(async u=>{ if(u){ me=u; await loadPlayerPro(); } });
+function showAdminLogin(){
+  let email=prompt("Admin Email Daalo:");
+  let pass=prompt("Admin Password Daalo:");
+  if(!email||!pass) return;
+  auth.signInWithEmailAndPassword(email,pass).then(async cred=>{ me=cred.user; if(me.uid!==OWNER_UID) return toast("Tu Admin Nahi Hai!"); toast("Welcome Admin 👑"); await loadPlayerPro(); showPage('admin'); }).catch(e=>toast(e.message));
+}
 
-async function loadPlayer(){
-  let u=await db.collection('users').doc(me.uid).get(); myData=u.data();
-  document.getElementById('myCoins').innerText=myData.coins||0;
-  document.getElementById('playerName').innerText=myData.gameName||myData.name;
-  document.getElementById('playerKyc').innerText='KYC: '+(myData.kycStatus||'pending');
-  document.getElementById('playerVip').innerText=myData.vipUntil?'👑 VIP':'Free Player';
-  document.getElementById('myReferralCode').innerText=myData.referralCode||'';
-  loadTournaments(); loadLeaderboard(); loadAnnouncements(); loadMyCustom();
+// ===== TOURNAMENTS =====
+async function loadTournamentsPro(){
+  let q=await db.collection('tournaments').orderBy('createdAt','desc').get();
+  allTournaments=[]; let live='', up='', done='';
+  q.forEach(d=>{ let t=d.data(); t.id=d.id; allTournaments.push(t);
+    let filled=t.registrations||0; let pct=Math.min(100,Math.round(filled/t.slots*100));
+    let card=`<div class="t-card" onclick="openTournament('${d.id}')">
+      <div class="t-img">🔥</div>
+      <div class="t-info">
+        <h4>${t.title} ${t.status==='Live'?'<span class="tag live">● LIVE</span>':t.status==='Upcoming'?'<span class="tag">UPCOMING</span>':'<span class="tag">DONE</span>'} ${t.isMega?'<span style="color:var(--gold)">⭐ MEGA</span>':''}</h4>
+        <p>📅 ${t.date||''} • ⏰ ${t.time||''} • 🗺️ ${t.map||'Bermuda'} • ${t.mode||'Solo'}</p>
+        <div class="tags"><span class="tag">👥 ${filled}/${t.slots} Slots</span><span class="tag">💀 Per Kill ₹${t.perKill||10}</span><span class="tag">🥇 #1 ₹${t.firstPrize||t.prize}</span></div>
+        <div style="background:#262A35;height:6px;border-radius:50px;margin:7px 0"><div style="background:var(--red);height:6px;border-radius:50px;width:${pct}%"></div></div>
+        <div style="font-size:11px;color:var(--muted)">${pct}% Filled • ${t.slots-filled} Slots Left</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:7px"><div class="price">₹${t.prize} <small>Prize Pool</small></div><div style="font-size:12px;color:var(--muted)">Entry ₹${t.fee}</div></div>
+        <button class="btn-join ${t.status==='Live'?'green':''}" onclick="event.stopPropagation();joinTournamentPro('${d.id}',${t.fee},'${t.title}')">${t.status==='Completed'?'View Result':t.status==='Live'?'JOIN NOW 🔥':'JOIN - ₹'+t.fee}</button>
+      </div></div>`;
+    if(t.status==='Live') live+=card; else if(t.status==='Completed') done+=card; else up+=card;
+  });
+  document.getElementById('liveList').innerHTML=live||'<div class="card" style="margin-top:12px;text-align:center;color:var(--muted)">Abhi koi Live nahi, Upcoming join karo</div>';
+  document.getElementById('upcomingList').innerHTML=up||'<div class="card" style="margin-top:12px;text-align:center;color:var(--muted)">Upcoming jaldi aayega</div>';
+  document.getElementById('completedList').innerHTML=done||'<div class="card" style="margin-top:12px;text-align:center;color:var(--muted)">Abhi koi result nahi</div>';
 }
-async function loadTournaments(){
-  let q=await db.collection('tournaments').orderBy('createdAt','desc').get(); let h='';
-  q.forEach(d=>{ let t=d.data(); let reg = t.registrations||0; h+=`<div class="t-card"><img src="${t.banner||'https://i.imgur.com/3ZQ3ZQZ.png'}"><div style="padding:12px"><b>${t.title}</b> <span class="badge">${t.status}</span><br><span class="muted">${t.map} | ${t.mode} | ${t.date} ${t.time}</span><br>Fee: ${t.fee} | Prize: ${t.prize} | Per Kill: ${t.perKill}<br>Slots: ${reg}/${t.slots}<br><button onclick="joinTournament('${d.id}',${t.fee})">JOIN</button> <button class="blue" onclick="viewDetails('${d.id}')">DETAILS</button></div></div>`; });
-  document.getElementById('tourList').innerHTML=h||'Koi Tournament Nahi';
+function openTournament(id){
+  let t=allTournaments.find(x=>x.id===id); if(!t) return;
+  let isJoined = false;
+  document.getElementById('detailContent').innerHTML=`
+    <div style="text-align:center"><div style="font-size:50px">🔥</div><h2 style="font-family:'Poppins';margin-top:8px">${t.title}</h2><p style="color:var(--muted);font-size:13px">${t.map||'Bermuda'} • ${t.mode||'Solo'} • ${t.date} ${t.time}</p></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;text-align:center">
+      <div class="card" style="padding:12px"><b>₹${t.prize}</b><br><span style="font-size:11px;color:var(--muted)">Prize Pool</span></div>
+      <div class="card" style="padding:12px"><b>₹${t.perKill||10}</b><br><span style="font-size:11px;color:var(--muted)">Per Kill</span></div>
+      <div class="card" style="padding:12px"><b>₹${t.firstPrize||t.prize}</b><br><span style="font-size:11px;color:var(--muted)">Winner #1</span></div>
+      <div class="card" style="padding:12px"><b>${t.registrations||0}/${t.slots}</b><br><span style="font-size:11px;color:var(--muted)">Slots Filled</span></div>
+    </div>
+    <div class="card" style="margin-top:12px"><h4>📜 Rules</h4><p style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px">1. No Hack / Mod Menu - Direct Ban<br>2. Room ID match se 10 min pehle milega<br>3. Team Up / Teaming = Disqualify<br>4. Screenshot proof zaroori hai<br>5. Per Kill prize kills ke hisab se milega</p></div>
+    <div class="card" style="margin-top:12px"><h4>🏆 Prize Breakdown</h4><p style="font-size:13px;margin-top:6px">#1 - ₹${t.firstPrize||t.prize} &nbsp; #2 - ₹${t.secondPrize||100} &nbsp; #3 - ₹${t.thirdPrize||50}<br>Per Kill - ₹${t.perKill||10} x Kills</p></div>
+    <button class="btn-main" onclick="joinTournamentPro('${t.id}',${t.fee},'${t.title}');closeModal('detailModal')">Join Tournament - ₹${t.fee}</button>`;
+  document.getElementById('detailModal').classList.remove('hide');
 }
-async function joinTournament(id,fee){
-  if((myData.coins||0)<fee) return alert("Coins Kam Hain! Deposit Karo");
-  let check=await db.collection('registrations').where('tournamentId','==',id).where('userId','==',me.uid).get(); if(!check.empty) return alert("Already Joined");
+async function joinTournamentPro(tid,fee,title){
+  if(!me) return toast("Pehle Login Karo");
+  let q=await db.collection('registrations').where('userId','==',me.uid).where('tournamentId','==',tid).get();
+  if(!q.empty) return toast("Tu already joined hai! My Match me Room ID dekh");
+  if((myData.coins||0)<fee) return toast("Coins Kam Hain! Add Coins Karo");
+  if(!confirm("₹"+fee+" Entry Fee lagegi. Join "+title+"?")) return;
   await db.collection('users').doc(me.uid).update({coins:firebase.firestore.FieldValue.increment(-fee)});
-  await db.collection('registrations').add({tournamentId:id,userId:me.uid,gameName:myData.gameName,gameUid:myData.gameName,status:'joined',createdAt:new Date()});
-  await db.collection('tournaments').doc(id).update({registrations:firebase.firestore.FieldValue.increment(1)});
-  await db.collection('transactions').add({userId:me.uid,type:'entry',amount:-fee,note:'Tournament Join '+id,createdAt:new Date()});
-  alert("Joined! Room ID Matches me milega"); loadPlayer();
+  await db.collection('registrations').add({userId:me.uid,tournamentId:tid,gameName:myData.gameName,phone:myData.phone,ffuid:myData.ffuid||"",kills:0,position:0,prize:0,status:"joined",createdAt:new Date()});
+  await db.collection('tournaments').doc(tid).update({registrations:firebase.firestore.FieldValue.increment(1)});
+  toast("✅ Joined! Room ID My Match me milega");
+  await loadPlayerPro();
 }
-function viewDetails(id){ alert("Tournament ID: "+id+"\nRoom ID Matches tab me milega jab Admin dega."); }
-async function loadLeaderboard(){
-  let q=await db.collection('users').orderBy('totalKills','desc').limit(10).get(); let h='<table><tr><th>Rank</th><th>Player</th><th>Kills</th><th>Wins</th></tr>'; let i=1;
-  q.forEach(d=>{ let u=d.data(); h+=`<tr><td>${i++}</td><td>${u.gameName||u.name}</td><td>${u.totalKills||0}</td><td>${u.totalWins||0}</td></tr>`; });
-  document.getElementById('leaderboard').innerHTML=h+'</table>';
+async function loadMyMatchesCount(){
+  if(!me) return; let q=await db.collection('registrations').where('userId','==',me.uid).get();
+  let b=document.getElementById('myBadge'); if(q.size>0){ b.innerText=q.size; b.classList.remove('hide'); }
 }
-async function loadAnnouncements(){
-  let q=await db.collection('announcements').orderBy('createdAt','desc').limit(5).get(); let h='';
-  q.forEach(d=>{ let a=d.data(); h+=`<div style="background:#111;padding:10px;border-radius:10px;margin:6px 0"><b>${a.title}</b><br>${a.message}</div>`; });
-  document.getElementById('annBox').innerHTML=h||'Koi Announcement Nahi';
+async function loadLeaderboardPro(){
+  let q=await db.collection('users').orderBy('totalKills','desc').limit(5).get(); let h='',rank=1;
+  q.forEach(d=>{ let u=d.data(); h+=`<div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)"><span><b>#${rank++}</b> ${u.gameName} ${rank===2?'👑':''} ${u.isVIP?'<span class="badge-vip">VIP</span>':''}</span><span><b>${u.totalKills||0}</b> Kills • ₹${u.totalEarnings||0}</span></div>`; });
+  document.getElementById('leaderboardHome').innerHTML=h||'Abhi koi data nahi';
 }
-</script>
-<script>
-async function createCustom(){
-  let type=document.getElementById('customType').value, slot=document.getElementById('customSlot').value, date=document.getElementById('customDate').value, time=document.getElementById('customTime').value;
-  let fee= type==='Paid'? 50 : 0;
-  if(fee>0 && (myData.coins||0)<fee) return alert("Paid Custom ke liye 50 Coins chahiye");
-  if(fee>0) await db.collection('users').doc(me.uid).update({coins:firebase.firestore.FieldValue.increment(-fee)});
-  await db.collection('customMatches').add({creatorId:me.uid,creatorName:myData.gameName,type,slot,date,time,status: type==='Free'?'approved':'pending',createdAt:new Date()});
-  alert(type==='Free'?'Free Custom Live!':'Paid Custom Request Bheja - Admin Approve karega'); loadMyCustom(); loadPlayer();
+</script> 
+  <script>
+// ===== WALLET INFINITY =====
+async function loadWalletPro(){
+  let box=document.getElementById('walletBox'); if(!myData) return;
+  box.innerHTML=`
+  <div class="card" style="background:linear-gradient(135deg,#1D212B,#0B0D12);text-align:center;padding:24px">
+    <p style="color:var(--muted);font-size:13px">Total Balance</p>
+    <h2 style="font-size:40px;font-family:'Poppins';margin:6px 0">₹${myData.coins||0}</h2>
+    <p style="font-size:12px;color:var(--green)">✓ Withdrawable • Bonus: ${myData.bonusCoins||0} Coins</p>
+    <p style="font-size:12px;color:var(--muted);margin-top:6px">Total Earnings: ₹${myData.totalEarnings||0} • Total Wins: ${myData.totalWins||0}</p>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn-main" style="margin:0;background:var(--green)" onclick="document.getElementById('addBox').scrollIntoView({behavior:'smooth'})">+ ADD COINS</button>
+      <button class="btn-main" style="margin:0;background:#fff;color:#000" onclick="document.getElementById('withBox').scrollIntoView({behavior:'smooth'})">Withdraw</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px" id="addBox">
+    <h3>💰 Add Coins - UPI Payment</h3>
+    <p style="font-size:12px;color:var(--muted);margin-top:4px">UPI se pay karo, screenshot + UTR bhejo, Admin 5 min me approve karega</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px">
+      <div onclick="selectPack(50,55)" class="pack" style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer"><b>₹50</b><br><span style="font-size:11px;color:var(--muted)">Get 55</span></div>
+      <div onclick="selectPack(100,115)" class="pack" style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer"><b>₹100</b><br><span style="font-size:11px;color:var(--gold)">Get 115</span></div>
+      <div onclick="selectPack(200,240)" class="pack" style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer"><b>₹200</b><br><span style="font-size:11px;color:var(--green)">Get 240</span></div>
+      <div onclick="selectPack(500,650)" class="pack" style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer"><b>₹500</b><br><span style="font-size:11px;color:var(--gold)">Get 650 🔥</span></div>
+      <div onclick="selectPack(1000,1400)" class="pack" style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer"><b>₹1000</b><br><span style="font-size:11px;color:var(--green)">Get 1400 👑</span></div>
+      <div onclick="selectPack(2000,3000)" class="pack" style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer"><b>₹2000</b><br><span style="font-size:11px;color:var(--red)">Get 3000 💎</span></div>
+    </div>
+    <input id="payAmount" type="number" placeholder="Ya apni amount likho - jaise 500">
+    <input id="couponCode" placeholder="🎟️ Coupon Code (Optional) - BGR100, FIRST50">
+    <button class="btn-main" style="background:#333;font-size:13px;padding:11px" onclick="applyCoupon()">Apply Coupon</button>
+    <p id="couponMsg" style="font-size:12px;color:var(--green);margin-top:6px"></p>
+    <input id="payUTR" placeholder="UTR / Transaction ID (12 Digit)">
+    <input id="payScreenshot" type="file" accept="image/*" style="color:var(--muted)">
+    <button class="btn-main" onclick="submitDepositPro()">Submit Payment →</button>
+    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Pay to UPI: <b style="color:#fff" onclick="navigator.clipboard.writeText('bgr@upi');toast('UPI Copied')">bgr@upi 📋</b> • Screenshot zaroori hai</p>
+  </div>
+
+  <div class="card" style="margin-top:14px" id="withBox">
+    <h3>🏦 Withdraw Money</h3>
+    <p style="font-size:12px;color:var(--muted)">Min ₹100 • Max ₹10,000 / Day • 24 Hours me payment</p>
+    <input id="withAmount" type="number" placeholder="Amount - Min ₹100">
+    <select id="withMethod"><option value="upi">UPI</option><option value="paytm">Paytm Wallet</option><option value="bank">Bank Transfer</option></select>
+    <input id="withUPI" placeholder="UPI ID / Paytm / Account No - jaise 98765@paytm">
+    <button class="btn-main" style="background:#fff;color:#000" onclick="submitWithdrawPro()">Request Withdrawal</button>
+    <p style="font-size:11px;color:var(--gold);margin-top:8px">⚠️ Galat UPI diya to paisa wapas nahi milega. Dhyan se check karo.</p>
+  </div>
+
+  <div class="card" style="margin-top:14px"><h3>📜 Transaction History</h3><div id="txnList" style="margin-top:10px"></div></div>
+  `;
+  loadTxnsPro();
 }
-async function loadMyCustom(){
-  let q=await db.collection('customMatches').where('status','==','approved').orderBy('createdAt','desc').limit(20).get(); let h='';
-  q.forEach(d=>{ let c=d.data(); h+=`<div style="background:#111;padding:10px;border-radius:10px;margin:6px 0"><b>${c.creatorName}</b> - ${c.type} - ${c.slot} - ${c.date} ${c.time} <span class="badge">${c.status}</span></div>`; });
-  document.getElementById('customList').innerHTML=h||'Koi Custom Nahi';
+let selectedPack=0, couponBonus=0;
+function selectPack(amt,coins){ selectedPack=coins; document.getElementById('payAmount').value=amt; document.querySelectorAll('.pack').forEach(p=>p.style.borderColor='var(--border)'); event.currentTarget.style.borderColor='var(--red)'; toast(coins+" Coins milegi"); }
+async function applyCoupon(){
+  let code=document.getElementById('couponCode').value.trim().toUpperCase(); if(!code) return toast("Coupon Daalo");
+  let q=await db.collection('coupons').where('code','==',code).get();
+  if(q.empty) return toast("Galat Coupon!");
+  let c=q.docs[0].data();
+  if(c.usedCount>=c.maxUse) return toast("Coupon Khatam Ho Gaya");
+  couponBonus=c.bonus; document.getElementById('couponMsg').innerText="✅ "+c.code+" Applied! Extra +"+c.bonus+" Coins milegi";
+  toast("Coupon Applied! +"+c.bonus);
 }
-async function createTeam(){
-  let n=document.getElementById('teamName').value; if(!n) return alert("Team Name Daalo");
-  await db.collection('teams').add({name:n,leaderId:me.uid,leaderName:myData.gameName,members:[me.uid],createdAt:new Date()}); alert("Team Ban Gayi!"); loadPlayer();
+async function submitDepositPro(){
+  let amt=Number(document.getElementById('payAmount').value);
+  let utr=document.getElementById('payUTR').value.trim();
+  let file=document.getElementById('payScreenshot').files[0];
+  if(!amt||amt<10) return toast("Amount Daalo - Min ₹10");
+  if(!utr) return toast("UTR Daalo");
+  if(!file) return toast("Screenshot Daalo");
+  let btn=event.target; btn.innerText="Uploading..."; btn.disabled=true;
+  try{
+    let ref=storage.ref('payments/'+Date.now()+'_'+file.name); await ref.put(file); let url=await ref.getDownloadURL();
+    let totalCoins=(selectedPack||amt)+couponBonus;
+    await db.collection('deposits').add({userId:me.uid,gameName:myData.gameName,phone:myData.phone,amount:amt,coins:totalCoins,utr,screenshot:url,coupon:document.getElementById('couponCode').value||"",status:'pending',createdAt:new Date()});
+    toast("✅ Request Bhej Di! Admin approve karega");
+    await loadPlayerPro(); showPage('wallet');
+  }catch(e){ toast(e.message); btn.innerText="Submit Payment →"; btn.disabled=false; }
 }
-async function joinTeam(){
-  let n=document.getElementById('teamName').value; let q=await db.collection('teams').where('name','==',n).get(); if(q.empty) return alert("Team Nahi Mili");
-  await q.docs[0].ref.update({members:firebase.firestore.FieldValue.arrayUnion(me.uid)}); alert("Team Join Ho Gayi!");
+async function submitWithdrawPro(){
+  let amt=Number(document.getElementById('withAmount').value);
+  let method=document.getElementById('withMethod').value;
+  let upi=document.getElementById('withUPI').value.trim();
+  if(amt<100) return toast("Min Withdrawal ₹100 hai");
+  if(!upi) return toast("UPI / Account Daalo");
+  if((myData.coins||0)<amt) return toast("Balance Kam Hai");
+  if(myData.kycStatus!=='approved') return toast;
+  await db.collection('withdrawals').add({userId:me.uid,gameName:myData.gameName,phone:myData.phone,amount:amt,method,upi,status:'pending',createdAt:new Date()});
+  await db.collection('users').doc(me.uid).update({coins:firebase.firestore.FieldValue.increment(-amt)});
+  toast("✅ Withdrawal Request Bhej Di! 24h me paisa aayega");
+  await loadPlayerPro(); showPage('wallet');
+}
+async function loadTxnsPro(){
+  let q=await db.collection('deposits').where('userId','==',me.uid).orderBy('createdAt','desc').limit(10).get();
+  let h='';
+  q.forEach(d=>{ let t=d.data(); let color=t.status==='approved'?'var(--green)':t.status==='rejected'?'var(--red)':'var(--gold)'; h+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)"><span>Deposit ₹${t.amount} → ${t.coins} Coins<br><span style="font-size:11px;color:var(--muted)">${t.utr}</span></span><b style="color:${color}">${t.status.toUpperCase()}</b></div>`; });
+  document.getElementById('txnList').innerHTML=h||'<p style="color:var(--muted);font-size:13px">Abhi koi transaction nahi</p>';
+}
+
+// ===== DAILY REWARD + SPIN + REFER =====
+async function claimDaily(){
+  if(!me) return toast("Login Karo");
+  let today=new Date().toDateString();
+  if(myData.lastDaily===today) return toast("Aaj ka reward already le liya! Kal aana");
+  let reward=5+Math.floor(Math.random()*10);
+  await db.collection('users').doc(me.uid).update({coins:firebase.firestore.FieldValue.increment(reward),lastDaily:today});
+  toast("🎉 Daily Reward: +"+reward+" Coins!");
+  await loadPlayerPro();
+}
+function openSpin(){
+  if(!me) return toast("Login Karo");
+  if((myData.spinLeft||0)<=0) return toast("Aaj ka Spin khatam! Kal aana");
+  let prizes=[0,5,10,20,50,100,5,10];
+  let win=prizes[Math.floor(Math.random()*prizes.length)];
+  if(confirm("🎡 Spin Wheel\n\nSpin karna hai? Bacha hua: "+myData.spinLeft)){
+    db.collection('users').doc(me.uid).update({coins:firebase.firestore.FieldValue.increment(win),spinLeft:firebase.firestore.FieldValue.increment(-1)}).then(async()=>{ toast(win===0?"😢 Better Luck Next Time":"🎉 You Won "+win+" Coins!"); await loadPlayerPro(); });
+  }
+}
+async function loadRefer(){
+  if(!myData) return;
+  let q=await db.collection('referrals').where('to','==',me.uid).get();
+  document.getElementById('referBox').innerHTML=`
+  <div class="card" style="text-align:center;background:linear-gradient(135deg,#1D212B,#2A1A00)">
+    <p style="color:var(--muted);font-size:13px">Tera Referral Code</p>
+    <h2 style="font-size:32px;letter-spacing:3px;font-family:'Poppins';margin:8px 0">${myData.referralCode}</h2>
+    <button class="btn-main" style="width:auto;padding:11px 22px" onclick="navigator.clipboard.writeText('BGR ESPORTS join karo! Code: ${myData.referralCode} - 20 Coins Free! Link: https://21137-cyber.github.io');toast('Refer Link Copied!')">Copy Link 📋</button>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px">Dost join karega = Tujhe <b style="color:var(--gold)">₹10</b> • Dost ko <b style="color:var(--green)">₹10</b></p>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:12px;text-align:center">
+    <div class="card" style="flex:1"><b>${q.size}</b><br><span style="font-size:11px;color:var(--muted)">Total Referrals</span></div>
+    <div class="card" style="flex:1"><b>₹${q.size*10}</b><br><span style="font-size:11px;color:var(--muted)">Refer Earnings</span></div>
+    <div class="card" style="flex:1"><b>${myData.spinLeft||0}</b><br><span style="font-size:11px;color:var(--muted)">Spin Left</span></div>
+  </div>
+  <div class="card" style="margin-top:12px"><h4>Kaise Kamaye?</h4><p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:6px">1. Link dost ko bhejo<br>2. Dost tera code daal ke Register kare<br>3. Dono ko 10-10 Coins instant<br>4. Dost Add Coins karega to tujhe 10% Commission bhi</p></div>`;
+}
+
+// ===== MY MATCHES + PROFILE + LEADER + NOTI + SUPPORT =====
+async function loadMyMatches(){
+  if(!me) return;
+  let q=await db.collection('registrations').where('userId','==',me.uid).orderBy('createdAt','desc').get();
+  let h='';
+  for(let doc of q.docs){
+    let r=doc.data();
+    let tDoc=await db.collection('tournaments').doc(r.tournamentId).get();
+    let t=tDoc.exists?tDoc.data():{title:"Tournament Deleted",status:"-",roomId:"",roomPass:""};
+    h+=`<div class="card" style="margin-top:12px">
+      <div style="display:flex;justify-content:space-between"><b>${t.title}</b><span class="tag ${t.status==='Live'?'live':''}">${t.status||''}</span></div>
+      <p style="font-size:12px;color:var(--muted);margin-top:6px">📅 ${t.date||''} • ⏰ ${t.time||''} • Kills: ${r.kills||0} • Prize: ₹${r.prize||0} • Pos: ${r.position||'-'}</p>
+      ${t.roomId?`<div style="background:var(--card2);border:1px dashed var(--gold);border-radius:12px;padding:12px;margin-top:10px;text-align:center"><p style="font-size:12px;color:var(--muted)">ROOM ID</p><h2 style="letter-spacing:2px">${t.roomId}</h2><p style="font-size:13px;margin-top:4px">Password: <b>${t.roomPass||'No Pass'}</b></p><button class="btn-main" style="width:auto;padding:8px 16px;font-size:12px;margin-top:8px" onclick="navigator.clipboard.writeText('${t.roomId} / ${t.roomPass||''}');toast('Room ID Copied!')">Copy Room ID</button></div>`:`<p style="font-size:12px;color:var(--gold);margin-top:8px">⏳ Room ID match se 10 min pehle yahan aayega</p>`}
+      ${t.status==='Completed'?`<p style="font-size:13px;margin-top:8px">Result: ${r.kills||0} Kills • ₹${r.prize||0} Prize ${r.prize>0?'🎉':''}</p>`:''}
+    </div>`;
+  }
+  document.getElementById('myMatchesBox').innerHTML=h||'<div class="card" style="text-align:center;color:var(--muted)">Abhi koi match join nahi kiya. Home se join karo.</div>';
+}
+async function loadProfilePro(){
+  if(!myData) return;
+  document.getElementById('profileBox').innerHTML=`
+  <div class="card" style="text-align:center">
+    <div style="font-size:55px">👤</div>
+    <h2 style="font-family:'Poppins'">${myData.gameName} ${myData.isVIP?'<span class="badge-vip">VIP 👑</span>':''} ${myData.kycStatus==='approved'?'<span class="badge-verified">✓ Verified</span>':''}</h2>
+    <p style="color:var(--muted);font-size:13px">${myData.phone} • FF UID: ${myData.ffuid||'Not Set'}</p>
+    <p style="font-size:12px;margin-top:6px">Referral: <b>${myData.referralCode}</b> • KYC: <b style="color:${myData.kycStatus==='approved'?'var(--green)':'var(--gold)'}">${myData.kycStatus}</b></p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;text-align:center">
+    <div class="card"><b>${myData.totalMatches||0}</b><br><span style="font-size:11px;color:var(--muted)">Matches</span></div>
+    <div class="card"><b>${myData.totalKills||0}</b><br><span style="font-size:11px;color:var(--muted)">Kills</span></div>
+    <div class="card"><b>${myData.totalWins||0}</b><br><span style="font-size:11px;color:var(--muted)">Wins</span></div>
+  </div>
+  <div class="card" style="margin-top:12px"><h4>🛡️ KYC Verification</h4><p style="font-size:12px;color:var(--muted);margin-top:4px">Withdraw ke liye KYC zaroori hai. Aadhar / PAN ka photo bhejo.</p>
+    <input id="kycName" placeholder="Full Name (Aadhar wala)" value="${myData.kycName||''}">
+    <input id="kycAadhar" placeholder="Aadhar Last 4 Digit">
+    <input id="kycFile" type="file" accept="image/*">
+    <button class="btn-main" onclick="submitKYC()">Submit KYC</button></div>
+  <div class="card" style="margin-top:12px"><h4>⚙️ Settings</h4>
+    <p style="font-size:13px;margin-top:10px">Language: <select id="langSel" onchange="changeLang(this.value)"><option value="Hindi">Hindi</option><option value="English">English</option></select></p>
+    <button class="btn-main" style="background:#333" onclick="auth.signOut().then(()=>location.reload())">Logout</button>
+    <button class="btn-main" style="background:#333" onclick="if(confirm('Account Delete karna hai?')) toast('Support se contact karo delete ke liye')">Delete Account</button>
+  </div>`;
+} 
+function changeLang(v){ db.collection('users').doc(me.uid).update({language:v}); toast("Language: "+v); }
+async function loadLeaderFull(){
+  let q=await db.collection('users').orderBy('totalEarnings','desc').limit(20).get(); let h='',rank=1;
+  q.forEach(d=>{ let u=d.data(); let medal=rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':'#'+rank; h+=`<div class="card" style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;padding:12px 14px"><span><b>${medal}</b> ${u.gameName} ${u.isVIP?'👑':''}</span><span style="text-align:right"><b>₹${u.totalEarnings||0}</b><br><span style="font-size:11px;color:var(--muted)">${u.totalKills||0} Kills • ${u.totalWins||0} Wins</span></span></div>`; rank++; });
+  document.getElementById('leaderFull').innerHTML=h||'No data';
+}
+async function loadNotices(){
+  let q=await db.collection('notices').orderBy('createdAt','desc').limit(20).get(); let h='';
+  q.forEach(d=>{ let n=d.data(); h+=`<div class="card" style="margin-top:10px"><b>${n.title}</b><p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.5">${n.msg}</p><p style="font-size:11px;color:var(--muted);margin-top:6px">${n.createdAt?.toDate().toLocaleString('en-IN')||''}</p></div>`; });
+  document.getElementById('notiBox').innerHTML=h||'<div class="card">Koi notice nahi. Sab chill hai 😎</div>';
+  document.getElementById('notiDot').classList.add('hide');
+}
+async function loadSupport(){
+  document.getElementById('supportBox').innerHTML=`
+  <div class="card"><h4>Need Help?</h4><p style="font-size:13px;color:var(--muted);margin-top:6px">WhatsApp: <b style="color:#fff">+91 98765 43210</b><br>Telegram: <b style="color:#fff">@BGREsports</b><br>Time: 10 AM - 10 PM</p>
+    <button class="btn-main" style="background:var(--green)" onclick="window.open('https://wa.me/919876543210','_blank')">WhatsApp Support 💬</button></div>
+  <div class="card" style="margin-top:12px"><h4>Raise Ticket</h4><input id="ticketSub" placeholder="Problem kya hai? - Payment / Room ID / Withdraw"><textarea id="ticketMsg" placeholder="Detail me likho..." rows="3"></textarea><button class="btn-main" onclick="raiseTicket()">Submit Ticket</button></div>
+  <div id="myTickets" style="margin-top:12px"></div>`;
+  let q=await db.collection('tickets').where('userId','==',me.uid).orderBy('createdAt','desc').limit(10).get(); let h='<h4 style="margin:12px 0">My Tickets</h4>';
+  q.forEach(d=>{ let t=d.data(); h+=`<div class="card" style="margin-top:8px"><b>${t.subject}</b> - <span style="color:var(--gold)">${t.status}</span><p style="font-size:12px;color:var(--muted)">${t.msg}</p>${t.reply?`<p style="font-size:12px;color:var(--green);margin-top:6px">Admin Reply: ${t.reply}</p>`:''}</div>`; });
+  document.getElementById('myTickets').innerHTML=h;
+}
+async function raiseTicket(){
+  let sub=document.getElementById('ticketSub').value.trim(); let msg=document.getElementById('ticketMsg').value.trim();
+  if(!sub||!msg) return toast("Subject + Message likho");
+  await db.collection('tickets').add({userId:me.uid,gameName:myData.gameName,phone:myData.phone,subject:sub,msg,status:'open',createdAt:new Date()});
+  toast("✅ Ticket Bhej Diya!"); loadSupport();
+}
+    </script> 
+  <script>
+// ===== ADMIN PANEL - FULL CONTROL =====
+async function loadAdmin(){
+  if(!me || me.uid!==OWNER_UID){
+    document.getElementById('adminBox').innerHTML=`<div class="card" style="text-align:center"><h2>🔒 Access Denied</h2><p style="color:var(--muted);margin-top:8px">Tu Admin nahi hai bhai!</p><button class="btn-main" onclick="showAdminLogin()">Admin Login</button></div>`;
+    return;
+  }
+  document.getElementById('adminBox').innerHTML=`
+  <div class="card" style="background:linear-gradient(135deg,#FF2D20,#7B0D0D);text-align:center"><h2>👑 ADMIN PANEL</h2><p style="font-size:13px;opacity:.9">BGR Esports - Full Control</p><p style="font-size:12px;margin-top:6px" id="adminStats">Loading stats...</p></div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+    <button class="btn-main" style="margin:0" onclick="showAdminTab('tour')">🏆 Tournament</button>
+    <button class="btn-main" style="margin:0;background:var(--green)" onclick="showAdminTab('deposit')">💰 Deposits</button>
+    <button class="btn-main" style="margin:0;background:var(--gold);color:#000" onclick="showAdminTab('withdraw')">🏦 Withdrawals</button>
+    <button class="btn-main" style="margin:0;background:var(--blue)" onclick="showAdminTab('users')">👥 Users</button>
+    <button class="btn-main" style="margin:0;background:var(--purple)" onclick="showAdminTab('kyc')">🛡️ KYC</button>
+    <button class="btn-main" style="margin:0;background:#333" onclick="showAdminTab('other')">⚙️ Other</button>
+  </div>
+  <div id="adminTab" style="margin-top:14px"></div>
+  `;
+  loadAdminStats();
+  showAdminTab('tour');
+}
+async function loadAdminStats(){
+  let u=await db.collection('users').get();
+  let d=await db.collection('deposits').where('status','==','pending').get();
+  let w=await db.collection('withdrawals').where('status','==','pending').get();
+  let t=await db.collection('tournaments').get();
+  let el=document.getElementById('adminStats'); if(el) el.innerText=`${u.size} Users • ${t.size} Tournaments • ${d.size} Pending Deposits • ${w.size} Pending Withdrawals`;
+}
+async function showAdminTab(tab){
+  let box=document.getElementById('adminTab'); if(!box) return;
+  if(tab==='tour'){
+    box.innerHTML=`
+    <div class="card"><h3>➕ New Tournament Banao</h3>
+      <input id="aTitle" placeholder="Title - jaise MEGA WEEKLY ₹10,000">
+      <div style="display:flex;gap:10px"><input id="aDate" type="date"><input id="aTime" type="time" value="20:00"></div>
+      <div style="display:flex;gap:10px"><input id="aFee" type="number" placeholder="Entry Fee ₹"><input id="aPrize" type="number" placeholder="Prize Pool ₹"></div>
+      <div style="display:flex;gap:10px"><input id="aFirst" type="number" placeholder="#1 Prize ₹"><input id="aSecond" type="number" placeholder="#2 Prize ₹"><input id="aThird" type="number" placeholder="#3 Prize ₹"></div>
+      <div style="display:flex;gap:10px"><input id="aPerKill" type="number" placeholder="Per Kill ₹" value="10"><input id="aSlots" type="number" placeholder="Slots" value="48"></div>
+      <div style="display:flex;gap:10px"><select id="aMap"><option>Bermuda</option><option>Purgatory</option><option>Kalahari</option><option>Bermuda Remastered</option><option>Craftland</option></select><select id="aMode"><option>Solo</option><option>Duo</option><option>Squad</option><option>Lone Wolf</option><option>Clash Squad</option></select></div>
+      <div style="display:flex;gap:10px"><select id="aStatus"><option value="Upcoming">Upcoming</option><option value="Live">Live</option><option value="Completed">Completed</option></select><label style="font-size:13px;display:flex;align-items:center;gap:6px"><input type="checkbox" id="aMega" style="width:auto;margin:0"> ⭐ MEGA</label></div>
+      <button class="btn-main" onclick="createTournament()">Create Tournament →</button>
+    </div>
+    <div id="adminTourList" style="margin-top:12px"></div>`;
+    let q=await db.collection('tournaments').orderBy('createdAt','desc').limit(20).get(); let h='<h3 style="margin:12px 0">All Tournaments</h3>';
+    q.forEach(d=>{ let t=d.data(); h+=`<div class="card" style="margin-top:10px"><div style="display:flex;justify-content:space-between"><b>${t.title}</b><span class="tag">${t.status}</span></div><p style="font-size:12px;color:var(--muted);margin-top:4px">${t.date} ${t.time} • ${t.registrations||0}/${t.slots} Joined • Entry ₹${t.fee} • Prize ₹${t.prize}</p>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+      <input id="room-${d.id}" placeholder="Room ID" value="${t.roomId||''}" style="margin:0;flex:1">
+      <input id="pass-${d.id}" placeholder="Password" value="${t.roomPass||''}" style="margin:0;flex:1">
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn-main" style="margin:0;padding:10px;font-size:12px;background:var(--green)" onclick="updateRoom('${d.id}')">Save Room ID</button>
+      <button class="btn-main" style="margin:0;padding:10px;font-size:12px;background:var(--blue)" onclick="makeLive('${d.id}')">Make Live</button>
+      <button class="btn-main" style="margin:0;padding:10px;font-size:12px;background:#333" onclick="openResultEntry('${d.id}')">Result</button>
+      <button class="btn-main" style="margin:0;padding:10px;font-size:12px;background:var(--red)" onclick="deleteTournament('${d.id}')">Delete</button>
+    </div></div>`; });
+    document.getElementById('adminTourList').innerHTML=h;
+  }
+  if(tab==='deposit'){
+    let q=await db.collection('deposits').where('status','==','pending').orderBy('createdAt','desc').get(); let h='<h3>Pending Deposits</h3>';
+    if(q.empty) h+='<div class="card" style="margin-top:10px">Koi pending nahi 😎</div>';
+    q.forEach(d=>{ let t=d.data(); h+=`<div class="card" style="margin-top:10px"><b>${t.gameName}</b> • ${t.phone}<br><span>₹${t.amount} → ${t.coins} Coins • UTR: ${t.utr}</span><br><a href="${t.screenshot}" target="_blank" style="color:var(--blue);font-size:13px">📸 Screenshot Dekho</a><div style="display:flex;gap:8px;margin-top:10px"><button class="btn-main" style="margin:0;background:var(--green);padding:10px" onclick="approveDeposit('${d.id}','${t.userId}',${t.coins},${t.amount})">✅ Approve</button><button class="btn-main" style="margin:0;background:var(--red);padding:10px" onclick="rejectDeposit('${d.id}')">❌ Reject</button></div></div>`; });
+    box.innerHTML=h;
+  }
+  if(tab==='withdraw'){
+    let q=await db.collection('withdrawals').where('status','==','pending').orderBy('createdAt','desc').get(); let h='<h3>Pending Withdrawals</h3>';
+    if(q.empty) h+='<div class="card" style="margin-top:10px">Koi pending nahi</div>';
+    q.forEach(d=>{ let t=d.data(); h+=`<div class="card" style="margin-top:10px"><b>${t.gameName}</b> • ${t.phone}<br><span>₹${t.amount} → ${t.method}: ${t.upi}</span><div style="display:flex;gap:8px;margin-top:10px"><button class="btn-main" style="margin:0;background:var(--green);padding:10px" onclick="approveWithdraw('${d.id}')">✅ Paid Kar Diya</button><button class="btn-main" style="margin:0;background:var(--red);padding:10px" onclick="rejectWithdraw('${d.id}','${t.userId}',${t.amount})">❌ Reject + Refund</button></div></div>`; });
+    box.innerHTML=h;
+  }
+  if(tab==='users'){
+    let q=await db.collection('users').orderBy('createdAt','desc').limit(30).get(); let h='<h3>All Users (Latest 30)</h3>';
+    q.forEach(d=>{ let u=d.data(); h+=`<div class="card" style="margin-top:10px;display:flex;justify-content:space-between;align-items:center"><span><b>${u.gameName}</b> ${u.isVIP?'👑':''} ${u.isBanned?'🚫 BANNED':''}<br><span style="font-size:12px;color:var(--muted)">${u.phone} • Coins: ${u.coins} • Kills: ${u.totalKills||0} • Earn: ₹${u.totalEarnings||0}</span></span><div style="display:flex;gap:6px"><button style="background:var(--gold);border:none;padding:7px 10px;border-radius:8px;font-weight:700" onclick="giveCoins('${d.id}')">+ Coins</button><button style="background:var(--red);border:none;color:#fff;padding:7px 10px;border-radius:8px;font-weight:700" onclick="toggleBan('${d.id}',${!!u.isBanned})">${u.isBanned?'Unban':'Ban'}</button></div></div>`; });
+    box.innerHTML=h;
+  } 
+  if(tab==='other'){
+    box.innerHTML=`
+    <div class="card"><h3>📢 Notice / Banner Bhejo</h3><input id="noticeTitle" placeholder="Title - jaise Aaj Mega Tournament"><textarea id="noticeMsg" placeholder="Message..." rows="2"></textarea><button class="btn-main" onclick="sendNotice()">Send Notice</button></div>
+    <div class="card" style="margin-top:12px"><h3>🎟️ Coupon Banao</h3><input id="coupCode" placeholder="Code - BGR100"><input id="coupBonus" type="number" placeholder="Bonus Coins - 50"><input id="coupMax" type="number" placeholder="Max Use - 100"><button class="btn-main" onclick="createCoupon()">Create Coupon</button></div>
+    <div class="card" style="margin-top:12px"><h3>🎁 Sabko Free Coins Do</h3><input id="freeCoinsAmt" type="number" placeholder="Kitne Coins - 10"><button class="btn-main" style="background:var(--gold);color:#000" onclick="giveAllCoins()">Sabko Bhejo</button></div>
+    <div class="card" style="margin-top:12px"><h3>💬 Tickets</h3><div id="ticketAdminList"></div></div>`;
+    let q=await db.collection('tickets').where('status','==','open').orderBy('createdAt','desc').limit(20).get(); let h='';
+    q.forEach(d=>{ let t=d.data(); h+=`<div style="border-bottom:1px solid var(--border);padding:10px 0"><b>${t.gameName}</b> - ${t.subject}<br><span style="font-size:12px;color:var(--muted)">${t.msg}</span><br><input id="reply-${d.id}" placeholder="Reply likho..." style="margin-top:8px"><button class="btn-main" style="padding:8px;font-size:12px" onclick="replyTicket('${d.id}')">Reply + Close</button></div>`; });
+    document.getElementById('ticketAdminList').innerHTML=h||'Koi open ticket nahi';
+  }
+}
+async function createTournament(){
+  let title=document.getElementById('aTitle').value.trim(); let date=document.getElementById('aDate').value; let time=document.getElementById('aTime').value;
+  let fee=Number(document.getElementById('aFee').value); let prize=Number(document.getElementById('aPrize').value);
+  if(!title||!date||!fee) return toast("Title + Date + Fee bharo");
+  await db.collection('tournaments').add({title,date,time,fee,prize,firstPrize:Number(document.getElementById('aFirst').value)||prize,secondPrize:Number(document.getElementById('aSecond').value)||100,thirdPrize:Number(document.getElementById('aThird').value)||50,perKill:Number(document.getElementById('aPerKill').value)||10,slots:Number(document.getElementById('aSlots').value)||48,map:document.getElementById('aMap').value,mode:document.getElementById('aMode').value,status:document.getElementById('aStatus').value,isMega:document.getElementById('aMega').checked,registrations:0,roomId:"",roomPass:"",createdAt:new Date()});
+  toast("✅ Tournament Ban Gaya!"); showAdminTab('tour'); loadTournamentsPro();
+}
+async function updateRoom(id){ let r=document.getElementById('room-'+id).value; let p=document.getElementById('pass-'+id).value; await db.collection('tournaments').doc(id).update({roomId:r,roomPass:p}); toast("✅ Room ID Save Ho Gaya!"); loadTournamentsPro(); }
+async function makeLive(id){ await db.collection('tournaments').doc(id).update({status:'Live'}); toast("🔴 Tournament LIVE!"); showAdminTab('tour'); loadTournamentsPro(); }
+async function deleteTournament(id){ if(!confirm("Delete karna hai?")) return; await db.collection('tournaments').doc(id).delete(); toast("Deleted"); showAdminTab('tour'); }
+async function approveDeposit(id,uid,coins,amt){ await db.collection('deposits').doc(id).update({status:'approved'}); await db.collection('users').doc(uid).update({coins:firebase.firestore.FieldValue.increment(coins)}); toast("✅ "+coins+" Coins De Diye"); showAdminTab('deposit'); }
+async function rejectDeposit(id){ await db.collection('deposits').doc(id).update({status:'rejected'}); toast("Rejected"); showAdminTab('deposit'); }
+async function approveWithdraw(id){ await db.collection('withdrawals').doc(id).update({status:'paid'}); toast("✅ Paid Marked"); showAdminTab('withdraw'); }
+async function rejectWithdraw(id,uid,amt){ await db.collection('withdrawals').doc(id).update({status:'rejected'}); await db.collection('users').doc(uid).update({coins:firebase.firestore.FieldValue.increment(amt)}); toast("Refunded"); showAdminTab('withdraw'); }
+async function giveCoins(uid){ let amt=Number(prompt("Kitne Coins dene hain?")); if(!amt) return; await db.collection('users').doc(uid).update({coins:firebase.firestore.FieldValue.increment(amt)}); toast("✅ "+amt+" Coins Diye"); showAdminTab('users'); }
+async function toggleBan(uid,isBanned){ await db.collection('users').doc(uid).update({isBanned:!isBanned}); toast(isBanned?"Unbanned":"Banned 🚫"); showAdminTab('users'); }
+async function approveKYC(id,uid){ await db.collection('kyc').doc(id).update({status:'approved'}); await db.collection('users').doc(uid).update({kycStatus:'approved'}); toast("✅ KYC Approved"); showAdminTab('kyc'); }
+async function rejectKYC(id,uid){ await db.collection('kyc').doc(id).update({status:'rejected'}); await db.collection('users').doc(uid).update({kycStatus:'rejected'}); toast("Rejected"); showAdminTab('kyc'); }
+async function sendNotice(){ let t=document.getElementById('noticeTitle').value.trim(); let m=document.getElementById('noticeMsg').value.trim(); if(!t||!m) return toast("Title + Msg bharo"); await db.collection('notices').add({title:t,msg:m,createdAt:new Date()}); toast("✅ Notice Bhej Diya"); showAdminTab('other'); }
+async function createCoupon(){ let c=document.getElementById('coupCode').value.trim().toUpperCase(); let b=Number(document.getElementById('coupBonus').value); let mx=Number(document.getElementById('coupMax').value)||100; if(!c||!b) return toast("Code + Bonus bharo"); await db.collection('coupons').add({code:c,bonus:b,maxUse:mx,usedCount:0,createdAt:new Date()}); toast("✅ Coupon Ban Gaya: "+c); }
+async function giveAllCoins(){ let amt=Number(document.getElementById('freeCoinsAmt').value); if(!amt) return toast("Amount bharo"); if(!confirm("Sab users ko "+amt+" coins dene hain?")) return; let q=await db.collection('users').get(); let batch=db.batch(); q.forEach(d=>{ batch.update(db.collection('users').doc(d.id),{coins:firebase.firestore.FieldValue.increment(amt)}); }); await batch.commit(); toast("✅ Sabko "+amt+" Coins Mil Gaye"); }
+async function replyTicket(id){ let r=document.getElementById('reply-'+id).value.trim(); if(!r) return toast("Reply likho"); await db.collection('tickets').doc(id).update({reply:r,status:'closed'}); toast("✅ Reply Ho Gaya"); showAdminTab('other'); }
+async function openResultEntry(tid){
+  let q=await db.collection('registrations').where('tournamentId','==',tid).get();
+  let h=`<div class="card"><h3>Result Entry</h3><p style="font-size:12px;color:var(--muted)">Har player ke kills + position daalo, prize auto calculate hoga (Per Kill + Position Prize)</p></div>`;
+  let tDoc=await db.collection('tournaments').doc(tid).get(); let t=tDoc.data();
+  q.forEach(d=>{ let r=d.data(); h+=`<div class="card" style="margin-top:10px"><b>${r.gameName}</b> (${r.phone})<div style="display:flex;gap:8px"><input id="kill-${d.id}" type="number" placeholder="Kills" value="${r.kills||0}" style="margin-top:8px"><input id="pos-${d.id}" type="number" placeholder="Position #1,2..." value="${r.position||0}" style="margin-top:8px"></div><button class="btn-main" style="padding:10px;font-size:12px" onclick="saveResult('${d.id}','${r.userId}',${t.perKill||10},${t.firstPrize||0},${t.secondPrize||0},${t.thirdPrize||0})">Save Result</button></div>`; });
+  h+=`<button class="btn-main" style="background:var(--green)" onclick="finishTournament('${tid}')">🏁 Tournament Finish + Prize Distribute</button>`;
+  document.getElementById('adminTab').innerHTML=h;
+}
+async function saveResult(regId,uid,perKill,first,second,third){
+  let kills=Number(document.getElementById('kill-'+regId).value)||0; let pos=Number(document.getElementById('pos-'+regId).value)||0;
+  let prize=kills*perKill + (pos===1?first:pos===2?second:pos===3?third:0);
+  await db.collection('registrations').doc(regId).update({kills,position:pos,prize});
+  toast("Saved: "+kills+" Kills, Prize ₹"+prize);
+}
+async function finishTournament(tid){
+  let q=await db.collection('registrations').where('tournamentId','==',tid).get();
+  for(let d of q.docs){ let r=d.data(); if(r.prize>0){ await db.collection('users').doc(r.userId).update({coins:firebase.firestore.FieldValue.increment(r.prize),totalKills:firebase.firestore.FieldValue.increment(r.kills||0),totalMatches:firebase.firestore.FieldValue.increment(1),totalEarnings:firebase.firestore.FieldValue.increment(r.prize),totalWins:firebase.firestore.FieldValue.increment(r.position===1?1:0)}); } else { await db.collection('users').doc(r.userId).update({totalMatches:firebase.firestore.FieldValue.increment(1),totalKills:firebase.firestore.FieldValue.increment(r.kills||0)}); } }
+  await db.collection('tournaments').doc(tid).update({status:'Completed'});
+  toast("🏆 Tournament Finished! Prizes Distribute Ho Gaye!"); showAdminTab('tour'); loadTournamentsPro();
+}
+      </script>
+  <script>
+// ===== SUPER ADVANCE - PART 5 =====
+
+// --- 1. GLOBAL CHAT (Tournament Lobby Chat) ---
+async function loadChat(){
+  let box=document.getElementById('chatBox'); if(!box) return;
+  let q=await db.collection('chat').orderBy('createdAt','desc').limit(30).get();
+  let arr=[]; q.forEach(d=>arr.push(d.data())); arr.reverse();
+  box.innerHTML=arr.map(c=>`<div style="padding:8px 0;border-bottom:1px solid var(--border)"><b style="font-size:13px">${c.gameName} ${c.isAdmin?'👑':''}</b> <span style="font-size:11px;color:var(--muted)">${c.createdAt?.toDate().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})||''}</span><br><span style="font-size:13px">${c.msg}</span></div>`).join('') || '<p style="color:var(--muted)">Koi message nahi, pehla message tu bhej 🔥</p>';
+  box.scrollTop=box.scrollHeight;
 }
 async function sendChat(){
-  let m=document.getElementById('chatInput').value; if(!m) return;
-  await db.collection('chats').add({userId:me.uid,name:myData.gameName,msg:m,createdAt:new Date()});
-  document.getElementById('chatInput').value=''; loadChat();
+  let inp=document.getElementById('chatInput'); let msg=inp.value.trim(); if(!msg) return;
+  if(!me) return toast("Login Karo");
+  await db.collection('chat').add({userId:me.uid,gameName:myData.gameName,msg,isAdmin:me.uid===OWNER_UID,createdAt:new Date()});
+  inp.value=''; loadChat(); playSound('pop');
 }
-async function loadChat(){
-  let q=await db.collection('chats').orderBy('createdAt','desc').limit(20).get(); let h='';
-  q.forEach(d=>{ let c=d.data(); h+=`<div style="padding:6px;border-bottom:1px solid #222"><b>${c.name}:</b> ${c.msg}</div>`; });
-  document.getElementById('chatBox').innerHTML=h||'Koi Chat Nahi';
+function openChatModal(){
+  if(!me) return toast("Login Karo");
+  let m=document.createElement('div'); m.id='chatModal'; m.className='modal';
+  m.innerHTML=`<div class="modal-box"><div style="display:flex;justify-content:space-between;align-items:center"><h3>💬 Live Lobby Chat</h3><button onclick="document.getElementById('chatModal').remove()" style="background:#333;color:#fff;border:none;padding:6px 12px;border-radius:50px">✕</button></div><div id="chatBox" style="height:320px;overflow-y:auto;margin-top:12px"></div><div style="display:flex;gap:8px;margin-top:10px"><input id="chatInput" placeholder="Message likho..." style="margin:0" onkeypress="if(event.key==='Enter')sendChat()"><button class="btn-main" style="width:auto;margin:0;padding:12px 18px" onclick="sendChat()">Send</button></div><p style="font-size:11px;color:var(--muted);margin-top:8px">⚠️ Gaali / Spam = Ban. Respect se baat karo.</p></div>`;
+  document.body.appendChild(m); loadChat();
+  setInterval(()=>{ if(document.getElementById('chatBox')) loadChat(); },5000);
 }
-async function reportPlayer(){
-  let uid=document.getElementById('reportUid').value, reason=document.getElementById('reportReason').value;
-  await db.collection('reports').add({reportedUid:uid,reporterId:me.uid,reason,createdAt:new Date()}); alert("Report Bhej Di - Admin dekhega");
+
+// --- 2. SOUND SYSTEM ---
+let soundOn = localStorage.getItem('bgr_sound')!=='off';
+function playSound(type){
+  if(!soundOn) return;
+  try{
+    let ctx=new (window.AudioContext||window.webkitAudioContext)();
+    let o=ctx.createOscillator(), g=ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.value= type==='win'?880 : type==='pop'?520 : 440;
+    o.type='sine'; g.gain.value=0.15;
+    o.start(); o.stop(ctx.currentTime+0.2);
+  }catch(e){}
 }
-async function copyReferral(){ navigator.clipboard.writeText(document.getElementById('myReferralCode').innerText); alert("Referral Code Copy Ho Gaya! Dosto ko bhejo - 20 Coins milega"); }
-function openLink(type){ let l=JSON.parse(localStorage.getItem('supportLinks')||'{}'); let url=l[type]||'https://wa.me/91'; window.open(url,'_blank'); }
-</script>
-<script>
-async function loadMyMatches(){
-  let regs=await db.collection('registrations').where('userId','==',me.uid).get(); let h='';
-  for(let r of regs.docs){ let reg=r.data(); let m=await db.collection('matches').where('tournamentId','==',reg.tournamentId).get();
-    m.forEach(d=>{ let mt=d.data(); h+=`<div style="background:#111;padding:12px;border-radius:10px;margin:8px 0"><b>${mt.title}</b><br>Room ID: <b style="color:#FFA500;font-size:18px">${mt.roomId||'Admin jaldi dega'}</b><br>Password: <b>${mt.roomPass||'---'}</b><br>Slot: ${mt.slot}</div>`; }); }
-  document.getElementById('myMatches').innerHTML=h||'Koi Match Nahi - Pehle Join Karo';
-  let hist=await db.collection('results').where('userId','==',me.uid).get(); let hh='';
-  hist.forEach(d=>{ let r=d.data(); hh+=`<div style="padding:8px;border-bottom:1px solid #222">TID: ${r.tournamentId} | Kills: ${r.kills} | Place: ${r.place} | Prize: ${r.prize}</div>`; });
-  document.getElementById('myHistory').innerHTML=hh||'Koi Result Nahi';
-  let pr=await db.collection('proofs').where('userId','==',me.uid).get(); let ph='';
-  pr.forEach(d=>{ let p=d.data(); ph+=`<div>${p.note} - ${p.status}</div>`; });
-  document.getElementById('myProofs').innerHTML=ph;
+function toggleSound(){ soundOn=!soundOn; localStorage.setItem('bgr_sound',soundOn?'on':'off'); toast(soundOn?"🔊 Sound On":"🔇 Sound Off"); }
+
+// --- 3. PWA INSTALL + SHARE ---
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredPrompt=e; let b=document.getElementById('installBtn'); if(b) b.classList.remove('hide'); });
+async function installApp(){
+  if(deferredPrompt){ deferredPrompt.prompt(); let r=await deferredPrompt.userChoice; if(r.outcome==='accepted') toast("✅ App Install Ho Gaya!"); deferredPrompt=null; }
+  else toast("Browser menu → Add to Home Screen se install karo");
 }
-async function uploadProof(){
-  let f=document.getElementById('proofFile').files[0], note=document.getElementById('proofNote').value;
-  let url=''; if(f){ let ref=storage.ref('proofs/'+Date.now()+'_'+f.name); await ref.put(f); url=await ref.getDownloadURL(); }
-  await db.collection('proofs').add({userId:me.uid,gameName:myData.gameName,note,img:url,status:'pending',createdAt:new Date()}); alert("Proof Upload Ho Gaya!");
+function shareApp(){
+  let txt="🔥 BGR ESPORTS join karo! Free Fire Tournament, Daily Cash Prize! Code: "+(myData?.referralCode||"BGR")+" Link: https://21137-cyber.github.io";
+  if(navigator.share) navigator.share({title:"BGR ESPORTS",text:txt,url:"https://21137-cyber.github.io"});
+  else { navigator.clipboard.writeText(txt); toast("Link Copied!"); }
 }
-async function loadWallet(){
-  let u=await db.collection('users').doc(me.uid).get(); myData=u.data();
-  let s=await db.collection('systemSettings').doc('main').get(); let set=s.exists?s.data():{};
-  document.getElementById('upiDisplay').innerText=set.upi||'Admin ne UPI nahi dala';
-  document.getElementById('payMode').innerText=set.payMode||'UPI';
-  document.getElementById('walletInfo').innerHTML=`Coins: <b>${myData.coins||0}</b><br>Total Earnings: ${myData.totalEarnings||0}<br>VIP: ${myData.vipUntil?'Active':'No'}`;
-  document.getElementById('vipStatus').innerText='VIP Status: '+(myData.vipUntil?'Active till '+myData.vipUntil:'Free Player');
-  let t=await db.collection('transactions').where('userId','==',me.uid).orderBy('createdAt','desc').limit(20).get(); let h='';
-  t.forEach(d=>{ let tx=d.data(); h+=`<div style="padding:8px;border-bottom:1px solid #222">${tx.type} : ${tx.amount} - ${tx.note}</div>`; });
-  document.getElementById('txnHistory').innerHTML=h||'Koi Transaction Nahi';
-  let dep=await db.collection('depositRequests').where('userId','==',me.uid).orderBy('createdAt','desc').limit(10).get(); let dh='';
-  dep.forEach(d=>{ let x=d.data(); dh+=`<div>Deposit ${x.amount} Coins ${x.coins} - ${x.status}</div>`; });
-  let wd=await db.collection('withdrawalRequests').where('userId','==',me.uid).orderBy('createdAt','desc').limit(10).get();
-  wd.forEach(d=>{ let x=d.data(); dh+=`<div>Withdraw ${x.coins} - ${x.status}</div>`; });
-  document.getElementById('myDepWith').innerHTML=dh||'Koi Request Nahi';
+
+// --- 4. FAKE PLAYERS / SOCIAL PROOF (Admin se auto badhta hai) ---
+function showFakeActivity(){
+  let names=["Rahul FF","AmanYT","Priya","Vikash","Deepak","Arjun","Sahil","Rohit","Karan","Manish","Aryan","Dev"];
+  let acts=["ne ₹500 jeeta 🎉","ne Tournament join kiya 🔥","ne ₹1000 Withdraw kiya 💰","ne 12 Kills kiye 💀","ne Daily Reward liya 🎁"];
+  let n=names[Math.floor(Math.random()*names.length)], a=acts[Math.floor(Math.random()*acts.length)];
+  toast(n+" "+a);
 }
-async function submitDeposit(){
-  let amt=document.getElementById('depAmount').value, coins=document.getElementById('depCoins').value, utr=document.getElementById('depUtr').value, coupon=document.getElementById('depCoupon').value, f=document.getElementById('depSSFile').files[0];
-  if(!amt||!coins||!utr) return alert("Amount, Coins, UTR bharo");
-  let url=''; if(f){ let ref=storage.ref('deposits/'+Date.now()+'_'+f.name); await ref.put(f); url=await ref.getDownloadURL(); }
-  let bonus=0; if(coupon){ let q=await db.collection('coupons').where('code','==',coupon.toUpperCase()).get(); if(!q.empty){ let c=q.docs[0].data(); if(parseInt(coins)>= (c.minDeposit||0)) bonus=c.bonus||0; } }
-  await db.collection('depositRequests').add({userId:me.uid,gameName:myData.gameName,amount:parseInt(amt),coins:parseInt(coins)+bonus,bonus,utr,coupon,ss:url,status:'pending',createdAt:new Date()});
-  alert("Deposit Request Bhej Di! Admin Approve karega. Bonus: "+bonus);
+setInterval(showFakeActivity,45000); // Har 45 sec me ek fake activity toast
+
+// --- 5. MAINTENANCE MODE CHECK ---
+async function checkMaintenance(){
+  try{
+    let doc=await db.collection('settings').doc('app').get();
+    if(doc.exists && doc.data().maintenance){
+      document.body.innerHTML=`<div style="text-align:center;padding:60px 20px"><div style="font-size:70px">🛠️</div><h2 style="font-family:Poppins;margin-top:16px">App Under Maintenance</h2><p style="color:#9AA0AE;margin-top:10px;line-height:1.6">${doc.data().maintenanceMsg||"Thodi der me wapas aayenge. Naya update aa raha hai!"}</p><p style="font-size:12px;color:#9AA0AE;margin-top:20px">BGR ESPORTS Team</p></div>`;
+    }
+  }catch(e){}
 }
-async function submitWithdraw(){
-  let coins=parseInt(document.getElementById('withCoins').value), upi=document.getElementById('withUpi').value, name=document.getElementById('withName').value;
-  let s=await db.collection('systemSettings').doc('main').get(); let min=s.exists?(s.data().minWithdraw||100):100;
-  if(coins<min) return alert("Min Withdraw "+min+" Coins");
-  if((myData.coins||0)<coins) return alert("Coins Kam Hain");
-  await db.collection('users').doc(me.uid).update({coins:firebase.firestore.FieldValue.increment(-coins)});
-  await db.collection('withdrawalRequests').add({userId:me.uid,gameName:myData.gameName,coins,upi,name,ageGroup:myData.ageGroup,status:'pending',createdAt:new Date()});
-  alert("Withdraw Request Bhej Di!");
-}
-async function buyVIP(type){
-  let cost= type==='weekly'?99:299; if((myData.coins||0)<cost) return alert("Coins Kam Hain");
-  let days= type==='weekly'?7:30; let until=new Date(); until.setDate(until.getDate()+days);
-  await db.collection('users').doc(me.uid).update({coins:firebase.firestore.FieldValue.increment(-cost),vipUntil:until.toISOString().split('T')[0]});
-  await db.collection('transactions').add({userId:me.uid,type:'vip',amount:-cost,note:'VIP '+type,createdAt:new Date()}); alert("VIP Active!"); loadWallet();
-}
-</script>
-<script>
-async function loadProfile(){
-  document.getElementById('profileInfo').innerHTML=`Name: ${myData.name}<br>Game: ${myData.gameName}<br>Email: ${myData.email}<br>Phone: ${myData.phone||''}<br>Age: ${myData.age} (${myData.ageGroup})<br>Coins: ${myData.coins}<br>Kills: ${myData.totalKills||0} | Wins: ${myData.totalWins||0}<br>Referral: ${myData.referralCode}`;
-  document.getElementById('kycStatus').innerHTML='KYC: <b>'+(myData.kycStatus||'pending')+'</b>';
-  let sup=await db.collection('supportTickets').where('userId','==',me.uid).orderBy('createdAt','desc').limit(10).get(); let h='';
-  sup.forEach(d=>{ let s=d.data(); h+=`<div style="padding:8px;border-bottom:1px solid #222"><b>${s.subject}</b> - ${s.status} - ${s.reply||'Reply pending'}</div>`; });
-  document.getElementById('mySupport').innerHTML=h;
-}
-async function updateProfile(){
-  let g=document.getElementById('editGameName').value; if(!g) return alert("Game Name Daalo");
-  await db.collection('users').doc(me.uid).update({gameName:g}); alert("Profile Update Ho Gaya"); loadPlayer();
-}
-async function submitKYC(){
-  let name=document.getElementById('kycName').value, aadhar=document.getElementById('kycAadhar').value, f=document.getElementById('kycFile').files[0];
-  if(!name||!aadhar) return alert("Name + Aadhar bharo");
-  let url=''; if(f){ let ref=storage.ref('kyc/'+Date.now()+'_'+f.name); await ref.put(f); url=await ref.getDownloadURL(); }
-  await db.collection('kycRequests').add({userId:me.uid,gameName:myData.gameName,name,aadhar,img:url,ageGroup:myData.ageGroup,status:'pending',createdAt:new Date()});
-  await db.collection('users').doc(me.uid).update({kycStatus:'pending'}); alert("KYC Bhej Di!");
-}
-async function sendSupport(){
-  let sub=document.getElementById('supSubject').value, msg=document.getElementById('supMsg').value; if(!sub||!msg) return alert("Subject + Msg bharo");
-  await db.collection('supportTickets').add({userId:me.uid,gameName:myData.gameName,subject:sub,message:msg,status:'open',reply:'',createdAt:new Date()}); alert("Ticket Bhej Di!"); loadProfile();
-}
-// CLOCK
-setInterval(()=>{ let e=document.getElementById('liveClock'); if(e) e.innerText=new Date().toLocaleString('en-IN'); },1000);
-</script>
-<script>
-async function loadAllAdmin(){ loadAdminDash(); loadTournamentsAdmin(); loadUsersAdmin(); loadMatchesAdmin(); loadResultsAdmin(); loadProofsAdmin(); loadDepositAdmin(); loadWithdrawAdmin(); loadSupportAdmin(); loadAnnounceAdmin(); loadAdminExtra(); loadThemes(); }
-async function loadAdminDash(){
-  let u=await db.collection('users').get(); let t=await db.collection('tournaments').get(); let dep=await db.collection('depositRequests').where('status','==','pending').get(); let wd=await db.collection('withdrawalRequests').where('status','==','pending').get(); let kyc=await db.collection('kycRequests').where('status','==','pending').get(); let rep=await db.collection('reports').get();
-  document.getElementById('adminStats').innerHTML=`<div class="stat"><b>${u.size}</b><br>Total Users</div><div class="stat"><b>${t.size}</b><br>Tournaments</div><div class="stat"><b>${dep.size}</b><br>Pending Deposit</div><div class="stat"><b>${wd.size}</b><br>Pending Withdraw</div><div class="stat"><b>${kyc.size}</b><br>Pending KYC</div><div class="stat"><b>${rep.size}</b><br>Reports</div>`;
-  document.getElementById('clockDisplay').innerText=new Date().toLocaleString('en-IN');
-  let r=await db.collection('reports').orderBy('createdAt','desc').limit(10).get(); let h='';
-  r.forEach(d=>{ let x=d.data(); h+=`<div style="padding:8px;border-bottom:1px solid #222">${x.reportedUid} - ${x.reason} <button onclick="banUser('${x.reportedUid}')">BAN</button></div>`; });
-  document.getElementById('reportList').innerHTML=h||'Koi Report Nahi';
-  let logs=await db.collection('auditLogs').orderBy('createdAt','desc').limit(10).get(); let lh='';
-  logs.forEach(d=>{ let x=d.data(); lh+=`<div>${x.action} - ${x.by} - ${x.detail}</div>`; });
-  document.getElementById('auditLogs').innerHTML=lh;
-}
-async function audit(action,detail){ await db.collection('auditLogs').add({action,by:me.uid,detail,createdAt:new Date()}); }
-async function createTournament(){
-  let data={title:document.getElementById('tTitle').value, game:document.getElementById('tGame').value, map:document.getElementById('tMap').value, mode:document.getElementById('tMode').value, date:document.getElementById('tDate').value, time:document.getElementById('tTime').value, slots:parseInt(document.getElementById('tSlots').value)||10, fee:parseInt(document.getElementById('tFee').value)||0, prize:parseInt(document.getElementById('tPrize').value)||0, perKill:parseInt(document.getElementById('tPerKill').value)||0, banner:document.getElementById('tBanner').value, status:'Upcoming', registrations:0, createdAt:new Date()};
-  if(!data.title) return alert("Title Daalo");
-  await db.collection('tournaments').add(data); await audit('Tournament Created',data.title); alert("Tournament Ban Gaya!"); loadTournamentsAdmin();
-}
-async function loadTournamentsAdmin(){
-  let q=await db.collection('tournaments').orderBy('createdAt','desc').get(); let h='';
-  q.forEach(d=>{ let t=d.data(); h+=`<div style="background:#111;padding:10px;border-radius:10px;margin:6px 0"><b>${t.title}</b> - ${t.status} - ${t.registrations}/${t.slots}<br><button onclick="goLive('${d.id}')">GO LIVE</button> <button onclick="cancelTournament('${d.id}')">CANCEL</button> <button onclick="deleteTournament('${d.id}')">DELETE</button></div>`; });
-  document.getElementById('tourAdminList').innerHTML=h;
-}
-async function goLive(id){ await db.collection('tournaments').doc(id).update({status:'Live'}); await audit('Tournament Live',id); loadTournamentsAdmin(); }
-async function cancelTournament(id){ await db.collection('tournaments').doc(id).update({status:'Cancelled'}); loadTournamentsAdmin(); }
-async function deleteTournament(id){ if(confirm("Delete?")){ await db.collection('tournaments').doc(id).delete(); loadTournamentsAdmin(); } }
-async function createAnnouncement(){ let t=document.getElementById('anTitle').value, m=document.getElementById('anMsg').value; await db.collection('announcements').add({title:t,message:m,createdAt:new Date()}); alert("Announcement Live!"); }
-async function loadAnnounceAdmin(){ let q=await db.collection('announcements').orderBy('createdAt','desc').limit(5).get(); let h=''; q.forEach(d=>{ let a=d.data(); h+=`<div>${a.title} - ${a.message}</div>`; }); document.getElementById('annAdminList').innerHTML=h; }
-</script>
-<script>
-async function loadUsersAdmin(){
-  let q=await db.collection('users').orderBy('createdAt','desc').limit(50).get(); let h='<table><tr><th>Player</th><th>Coins</th><th>Kills</th><th>Action</th></tr>';
-  q.forEach(d=>{ let u=d.data(); h+=`<tr><td>${u.gameName||u.name}<br><small>${u.email}</small></td><td>${u.coins||0}</td><td>${u.totalKills||0}</td><td><button onclick="addCoins('${d.id}')">+COINS</button> <button onclick="banUser('${d.id}')">BAN</button> <button onclick="unbanUser('${d.id}')">UNBAN</button></td></tr>`; });
-  document.getElementById('userAdminList').innerHTML=h+'</table>';
-}
-async function addCoins(uid){ let c=prompt("Kitne Coins Add karne hain?"); if(!c) return; await db.collection('users').doc(uid).update({coins:firebase.firestore.FieldValue.increment(parseInt(c))}); await audit('Add Coins',uid+' +'+c); alert("Coins Add Ho Gaye"); loadUsersAdmin(); }
-async function banUser(uid){ await db.collection('users').doc(uid).update({isBanned:true}); await audit('Ban User',uid); alert("Banned"); }
-async function unbanUser(uid){ await db.collection('users').doc(uid).update({isBanned:false}); alert("Unbanned"); }
-async function createMatch(){
-  let tid=document.getElementById('mTid').value, title=document.getElementById('mTitle').value, rid=document.getElementById('mRoomId').value, pass=document.getElementById('mRoomPass').value, slot=document.getElementById('mSlot').value;
-  await db.collection('matches').add({tournamentId:tid,title,roomId:rid,roomPass:pass,slot,createdAt:new Date()}); await audit('Match Created',title); alert("Match Ban Gaya - Players ko Room ID dikhega!"); loadMatchesAdmin();
-}
-async function loadMatchesAdmin(){ let q=await db.collection('matches').orderBy('createdAt','desc').limit(20).get(); let h=''; q.forEach(d=>{ let m=d.data(); h+=`<div>${m.title} - Room: ${m.roomId} - Pass: ${m.roomPass}</div>`; }); document.getElementById('matchAdminList').innerHTML=h; }
-async function addResult(){
-  let tid=document.getElementById('rTid').value, uid=document.getElementById('rUid').value, kills=parseInt(document.getElementById('rKills').value)||0, place=parseInt(document.getElementById('rPlace').value)||0, prize=parseInt(document.getElementById('rPrize').value)||0;
-  await db.collection('results').add({tournamentId:tid,userId:uid,kills,place,prize,createdAt:new Date()});
-  let u=await db.collection('users').doc(uid).get(); if(u.exists){ await db.collection('users').doc(uid).update({totalKills:firebase.firestore.FieldValue.increment(kills),totalWins:firebase.firestore.FieldValue.increment(place===1?1:0),totalMatches:firebase.firestore.FieldValue.increment(1),totalEarnings:firebase.firestore.FieldValue.increment(prize),coins:firebase.firestore.FieldValue.increment(prize)}); }
-  await audit('Result Added',uid+' kills '+kills); alert("Result Add Ho Gaya + Coins diye!"); loadResultsAdmin();
-}
-async function loadResultsAdmin(){ let q=await db.collection('results').orderBy('createdAt','desc').limit(20).get(); let h=''; q.forEach(d=>{ let r=d.data(); h+=`<div>UID: ${r.userId} | Kills: ${r.kills} | Place: ${r.place} | Prize: ${r.prize}</div>`; }); document.getElementById('resultAdminList').innerHTML=h; }
-async function loadProofsAdmin(){ let q=await db.collection('proofs').where('status','==','pending').get(); let h=''; q.forEach(d=>{ let p=d.data(); h+=`<div style="padding:8px;border-bottom:1px solid #222">${p.gameName} - ${p.note} <a href="${p.img}" target="_blank">View</a> <button onclick="approveProof('${d.id}','${p.userId}')">APPROVE</button> <button onclick="rejectProof('${d.id}')">REJECT</button></div>`; }); document.getElementById('proofList').innerHTML=h||'Koi Proof Nahi'; }
-async function approveProof(id,uid){ await db.collection('proofs').doc(id).update({status:'approved'}); await db.collection('users').doc(uid).update({coins:firebase.firestore.FieldValue.increment(10)}); alert("Approved + 10 Coins"); loadProofsAdmin(); }
-async function rejectProof(id){ await db.collection('proofs').doc(id).update({status:'rejected'}); loadProofsAdmin(); }
-async function bulkApproveProofs(){ let q=await db.collection('proofs').where('status','==','pending').get(); for(let d of q.docs){ await d.ref.update({status:'approved'}); } alert("Sab Proofs Approve!"); loadProofsAdmin(); }
-</script>
-<script>
-async function loadDepositAdmin(){
-  let q=await db.collection('depositRequests').where('status','==','pending').get(); let h='';
-  q.forEach(d=>{ let x=d.data(); h+=`<div style="background:#111;padding:10px;border-radius:10px;margin:6px 0"><b>${x.gameName}</b> - ₹${x.amount} - ${x.coins} Coins (Bonus ${x.bonus||0})<br>UTR: ${x.utr} <a href="${x.ss}" target="_blank">SS</a><br><button class="green" onclick="approveDeposit('${d.id}','${x.userId}',${x.coins})">APPROVE</button> <button onclick="rejectDeposit('${d.id}')">REJECT</button></div>`; });
-  document.getElementById('depAdminList').innerHTML=h||'Koi Pending Deposit Nahi';
-}
-async function approveDeposit(id,uid,coins){ await db.collection('depositRequests').doc(id).update({status:'approved'}); await db.collection('users').doc(uid).update({coins:firebase.firestore.FieldValue.increment(coins)}); await db.collection('transactions').add({userId:uid,type:'deposit',amount:coins,note:'Deposit Approved',createdAt:new Date()}); await audit('Deposit Approved',uid+' +'+coins); alert("Deposit Approved!"); loadDepositAdmin(); }
-async function rejectDeposit(id){ await db.collection('depositRequests').doc(id).update({status:'rejected'}); loadDepositAdmin(); }
-async function loadWithdrawAdmin(){
-  let q=await db.collection('withdrawalRequests').where('status','==','pending').get(); let h='';
-  q.forEach(d=>{ let x=d.data(); h+=`<div style="background:#111;padding:10px;border-radius:10px;margin:6px 0"><b>${x.gameName}</b> (${x.ageGroup}) - ${x.coins} Coins<br>UPI: ${x.upi} - ${x.name}<br><button class="green" onclick="approveWithdraw('${d.id}','${x.userId}',${x.coins})">PAID</button> <button onclick="rejectWithdraw('${d.id}','${x.userId}',${x.coins})">REJECT + REFUND</button></div>`; });
-  document.getElementById('withAdminList').innerHTML=h||'Koi Pending Withdraw Nahi';
-}
-async function approveWithdraw(id,uid,coins){ await db.collection('withdrawalRequests').doc(id).update({status:'approved'}); await db.collection('transactions').add({userId:uid,type:'withdraw',amount:-coins,note:'Withdraw Paid',createdAt:new Date()}); await audit('Withdraw Paid',uid+' -'+coins); alert("Withdraw Paid!"); loadWithdrawAdmin(); }
-async function rejectWithdraw(id,uid,coins){ await db.collection('withdrawalRequests').doc(id).update({status:'rejected'}); await db.collection('users').doc(uid).update({coins:firebase.firestore.FieldValue.increment(coins)}); loadWithdrawAdmin(); }
-async function loadSupportAdmin(){
-  let q=await db.collection('supportTickets').where('status','==','open').get(); let h='';
-  q.forEach(d=>{ let s=d.data(); h+=`<div style="padding:8px;border-bottom:1px solid #222"><b>${s.gameName}</b> - ${s.subject}<br>${s.message}<br><input id="rep_${d.id}" placeholder="Reply..."><button onclick="replySupport('${d.id}')">REPLY</button></div>`; });
-  document.getElementById('supportAdminList').innerHTML=h||'Koi Ticket Nahi';
-}
-async function replySupport(id){ let r=document.getElementById('rep_'+id).value; await db.collection('supportTickets').doc(id).update({reply:r,status:'closed'}); alert("Reply Bhej Di"); loadSupportAdmin(); }
-async function loadAdminExtra(){
-  let c=await db.collection('customMatches').where('status','==','pending').get(); let h='';
-  c.forEach(d=>{ let x=d.data(); h+=`<div>${x.creatorName} - ${x.type} - ${x.slot} - ${x.date} ${x.time} <button onclick="approveCustom('${d.id}')">APPROVE</button> <button onclick="rejectCustom('${d.id}')">REJECT</button></div>`; });
-  document.getElementById('customAdminList').innerHTML=h||'Koi Pending Custom Nahi';
-  let cp=await db.collection('coupons').get(); let ch=''; cp.forEach(d=>{ let x=d.data(); ch+=`<div>${x.code} - Bonus ${x.bonus} - Min ${x.minDeposit}</div>`; }); document.getElementById('couponList').innerHTML=ch;
-  let k=await db.collection('kycRequests').where('status','==','pending').get(); let kh='';
-  k.forEach(d=>{ let x=d.data(); kh+=`<div>${x.gameName} (${x.ageGroup}) - ${x.name} - ${x.aadhar} <a href="${x.img}" target="_blank">Doc</a> <button onclick="approveKYC('${d.id}','${x.userId}')">APPROVE</button> <button onclick="rejectKYC('${d.id}','${x.userId}')">REJECT</button></div>`; });
-  document.getElementById('kycList').innerHTML=kh||'Koi KYC Nahi';
-  let v=await db.collection('users').where('vipUntil','!=',null).get(); let vh=''; v.forEach(d=>{ let x=d.data(); vh+=`<div>${x.gameName} - VIP till ${x.vipUntil}</div>`; }); document.getElementById('vipList').innerHTML=vh;
-  let rf=await db.collection('referrals').orderBy('createdAt','desc').limit(20).get(); let rh=''; rf.forEach(d=>{ let x=d.data(); rh+=`<div>${x.from} -> ${x.to} - ${x.coins}</div>`; }); document.getElementById('refList').innerHTML=rh;
-  let tx=await db.collection('transactions').orderBy('createdAt','desc').limit(20).get(); let th=''; tx.forEach(d=>{ let x=d.data(); th+=`<div>${x.userId} - ${x.type} - ${x.amount}</div>`; }); document.getElementById('txnList').innerHTML=th;
-  let au=await db.collection('auditLogs').orderBy('createdAt','desc').limit(20).get(); let ah=''; au.forEach(d=>{ let x=d.data(); ah+=`<div>${x.action} - ${x.detail}</div>`; }); document.getElementById('auditList').innerHTML=ah;
-}
-async function approveCustom(id){ await db.collection('customMatches').doc(id).update({status:'approved'}); loadAdminExtra(); }
-async function rejectCustom(id){ await db.collection('customMatches').doc(id).update({status:'rejected'}); loadAdminExtra(); }
-async function createCoupon(){ let code=document.getElementById('cpCode').value.toUpperCase(), bonus=parseInt(document.getElementById('cpBonus').value)||0, min=parseInt(document.getElementById('cpMin').value)||0; await db.collection('coupons').add({code,bonus,minDeposit:min,createdAt:new Date()}); alert("Coupon Ban Gaya!"); loadAdminExtra(); }
-async function approveKYC(id,uid){ await db.collection('kycRequests').doc(id).update({status:'approved'}); await db.collection('users').doc(uid).update({kycStatus:'verified'}); loadAdminExtra(); }
-async function rejectKYC(id,uid){ await db.collection('kycRequests').doc(id).update({status:'rejected'}); await db.collection('users').doc(uid).update({kycStatus:'rejected'}); loadAdminExtra(); }
-</script>
-<script>
-// ===== THEME =====
-function applyTheme(name){
-  let themes={bgr:{'--bg':'#080808','--card':'#1a1a1a','--btn':'#FFA500','--accent':'#FFA500','--text':'#ffffff'},neon:{'--bg':'#001100','--card':'#0a2a0a','--btn':'#00FF00','--accent':'#00FF00','--text':'#ffffff'},royal:{'--bg':'#0a0a2a','--card':'#1a1a4a','--btn':'#FFD700','--accent':'#FFD700','--text':'#ffffff'},pink:{'--bg':'#1a001a','--card':'#2a0a2a','--btn':'#FF1493','--accent':'#FF1493','--text':'#ffffff'},purple:{'--bg':'#12001a','--card':'#2a0a3a','--btn':'#8A2BE2','--accent':'#8A2BE2','--text':'#ffffff'},dark:{'--bg':'#000000','--card':'#111111','--btn':'#333333','--accent':'#ffffff','--text':'#ffffff'}};
-  let t=themes[name]; for(let k in t){ document.documentElement.style.setProperty(k,t[k]); }
-  currentTheme=t; localStorage.setItem('theme',JSON.stringify(t));
-}
-function setColor(key,val){ document.documentElement.style.setProperty(key,val); currentTheme[key]=val; }
-function saveTheme(){ localStorage.setItem('theme',JSON.stringify(currentTheme)); alert("Theme Save Ho Gaya!"); }
-function loadThemes(){ let t=JSON.parse(localStorage.getItem('theme')||'{}'); for(let k in t) document.documentElement.style.setProperty(k,t[k]); }
-loadThemes();
-function saveBranding(){ let n=document.getElementById('appNameInput').value, d=document.getElementById('appDomainInput').value, l=document.getElementById('appLogoInput').value; localStorage.setItem('branding',JSON.stringify({name:n,domain:d,logo:l})); if(n) document.getElementById('appNameDisplay').innerText=(l||'🔥')+' '+n; alert("Branding Save!"); }
-function saveSupportLinks(){ let links={whatsapp:document.getElementById('linkWhatsapp').value,telegram:document.getElementById('linkTelegram').value,instagram:document.getElementById('linkInstagram').value,youtube:document.getElementById('linkYoutube').value,email:document.getElementById('linkEmail').value,website:document.getElementById('linkWebsite').value}; localStorage.setItem('supportLinks',JSON.stringify(links)); alert("Support Links Save!"); }
-async function saveSettings(){
-  await db.collection('systemSettings').doc('main').set({minWithdraw:parseInt(document.getElementById('sMinWithdraw').value)||100,upi:document.getElementById('sUpi').value,payMode:document.getElementById('sPayMode').value,whatsapp:document.getElementById('sWhatsapp').value,notice:document.getElementById('sNotice').value,minLevel:parseInt(document.getElementById('sMinLevel').value)||40,allowU18:document.getElementById('sAllowU18').value},{merge:true}); alert("Settings Save Ho Gaye!"); await audit('Settings Updated','main');
-}
+checkMaintenance();
+
+// --- 6. ADD CHAT + INSTALL BUTTON TO PROFILE / HOME ---
+// Profile page me extra buttons add karne ke liye - loadProfilePro ke baad call hoga
+let oldLoadProfile = loadProfilePro;
+loadProfilePro = async function(){
+  await oldLoadProfile();
+  let box=document.getElementById('profileBox');
+  if(box && !document.getElementById('extraBtns')){
+    let div=document.createElement('div'); div.id='extraBtns';
+    div.innerHTML=`
+    <div class="card" style="margin-top:12px"><h4>🚀 Extra Features</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+        <button class="btn-main" style="margin:0;padding:11px;font-size:13px;background:var(--blue)" onclick="openChatModal()">💬 Live Chat</button>
+        <button class="btn-main" style="margin:0;padding:11px;font-size:13px;background:var(--purple)" onclick="shareApp()">📤 Share App</button>
+        <button class="btn-main" style="margin:0;padding:11px;font-size:13px;background:var(--gold);color:#000" onclick="installApp()">📲 Install App</button>
+        <button class="btn-main" style="margin:0;padding:11px;font-size:13px;background:#333" onclick="toggleSound()">🔊 Sound: ${soundOn?'ON':'OFF'}</button>
+      </div>
+      <button id="installBtn" class="btn-main hide" style="background:var(--green)" onclick="installApp()">📲 App Install Karo - Home Screen Pe Pao</button>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px;text-align:center">Version: INFINITY v6.0 • Made with ❤️ by BGR Team</p>
+    </div>`;
+    box.appendChild(div);
+  }
+};
+
+// --- 7. ADD CHAT FLOATING BUTTON ON HOME ---
+setTimeout(()=>{
+  if(!document.getElementById('chatFloat')){
+    let f=document.createElement('div'); f.id='chatFloat';
+    f.style.cssText='position:fixed;bottom:100px;right:16px;width:52px;height:52px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;z-index:90;box-shadow:0 6px 20px rgba(255,45,32,.5);cursor:pointer';
+    f.innerText='💬'; f.onclick=()=>openChatModal();
+    document.body.appendChild(f);
+  }
+},2000);
+
+// --- 8. AUTO REFRESH + REALTIME LISTENERS ---
+db.collection('tournaments').onSnapshot(()=>{ if(me) loadTournamentsPro(); });
+db.collection('notices').orderBy('createdAt','desc').limit(1).onSnapshot(snap=>{
+  snap.docChanges().forEach(ch=>{
+    if(ch.type==='added' && me){ document.getElementById('notiDot').classList.remove('hide'); toast("📢 New Notice: "+ch.doc.data().title); }
+  });
+});
+if(me) db.collection('users').doc(me.uid).onSnapshot(doc=>{ if(doc.exists){ myData=doc.data(); document.getElementById('coinTop').innerText=myData.coins||0; } });
+  </script>
+  <script>
+// ===== FINAL TOUCH - PART 6 =====
+
+// --- 1. AUTO LOGIN FIX + LOGOUT FIX ---
+// Agar login atak jaye to ye fix karega
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    if(!me && document.getElementById('splash').style.display!=='none'){
+      document.getElementById('splash').style.display='none';
+    }
+  },2500);
+});
+
+// --- 2. COPY / PASTE PROTECTION FOR ROOM ID ---
+function copyText(txt){ navigator.clipboard.writeText(txt).then(()=>toast("Copied! 📋")); }
+
+// --- 3. PREVENT DOUBLE JOIN / DOUBLE CLICK ---
+let isJoining=false;
+let origJoin = joinTournamentPro;
+joinTournamentPro = async function(tid,fee,title){
+  if(isJoining) return toast("Wait karo...");
+  isJoining=true;
+  try{ await origJoin(tid,fee,title); } finally{ setTimeout(()=>isJoining=false,2000); }
+};
+
+// --- 4. OFFLINE / INTERNET CHECK ---
+window.addEventListener('online',()=>toast("✅ Internet Wapas Aa Gaya"));
+window.addEventListener('offline',()=>toast("⚠️ Internet Nahi Hai! Check Karo"));
+
+// --- 5. APP VERSION + FOOTER ---
+setTimeout(()=>{
+  if(!document.getElementById('appFooter')){
+    let f=document.createElement('div'); f.id='appFooter';
+    f.style.cssText='text-align:center;padding:20px 16px 10px;color:var(--muted);font-size:11px;line-height:1.7';
+    f.innerHTML=`BGR ESPORTS © 2026 • All Rights Reserved<br><span onclick="toast('Terms: 18+ Only, No Hack, Fair Play')" style="cursor:pointer;text-decoration:underline">Terms</span> • <span onclick="toast('Privacy: Tera data safe hai, kisi ko nahi denge')" style="cursor:pointer;text-decoration:underline">Privacy</span> • <span onclick="toast('Refund: Wrong payment pe 24h me refund')" style="cursor:pointer;text-decoration:underline">Refund Policy</span><br>🔥 INFINITY v6.0 • Made in India 🇮🇳`;
+    document.body.appendChild(f);
+  }
+},1000);
+
+// --- 6. WELCOME BACK MESSAGE ---
+auth.onAuthStateChanged(async u=>{
+  if(u && myData){
+    let hour=new Date().getHours();
+    let greet= hour<12?"Good Morning ☀️" : hour<17?"Good Afternoon 🌤️" : "Good Evening 🌙";
+    setTimeout(()=>toast(greet+" "+myData.gameName+"! Aaj ka Daily Reward claim karo 🎁"),1500);
+  }
+});
+
+// --- 7. ADMIN QUICK ACCESS - 5 BAR LOGO TAP = ADMIN ---
+let logoTaps=0;
+document.querySelector('.logo').addEventListener('click',()=>{
+  logoTaps++; if(logoTaps>=5){ logoTaps=0; if(me && me.uid===OWNER_UID){ showPage('admin'); toast("Admin Panel Khul Gaya 👑"); } else { showAdminLogin(); } }
+  setTimeout(()=>logoTaps=0,2000);
+});
+
+console.log("%c🔥 BGR ESPORTS INFINITY v6.0 Loaded!","color:#FF2D20;font-size:20px;font-weight:bold");
+console.log("Owner UID: LMPbpNrgbpOSTd4xglwfAbZlGXE2");
 </script>
 </body>
 </html>
