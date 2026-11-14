@@ -3,7 +3,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/fireba
 
 import {
   getAuth,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -15,6 +16,8 @@ const firebaseConfig = {
   messagingSenderId: "1046410116766",
   appId: "1:1046410116766:web:02fa3a28be10e39b28058f"
 };
+
+const OWNER_UID = "LMPbpNrgbpOSTd4xglwfAbZlGXE2";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -31,11 +34,21 @@ loginForm.addEventListener("submit", async (event) => {
   message.textContent = "Logging in...";
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
-    message.textContent = "Login successful!";
+    const result = await signInWithEmailAndPassword(
+      auth, email, password
+    );
+
+    if (result.user.uid !== OWNER_UID) {
+      await signOut(auth);
+      message.textContent = "Access denied: Owner only.";
+      return;
+    }
+
+    message.textContent = "Owner login successful!";
     window.location.href = "index.html";
+
   } catch (error) {
     console.error(error);
-    message.textContent = "Login failed. Please check your email and password.";
+    message.textContent = "Login failed. Check your email and password.";
   }
 });
