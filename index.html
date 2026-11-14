@@ -2,136 +2,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BGR eSports | Play. Compete. Dominate.</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BGR eSports - Owner Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #101010; color: white; }
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar { width: 220px; background: #181818; padding: 22px 15px; box-sizing: border-box; }
+    .logo { color: #f5c542; font-size: 24px; font-weight: bold; margin-bottom: 35px; }
+    .logo span { color: white; }
+    .sidebar a { display: block; color: #ddd; text-decoration: none; padding: 13px 10px; margin: 5px 0; border-radius: 6px; }
+    .sidebar a:hover { background: #333; color: #f5c542; }
+    .main { flex: 1; padding: 25px; min-width: 0; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    h1, h2 { color: #f5c542; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 25px 0; }
+    .stat, .panel { background: #1d1d1d; padding: 20px; border-radius: 10px; border: 1px solid #333; }
+    .stat h3 { color: #aaa; margin-top: 0; }
+    .stat p { font-size: 26px; color: #f5c542; margin-bottom: 0; }
+    input, select, textarea { width: 100%; padding: 12px; margin: 8px 0 15px; box-sizing: border-box; background: #292929; color: white; border: 1px solid #555; border-radius: 6px; }
+    button { background: #f5c542; color: #111; padding: 12px 18px; border: 0; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    button:hover { background: #dcae26; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 450px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #444; }
+    th { color: #f5c542; }
+    .section { margin-bottom: 25px; }
+    @media (max-width: 650px) {
+      .layout { display: block; }
+      .sidebar { width: 100%; }
+      .sidebar a { display: inline-block; padding: 9px; }
+      .main { padding: 15px; }
+    }
+  </style>
 </head>
-<body>
 
-<header>
-    <div class="logo">👑 BGR <span>eSports</span></div>
+<body style="display:none;">
 
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#tournaments">Tournaments</a>
-        <a href="#about">About</a>
-    </nav>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">BGR <span>eSports</span></div>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#tournaments">Tournaments</a>
+      <a href="#players">Players</a>
+      <a href="#registrations">Registrations</a>
+      <a href="#matches">Matches</a>
+      <a href="#winners">Winners</a>
+      <a href="#settings">Settings</a>
+      <a href="#" id="logoutBtn">Logout</a>
+    </aside>
 
-    <button class="login-btn" onclick="openRegister()">
-        Register
-    </button>
-</header>
-
-<section class="hero" id="home">
-    <div class="hero-content">
-        <p class="tagline">WELCOME TO THE BATTLE ARENA</p>
-        <h1>PLAY. COMPETE.<br><span>DOMINATE.</span></h1>
-
-        <p>
-            Join BGR eSports and compete with players.
-            Participate in exciting tournaments.
-        </p>
-
-        <a href="#tournaments" class="main-btn">
-            Explore Tournaments
-        </a>
-    </div>
-</section>
-
-<section class="features" id="about">
-    <h2>WHY BGR eSports?</h2>
-
-    <div class="feature-grid">
-        <div class="feature-card">
-            <h3>🏆 Tournaments</h3>
-            <p>Join exciting esports tournaments.</p>
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Owner Dashboard</h1>
+          <p>Welcome to BGR eSports Control Panel</p>
         </div>
+        <button id="logoutTopBtn">Logout</button>
+      </div>
 
-        <div class="feature-card">
-            <h3>⚔️ Competition</h3>
-            <p>Compete with talented players.</p>
+      <section class="section" id="dashboard">
+        <h2>Dashboard Overview</h2>
+        <div class="stats">
+          <div class="stat">
+            <h3>Total Tournaments</h3>
+            <p id="totalTournaments">0</p>
+          </div>
+          <div class="stat">
+            <h3>Total Players</h3>
+            <p id="totalPlayers">0</p>
+          </div>
+          <div class="stat">
+            <h3>Registrations</h3>
+            <p id="totalRegistrations">0</p>
+          </div>
+          <div class="stat">
+            <h3>Matches</h3>
+            <p id="totalMatches">0</p>
+          </div>
         </div>
+      </section>
 
-        <div class="feature-card">
-            <h3>👑 Leaderboard</h3>
-            <p>Track tournament rankings.</p>
+      <section class="section panel" id="tournaments">
+        <h2>Create Tournament</h2>
+        <form id="createTournamentForm">
+          <label for="tournamentName">Tournament Name</label>
+          <input id="tournamentName" type="text" placeholder="Enter tournament name" required>
+
+          <label for="gameName">Game</label>
+          <select id="gameName" required>
+            <option value="">Select Game</option>
+            <option value="BGMI">BGMI</option>
+            <option value="Free Fire">Free Fire</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <label for="entryFee">Entry Fee (Demo only)</label>
+          <input id="entryFee" type="number" min="0" placeholder="Enter entry fee" required>
+
+          <label for="prizePool">Prize Pool (Demo only)</label>
+          <input id="prizePool" type="number" min="0" placeholder="Enter prize pool" required>
+
+          <label for="tournamentDate">Tournament Date</label>
+          <input id="tournamentDate" type="date" required>
+
+          <button type="submit">Create Tournament</button>
+        </form>
+        <p id="tournamentMessage"></p>
+      </section>
+
+      <section class="section panel">
+        <h2>Tournament List</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Game</th>
+                <th>Entry Fee</th>
+                <th>Prize Pool</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="tournamentList">
+              <tr><td colspan="5">No tournaments created yet.</td></tr>
+            </tbody>
+          </table>
         </div>
-    </div>
-</section>
+      </section>
 
-<section class="tournaments" id="tournaments">
-    <h2>UPCOMING TOURNAMENTS</h2>
-    <p class="section-subtitle">
-        Choose your battle and join the competition.
-    </p>
+      <section class="section panel" id="players">
+        <h2>Players</h2>
+        <p>Player management will be connected to Firebase in the next step.</p>
+      </section>
 
-    <div class="tournament-grid">
+      <section class="section panel" id="registrations">
+        <h2>Registrations</h2>
+        <p>Tournament registrations will appear here after database setup.</p>
+      </section>
 
-        <div class="tournament-card">
-            <div class="game-icon">🔥</div>
-            <span class="status">OPEN</span>
-            <h3>Battle Royale Squad</h3>
-            <p>Mode: Squad</p>
-            <p>Entry: Free</p>
-            <p>Prize: Demo Prize</p>
-            <button onclick="joinTournament('Battle Royale Squad')">
-                Join Tournament
-            </button>
-        </div>
+      <section class="section panel" id="matches">
+        <h2>Matches</h2>
+        <p>Match management will be added in the next step.</p>
+      </section>
 
-        <div class="tournament-card">
-            <div class="game-icon">⚡</div>
-            <span class="status">OPEN</span>
-            <h3>Clash Squad</h3>
-            <p>Mode: 4 vs 4</p>
-            <p>Entry: Free</p>
-            <p>Prize: Demo Prize</p>
-            <button onclick="joinTournament('Clash Squad')">
-                Join Tournament
-            </button>
-        </div>
+      <section class="section panel" id="winners">
+        <h2>Winners</h2>
+        <p>Winner management will be added in the next step.</p>
+      </section>
 
-        <div class="tournament-card">
-            <div class="game-icon">🎯</div>
-            <span class="status">OPEN</span>
-            <h3>Solo Challenge</h3>
-            <p>Mode: Solo</p>
-            <p>Entry: Free</p>
-            <p>Prize: Demo Prize</p>
-            <button onclick="joinTournament('Solo Challenge')">
-                Join Tournament
-            </button>
-        </div>
+      <section class="section panel" id="settings">
+        <h2>Settings</h2>
+        <p>BGR eSports Owner Settings</p>
+      </section>
+    </main>
+  </div>
 
-    </div>
-</section>
+  <!-- Existing dashboard demo JavaScript -->
+  <script src="script.js"></script>
 
-<section class="register-section" id="register">
-    <h2>PLAYER REGISTRATION</h2>
+  <!-- Firebase owner login check -->
+  <script type="module">
+    import {
+      initializeApp,
+      getApps
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-    <form id="registerForm">
-        <input type="text" id="playerName"
-            placeholder="Enter Player Name" required>
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-        <input type="email" id="playerEmail"
-            placeholder="Enter Email Address" required>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
+      authDomain: "clashadda-b3e57.firebaseapp.com",
+      databaseURL: "https://clashadda-b3e57-default-rtdb.firebaseio.com",
+      projectId: "clashadda-b3e57",
+      storageBucket: "clashadda-b3e57.firebasestorage.app",
+      messagingSenderId: "1046410116766",
+      appId: "1:1046410116766:web:02fa3a28be10e39b28058f"
+    };
 
-        <input type="text" id="gameUid"
-            placeholder="Enter Game UID" required>
+    const OWNER_UID = "LMPbpNrgbpOSTd4xglwfAbZlGXE2";
 
-        <button type="submit">Submit Registration</button>
-    </form>
+    const app = getApps().length
+      ? getApps()[0]
+      : initializeApp(firebaseConfig);
 
-    <p id="message"></p>
-</section>
+    const auth = getAuth(app);
 
-<footer>
-    <h3>👑 BGR eSports</h3>
-    <p>Play. Compete. Dominate.</p>
-    <p>© 2026 BGR eSports. All Rights Reserved.</p>
-</footer>
+    onAuthStateChanged(auth, async (user) => {
+      if (!user || user.uid !== OWNER_UID) {
+        if (user) await signOut(auth);
+        window.location.replace("owner-login.html");
+        return;
+      }
 
-<script src="script.js"></script>
+      document.body.style.display = "";
+    });
+
+    async function ownerLogout() {
+      await signOut(auth);
+      window.location.replace("owner-login.html");
+    }
+
+    document.getElementById("logoutBtn")
+      .addEventListener("click", async (event) => {
+        event.preventDefault();
+        await ownerLogout();
+      });
+
+    document.getElementById("logoutTopBtn")
+      .addEventListener("click", ownerLogout);
+  </script>
+
 </body>
 </html>
