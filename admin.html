@@ -1,240 +1,567 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BGR eSports Ultra Pro Max</title>
-<style>
-body{margin:0;background:#090a0d;color:white;font-family:Arial}
-header{padding:18px;background:#151515;color:#e8bd58;font-weight:bold}
-main{padding:18px;max-width:1000px;margin:auto}
-.panel{background:#171717;border:1px solid #57451f;border-radius:12px;padding:18px;margin:15px 0}
-input,button,select{box-sizing:border-box;width:100%;padding:12px;margin:7px 0;border-radius:8px}
-input,select{background:#080808;color:white;border:1px solid #444}
-button{background:#e8bd58;color:#111;font-weight:bold;border:0}
-.hidden{display:none}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-table{width:100%;border-collapse:collapse}
-td,th{text-align:left;padding:10px;border-bottom:1px solid #444}
-.gold{color:#e8bd58}
-@media(max-width:600px){.grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BGR eSPORTS - Owner Panel</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #080808;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+
+    h1, h2 {
+      color: #d6b65b;
+    }
+
+    h1 {
+      font-size: 25px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: #151515;
+      border: 1px solid #66521f;
+      border-radius: 14px;
+      padding: 20px;
+      margin: 18px 0;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #777;
+      font-size: 15px;
+    }
+
+    input, select {
+      background: #252525;
+      color: white;
+    }
+
+    button {
+      background: #d6b65b;
+      color: #111;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .danger {
+      background: #b52b2b;
+      color: white;
+    }
+
+    .item {
+      background: #222;
+      padding: 14px;
+      border-radius: 9px;
+      margin: 10px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .muted {
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    #dashboard {
+      display: none;
+    }
+
+    #message {
+      white-space: pre-wrap;
+      color: #ffd36a;
+      margin: 12px 0;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      background: #242424;
+      padding: 15px 8px;
+      border-radius: 9px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      color: #d6b65b;
+      font-size: 23px;
+      margin-top: 8px;
+    }
+  </style>
 </head>
+
 <body>
-<header>BGR eSPORTS — ULTRA PRO MAX OWNER PANEL</header>
 
-<main>
-<section id="login" class="panel">
-<h2 class="gold">OWNER LOGIN</h2>
-<input id="email" type="email" placeholder="Owner Email">
-<input id="password" type="password" placeholder="Password">
-<button id="loginBtn">SECURE LOGIN</button>
-</section>
+  <h1>BGR eSPORTS — ULTRA PRO MAX OWNER PANEL</h1>
 
-<section id="dashboard" class="hidden">
-<h2 class="gold">OWNER DASHBOARD</h2>
-<button id="logoutBtn">Logout</button>
-<div class="grid">
-<div class="panel">Players <h2 id="players">0</h2></div>
-<div class="panel">Tournaments <h2 id="tournamentsCount">0</h2></div>
-<div class="panel">Registrations <h2 id="registrationsCount">0</h2></div>
-</div>
+  <div id="message"></div>
 
-<div class="panel">
-<h3 class="gold">Create Tournament</h3>
-<form id="tournamentForm">
-<input id="title" placeholder="Tournament Name" required>
-<input id="map" placeholder="Map Name" required>
-<input id="date" type="date" required>
-<input id="time" type="time" required>
-<select id="mode">
-<option>Solo</option><option>Duo</option><option>Squad</option>
-</select>
-<input id="slots" type="number" placeholder="Maximum Players" value="48">
-<input id="fee" type="number" placeholder="Entry Fee" value="0">
-<input id="prize" type="number" placeholder="Prize Pool" value="0">
-<button type="submit">CREATE TOURNAMENT</button>
-</form>
-</div>
+  <!-- OWNER LOGIN -->
+  <section id="login" class="card">
+    <h2>OWNER LOGIN</h2>
 
-<div class="panel">
-<h3 class="gold">Tournament List</h3>
-<div id="tournamentList"></div>
-</div>
+    <input
+      type="email"
+      id="email"
+      placeholder="Owner Email"
+      autocomplete="username"
+    >
 
-<div class="panel">
-<h3 class="gold">Player List</h3>
-<div id="playerList"></div>
-</div>
-</section>
-</main>
-<script type="module">
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+    <button id="loginBtn">LOGIN</button>
+  </section>
 
-import {
-  getFirestore,
-  collection,
-  doc,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  query,
-  limit,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+  <!-- DASHBOARD -->
+  <main id="dashboard">
 
-/* यहाँ index.html वाला Firebase config डालना है */
-const firebaseConfig = {
-  apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
-  authDomain: "clashadda-b3e57.firebaseapp.com",
-  databaseURL: "https://clashadda-b3e57-default-rtdb.firebaseio.com",
-  projectId: "clashadda-b3e57",
-  storageBucket: "clashadda-b3e57.firebasestorage.app",
-  messagingSenderId: "1046410116766",
-  appId: "1:1046410116766:web:02fa3a28be10e39b28058f",
-  measurementId: "G-60KBXTZKE9"
-};
+    <section class="card">
+      <h2>OWNER DASHBOARD</h2>
+      <p>Logged in as: <span id="ownerEmail"></span></p>
+      <button id="refreshBtn">REFRESH DATA</button>
+      <button id="logoutBtn" class="danger">LOGOUT</button>
 
-/* Owner UID */
-const OWNER_UID = "LMPbpNrgbpOSTd4xglwfAbZlGXE2";
+      <div class="stats">
+        <div class="stat">
+          Players
+          <strong id="playersCount">0</strong>
+        </div>
 
-const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
-const db = getFirestore(firebaseApp);
+        <div class="stat">
+          Tournaments
+          <strong id="tournamentsCount">0</strong>
+        </div>
 
-const $ = id => document.getElementById(id);
+        <div class="stat">
+          Registrations
+          <strong id="registrationsCount">0</strong>
+        </div>
+      </div>
+    </section>
 
-$("loginBtn").onclick = async () => {
-  try {
-    await signInWithEmailAndPassword(
-      auth,
-      $("email").value.trim(),
-      $("password").value
-    );
-  } catch (error) {
-    alert("Login Error: " + error.message);
-  }
-};
+    <!-- CREATE TOURNAMENT -->
+    <section class="card">
+      <h2>CREATE TOURNAMENT</h2>
 
-$("logoutBtn").onclick = () => signOut(auth);
+      <form id="tournamentForm">
 
-onAuthStateChanged(auth, async user => {
-  if (!user) {
-    $("login").classList.remove("hidden");
-    $("dashboard").classList.add("hidden");
-    return;
-  }
+        <input
+          id="title"
+          placeholder="Tournament Title"
+          required
+        >
 
-  if (user.uid !== OWNER_UID) {
-    await signOut(auth);
-    alert("Access Denied: Owner account only!");
-    return;
-  }
+        <input
+          id="map"
+          placeholder="Map Name"
+          required
+        >
 
-  $("login").classList.add("hidden");
-  $("dashboard").classList.remove("hidden");
+        <input
+          id="date"
+          type="date"
+          required
+        >
 
-  await loadDashboard();
-});
+        <input
+          id="time"
+          type="time"
+          required
+        >
 
-async function loadDashboard() {
-  try {
-    const [players, tournaments, registrations] =
-      await Promise.all([
-        getDocs(query(collection(db, "users"), limit(200))),
-        getDocs(query(collection(db, "tournaments"), limit(200))),
-        getDocs(query(collection(db, "registrations"), limit(200)))
-      ]);
+        <select id="mode">
+          <option value="Solo">Solo</option>
+          <option value="Duo">Duo</option>
+          <option value="Squad">Squad</option>
+        </select>
 
-    $("players").textContent = players.size;
-    $("tournamentsCount").textContent = tournaments.size;
-    $("registrationsCount").textContent = registrations.size;
+        <input
+          id="slots"
+          type="number"
+          min="1"
+          placeholder="Maximum Players"
+          required
+        >
 
-    $("tournamentList").innerHTML =
-      tournaments.docs.map(item => {
-        const t = item.data();
-        return `
-          <p>
-            <b>${escapeHTML(t.title || "Tournament")}</b>
-            — ${escapeHTML(t.date || "")}
-            <button data-delete="${item.id}">Delete</button>
-          </p>`;
-      }).join("") || "No tournaments found";
+        <input
+          id="fee"
+          type="number"
+          min="0"
+          placeholder="Entry Fee"
+          required
+        >
 
-    $("playerList").innerHTML =
-      players.docs.map(item => {
-        const p = item.data();
-        return `<p>${escapeHTML(p.gameName || p.email || item.id)}</p>`;
-      }).join("") || "No players found";
+        <input
+          id="prize"
+          type="number"
+          min="0"
+          placeholder="Prize Pool"
+          required
+        >
 
-    document.querySelectorAll("[data-delete]").forEach(button => {
-      button.onclick = async () => {
-        if (!confirm("Delete this tournament?")) return;
+        <button id="createBtn" type="submit">
+          CREATE TOURNAMENT
+        </button>
+      </form>
+    </section>
 
-        try {
-          await deleteDoc(
-            doc(db, "tournaments", button.dataset.delete)
-          );
-          alert("Tournament deleted");
-          await loadDashboard();
-        } catch (error) {
-          alert("Delete failed: " + error.message);
+    <!-- TOURNAMENT LIST -->
+    <section class="card">
+      <h2>ALL TOURNAMENTS</h2>
+      <div id="tournamentList">Loading...</div>
+    </section>
+
+    <!-- PLAYER LIST -->
+    <section class="card">
+      <h2>REGISTERED PLAYERS</h2>
+      <div id="playerList">Loading...</div>
+    </section>
+
+    <!-- REGISTRATIONS -->
+    <section class="card">
+      <h2>TOURNAMENT REGISTRATIONS</h2>
+      <div id="registrationList">Loading...</div>
+    </section>
+
+  </main>
+
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      addDoc,
+      deleteDoc,
+      doc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+
+    // FIREBASE CONFIG
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU",
+      authDomain: "clashadda-b3e57.firebaseapp.com",
+      databaseURL: "https://clashadda-b3e57-default-rtdb.firebaseio.com",
+      projectId: "clashadda-b3e57",
+      storageBucket: "clashadda-b3e57.firebasestorage.app",
+      messagingSenderId: "1046410116766",
+      appId: "1:1046410116766:web:02fa3a28be10e39b28058f",
+      measurementId: "G-60KBXTZKE9"
+    };
+
+    // OWNER UID
+    const OWNER_UID = "LMPbpNrgbpOSTd4xglwfAbZlGXE2";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const $ = (id) => document.getElementById(id);
+
+    function showMessage(message) {
+      $("message").textContent = message;
+    }
+
+    function showError(error) {
+      console.error(error);
+      showMessage(
+        "Error: " + (error.code || error.message || "Unknown error")
+      );
+    }
+
+    function addText(parent, tag, value) {
+      const element = document.createElement(tag);
+      element.textContent =
+        value === undefined || value === null ? "" : String(value);
+      parent.appendChild(element);
+      return element;
+    }
+
+    // LOGIN
+    $("loginBtn").addEventListener("click", async () => {
+      const email = $("email").value.trim();
+      const password = $("password").value;
+
+      if (!email || !password) {
+        showMessage("Email और password दोनों भरें।");
+        return;
+      }
+
+      $("loginBtn").disabled = true;
+      showMessage("Logging in...");
+
+      try {
+        const result = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        if (result.user.uid !== OWNER_UID) {
+          await signOut(auth);
+          showMessage("Access denied: यह Owner account नहीं है।");
+          return;
         }
-      };
+
+        showMessage("Login successful.");
+      } catch (error) {
+        showError(error);
+      } finally {
+        $("loginBtn").disabled = false;
+      }
     });
 
-  } catch (error) {
-    alert("Database Error: " + error.message);
-  }
-}
+    // AUTH STATE
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        $("login").style.display = "block";
+        $("dashboard").style.display = "none";
+        $("ownerEmail").textContent = "";
+        return;
+      }
 
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
+      if (user.uid !== OWNER_UID) {
+        await signOut(auth);
+        showMessage("Access denied: Owner only.");
+        return;
+      }
 
-$("tournamentForm").onsubmit = async event => {
-  event.preventDefault();
+      $("login").style.display = "none";
+      $("dashboard").style.display = "block";
+      $("ownerEmail").textContent = user.email || "Owner";
 
-  try {
-    await addDoc(collection(db, "tournaments"), {
-      title: $("title").value.trim(),
-      map: $("map").value.trim(),
-      date: $("date").value,
-      matchTime: $("time").value,
-      mode: $("mode").value,
-      maxPlayers: Number($("slots").value),
-      fee: Number($("fee").value),
-      prizePool: Number($("prize").value),
-      joined: 0,
-      status: "upcoming",
-      createdAt: serverTimestamp()
+      await loadDashboard();
     });
 
-    alert("Tournament created successfully!");
-    event.target.reset();
-    $("slots").value = 48;
-    $("fee").value = 0;
-    $("prize").value = 0;
-    await loadDashboard();
+    // LOAD DASHBOARD
+    async function loadDashboard() {
+      showMessage("Loading dashboard...");
 
-  } catch (error) {
-    alert("Tournament Error: " + error.message);
-  }
-};
+      try {
+        const [usersSnap, tournamentsSnap, registrationsSnap] =
+          await Promise.all([
+            getDocs(collection(db, "users")),
+            getDocs(collection(db, "tournaments")),
+            getDocs(collection(db, "registrations"))
+          ]);
+
+        $("playersCount").textContent = usersSnap.size;
+        $("tournamentsCount").textContent = tournamentsSnap.size;
+        $("registrationsCount").textContent = registrationsSnap.size;
+
+        renderPlayers(usersSnap);
+        renderTournaments(tournamentsSnap);
+        renderRegistrations(registrationsSnap);
+
+        showMessage("Dashboard updated successfully.");
+      } catch (error) {
+        showError(error);
+      }
+    }
+
+    // PLAYER LIST
+    function renderPlayers(snapshot) {
+      const list = $("playerList");
+      list.replaceChildren();
+
+      if (snapshot.empty) {
+        list.textContent = "No players found.";
+        return;
+      }
+
+      snapshot.forEach((item) => {
+        const player = item.data();
+        const box = document.createElement("div");
+        box.className = "item";
+
+        addText(box, "strong", player.gameName || "Unnamed Player");
+        addText(box, "p", "Email: " + (player.email || "N/A"));
+        addText(box, "p", "Game UID: " + (player.gameUid || "N/A"));
+        addText(box, "p", "User ID: " + item.id);
+
+        list.appendChild(box);
+      });
+    }
+
+    // TOURNAMENT LIST
+    function renderTournaments(snapshot) {
+      const list = $("tournamentList");
+      list.replaceChildren();
+
+      if (snapshot.empty) {
+        list.textContent = "No tournaments found.";
+        return;
+      }
+
+      snapshot.forEach((item) => {
+        const tournament = item.data();
+        const box = document.createElement("div");
+        box.className = "item";
+
+        addText(box, "strong", tournament.title || "Untitled");
+        addText(box, "p", "Map: " + (tournament.map || "N/A"));
+        addText(box, "p", "Date: " + (tournament.date || "N/A"));
+        addText(box, "p", "Time: " + (tournament.matchTime || "N/A"));
+        addText(box, "p", "Mode: " + (tournament.mode || "N/A"));
+        addText(box, "p", "Players: " + (tournament.joined || 0) +
+          " / " + (tournament.maxPlayers || 0));
+        addText(box, "p", "Entry Fee: " + (tournament.fee ?? 0));
+        addText(box, "p", "Prize Pool: " + (tournament.prizePool ?? 0));
+        addText(box, "p", "Status: " + (tournament.status || "N/A"));
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "danger";
+        deleteButton.textContent = "DELETE TOURNAMENT";
+
+        deleteButton.addEventListener("click", async () => {
+          if (!confirm("क्या यह tournament delete करना है?")) return;
+
+          try {
+            await deleteDoc(doc(db, "tournaments", item.id));
+            showMessage("Tournament deleted.");
+            await loadDashboard();
+          } catch (error) {
+            showError(error);
+          }
+        });
+
+        box.appendChild(deleteButton);
+        list.appendChild(box);
+      });
+    }
+
+    // REGISTRATION LIST
+    function renderRegistrations(snapshot) {
+      const list = $("registrationList");
+      list.replaceChildren();
+
+      if (snapshot.empty) {
+        list.textContent = "No registrations found.";
+        return;
+      }
+
+      snapshot.forEach((item) => {
+        const registration = item.data();
+        const box = document.createElement("div");
+        box.className = "item";
+
+        addText(box, "strong", registration.gameName || "Player");
+        addText(box, "p", "Game UID: " + (registration.gameUid || "N/A"));
+        addText(box, "p", "Tournament ID: " + (registration.tournamentId || "N/A"));
+        addText(box, "p", "Request Status: " + (registration.requestStatus || "N/A"));
+        addText(box, "p", "Paid: " + (registration.paid ? "Yes" : "No"));
+
+        list.appendChild(box);
+      });
+    }
+
+    // CREATE TOURNAMENT
+    $("tournamentForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!auth.currentUser || auth.currentUser.uid !== OWNER_UID) {
+        showMessage("Owner login required.");
+        return;
+      }
+
+      const title = $("title").value.trim();
+      const map = $("map").value.trim();
+      const date = $("date").value;
+      const time = $("time").value;
+      const mode = $("mode").value;
+      const slots = Number($("slots").value);
+      const fee = Number($("fee").value);
+      const prize = Number($("prize").value);
+
+      if (!title || !map || !date || !time ||
+          !Number.isInteger(slots) || slots < 1 ||
+          !Number.isFinite(fee) || fee < 0 ||
+          !Number.isFinite(prize) || prize < 0) {
+        showMessage("कृपया सभी जानकारी सही भरें।");
+        return;
+      }
+
+      $("createBtn").disabled = true;
+      showMessage("Creating tournament...");
+
+      try {
+        await addDoc(collection(db, "tournaments"), {
+          title: title,
+          map: map,
+          date: date,
+          matchTime: time,
+          mode: mode,
+          maxPlayers: slots,
+          fee: fee,
+          prizePool: prize,
+          status: "upcoming",
+          joined: 0,
+          createdAt: serverTimestamp()
+        });
+
+        $("tournamentForm").reset();
+        showMessage("Tournament created successfully.");
+        await loadDashboard();
+
+      } catch (error) {
+        showError(error);
+      } finally {
+        $("createBtn").disabled = false;
+      }
+    });
+
+    // REFRESH
+    $("refreshBtn").addEventListener("click", loadDashboard);
+
+    // LOGOUT
+    $("logoutBtn").addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        showMessage("Logged out successfully.");
+      } catch (error) {
+        showError(error);
+      }
+    });
+
   </script>
-  </body>
+
+</body>
 </html>
