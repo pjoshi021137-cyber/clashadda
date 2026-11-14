@@ -1,376 +1,239 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BGR eSports Tournament</title>
-
+<title id="appTitle">BGR_ESPORTS</title>
 <style>
-:root {
-  --bg: #0b1020;
-  --card: #171f35;
-  --primary: #735cff;
-  --text: #ffffff;
-  --muted: #aab4cc;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-}
-
-header {
-  background: var(--card);
-  padding: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #303a54;
-}
-
-header h2 {
-  color: var(--primary);
-}
-
-button {
-  border: none;
-  padding: 11px 16px;
-  background: var(--primary);
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.container {
-  padding: 18px;
-  max-width: 1100px;
-  margin: auto;
-}
-
-.hero {
-  background: linear-gradient(135deg,#30216b,#111d3d);
-  padding: 30px 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
-}
-
-.hero h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  color: var(--muted);
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 12px;
-  margin-bottom: 22px;
-}
-
-.card {
-  background: var(--card);
-  padding: 18px;
-  border-radius: 12px;
-  border: 1px solid #303a54;
-}
-
-.card h3 {
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.card h2 {
-  margin-top: 8px;
-  font-size: 25px;
-}
-
-.section-title {
-  margin: 22px 0 12px;
-}
-
-.match {
-  background: var(--card);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  border: 1px solid #303a54;
-}
-
-.match h3 {
-  margin-bottom: 8px;
-}
-
-.match p {
-  color: var(--muted);
-  margin: 5px 0;
-}
-
-.match button {
-  margin-top: 12px;
-  width: 100%;
-}
-
-nav {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-nav button {
-  background: var(--card);
-  border: 1px solid #303a54;
-}
-
-.page {
-  display: none;
-}
-
-.page.active {
-  display: block;
-}
-
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #39435b;
-  background: var(--card);
-  color: white;
-}
-
-footer {
-  text-align: center;
-  padding: 25px;
-  color: var(--muted);
-}
-
-@media(min-width:700px) {
-  .stats {
-    grid-template-columns: repeat(4,1fr);
-  }
-}
+:root{ --bg:#080808; --card:#151515; --btn:#FFA500; --text:#ffffff; --muted:#aaaaaa; --border:#66521f; --accent:#FFA500; --success:#1faa55; --danger:#b52b2b; --info:#2563eb; }
+body.light{ --bg:#f5f5f5; --card:#ffffff; --text:#111111; --muted:#666666; --border:#dddddd; }
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:12px;padding-bottom:110px;transition:.2s}
+h1,h2,h3{color:var(--accent)} .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+input,select,textarea,button{width:100%;padding:12px;margin:7px 0;border-radius:10px;border:1px solid var(--border);font-size:14px}
+input,select,textarea{background:var(--card);color:var(--text)} button{background:var(--btn);color:#111;font-weight:bold;border:none;cursor:pointer}
+button:disabled{opacity:.6} .danger{background:var(--danger);color:#fff} .green{background:var(--success);color:#fff} .blue{background:var(--info);color:#fff} .orange{background:orange;color:#000}
+.item{background:var(--bg);border:1px solid var(--border);padding:13px;border-radius:10px;margin:10px 0;overflow-wrap:anywhere} .muted{color:var(--muted);font-size:12px}
+#message{color:var(--accent);white-space:pre-wrap;font-weight:bold} .flex{display:flex;gap:8px} .flex button{flex:1}
+.screen{display:none} .screen.active{display:block} .tab{display:none} .tab.active{display:block}
+.tabs{display:flex;gap:6px;flex-wrap:wrap} .tabs button{width:auto;padding:9px 12px}
+.bottom{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--border);z-index:99} .bottom button{background:none;color:var(--text);border-radius:0} .bottom button.active{color:var(--btn)}
+img.ss{width:100%;max-width:320px;border-radius:10px;margin:8px 0;cursor:pointer} .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:bold} .live{background:red;color:#fff} .up{background:orange;color:#000} .done{background:green;color:#fff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px} .stat{background:var(--bg);border:1px solid var(--border);padding:12px 6px;border-radius:10px;text-align:center} .stat strong{display:block;color:var(--accent);font-size:19px}
+.notif{background:var(--bg);border:1px solid var(--border);padding:12px;border-radius:10px;margin:8px 0}
+.supportGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px} .supportGrid button{padding:12px 4px;font-size:12px}
+.themeRow{display:flex;gap:8px;align-items:center} .themeRow input[type=color]{width:60px;height:40px;padding:2px} .themeRow span{flex:1;font-size:13px}
+.logo{width:60px;height:60px;border-radius:50%;background:var(--btn);display:flex;align-items:center;justify-content:center;font-size:28px}
 </style>
 </head>
-
 <body>
+<div style="display:flex;gap:12px;align-items:center"><div class="logo" id="appLogo">🎮</div><div><h1 id="appNameDisplay" style="margin:0">BGR_ESPORTS</h1><p class="muted" id="appDomainDisplay">bgr-esports.web.app • Made By You</p></div><button id="themeToggleBtn" onclick="toggleTheme()" style="width:auto">🌙 / ☀️</button></div>
+<div id="message"></div>
 
-<header>
-  <h2>BGR eSports</h2>
-  <button onclick="toggleTheme()">☀ / ☾</button>
-</header>
-
-<div class="container">
-
-  <div class="hero">
-    <h1>WELCOME TO BGR eSports</h1>
-    <p>Your Tournament. Your Competition. Your Victory.</p>
-  </div>
-
-  <nav>
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('matches')">Matches</button>
-    <button onclick="showPage('wallet')">Wallet</button>
-    <button onclick="showPage('profile')">Profile</button>
-    <button onclick="showPage('support')">Support</button>
-    <button onclick="showPage('login')">Login</button>
-  </nav>
-
-  <section id="home" class="page active">
-    <div class="stats">
-      <div class="card">
-        <h3>Total Players</h3>
-        <h2 id="players">0</h2>
-      </div>
-      <div class="card">
-        <h3>Live Matches</h3>
-        <h2 id="live">0</h2>
-      </div>
-      <div class="card">
-        <h3>Upcoming Matches</h3>
-        <h2 id="upcoming">0</h2>
-      </div>
-      <div class="card">
-        <h3>My Demo Coins</h3>
-        <h2 id="coins">0</h2>
-      </div>
-    </div>
-
-    <h2 class="section-title">Featured Tournament</h2>
-    <div class="match">
-      <h3>BGR Opening Battle</h3>
-      <p>Mode: BR Squad</p>
-      <p>Entry: Free</p>
-      <p>Slots: 48</p>
-      <button onclick="showPage('matches')">
-        View Tournament
-      </button>
-    </div>
-  </section>
-
-  <section id="matches" class="page">
-    <h2 class="section-title">Available Matches</h2>
-    <div id="matchList"></div>
-  </section>
-
-  <section id="wallet" class="page">
-    <h2 class="section-title">My Wallet</h2>
-    <div class="card">
-      <h3>Demo Coin Balance</h3>
-      <h2 id="walletCoins">0</h2>
-      <p style="color:var(--muted);margin-top:10px">
-        Demo wallet only. No real money transactions.
-      </p>
-    </div>
-  </section>
-
-  <section id="profile" class="page">
-    <h2 class="section-title">My Profile</h2>
-    <div class="card">
-      <h3>Player Name</h3>
-      <input id="playerName" placeholder="Enter player name">
-      <button onclick="saveProfile()">Save Profile</button>
-    </div>
-  </section>
-
-  <section id="support" class="page">
-    <h2 class="section-title">Contact & Support</h2>
-    <div class="card">
-      <p>Connect with BGR eSports</p>
-      <br>
-      <p>WhatsApp</p>
-      <p>Telegram</p>
-      <p>Instagram</p>
-      <p>YouTube</p>
-      <p>Email</p>
-      <p>Website</p>
-      <br>
-      <p style="color:var(--muted)">
-        Official links will be configured in settings.
-      </p>
-    </div>
-  </section>
-
-  <section id="login" class="page">
-    <h2 class="section-title">Player Login</h2>
-    <div class="card">
-      <input type="email" id="email" placeholder="Email address">
-      <input type="password" id="password" placeholder="Password">
-      <button onclick="demoLogin()">Demo Login</button>
-      <p id="loginMessage" style="margin-top:12px"></p>
-    </div>
-  </section>
-
+<!-- LOGIN -->
+<div id="loginScreen" class="screen active">
+<div class="card"><h2>LOGIN / REGISTER</h2>
+<input id="loginEmail" placeholder="Owner Email - Admin ke liye"><input id="loginPass" type="password" placeholder="Owner Password"><button onclick="ownerLogin()">OWNER LOGIN</button><hr>
+<input id="phone" placeholder="Mobile Number"><input id="gameName" placeholder="Free Fire Game Name"><input id="ffUid" placeholder="Free Fire UID"><input id="ffLevel" type="number" placeholder="FF Level 40+"><select id="ageGroup"><option value="Under 18">Under 18</option><option value="18+">18+</option></select><input id="teamCode" placeholder="Team Code (Optional)"><button class="green" onclick="playerLogin()">PLAYER LOGIN / REGISTER</button><p class="muted">-18/+18 sab khel sakte. Level 40+. 1 UID = 1 Account. Duplicate UID Block.</p></div>
+<div class="card"><h3>📞 Support - Humse Baat Karo</h3><div class="supportGrid">
+<button class="green" onclick="openLink('whatsapp')">💬 WhatsApp</button>
+<button class="blue" onclick="openLink('telegram')">✈️ Telegram</button>
+<button style="background:#E1306C;color:#fff" onclick="openLink('instagram')">📸 Instagram</button>
+<button style="background:#FF0000;color:#fff" onclick="openLink('youtube')">▶️ YouTube</button>
+<button style="background:#333;color:#fff" onclick="openLink('email')">📧 Email</button>
+<button style="background:#111;color:#fff;border:1px solid var(--border)" onclick="openLink('website')">🌐 Website</button>
+</div><p class="muted">Sab buttons Owner ke Links se chalte hain. Admin Panel > Settings me apne Links daalo.</p></div>
+<div class="card"><h3>📢 Announcements</h3><div id="annHome">Loading...</div></div>
+<div class="card"><h3>🏆 Leaderboard</h3><div id="leaderHome">Loading...</div></div>
+<div class="card"><h3>🎨 Themes - Apna Look Chuno</h3><div class="flex"><button onclick="applyTheme('bgr')">🔥 BGR Orange</button><button onclick="applyTheme('neon')">💚 Neon Green</button><button onclick="applyTheme('royal')">👑 Royal Blue</button><button onclick="applyTheme('pink')">💖 Pink</button><button onclick="applyTheme('dark')">⚫ Dark Pro</button></div><p class="muted">Ready-made themes - Ek click me pura look badal jayega.</p></div>
 </div>
 
-<footer>
-  © 2026 BGR eSports | All Rights Reserved
-</footer>
-
-<script>
-let playerCount = 0;
-let demoCoins = 0;
-
-const matches = [
-  {
-    name: "BGR Opening Battle",
-    mode: "BR Squad",
-    entry: "Free",
-    slots: 48
-  },
-  {
-    name: "BGR Clash Challenge",
-    mode: "Clash Squad",
-    entry: "Free",
-    slots: 16
-  }
-];
-
-function showPage(id) {
-  document.querySelectorAll(".page")
-    .forEach(p => p.classList.remove("active"));
-
-  document.getElementById(id)
-    .classList.add("active");
-}
-
-function renderMatches() {
-  document.getElementById("matchList").innerHTML =
-    matches.map((m, i) => `
-      <div class="match">
-        <h3>${m.name}</h3>
-        <p>Mode: ${m.mode}</p>
-        <p>Entry: ${m.entry}</p>
-        <p>Slots: ${m.slots}</p>
-        <button onclick="joinMatch(${i})">
-          Join Tournament
-        </button>
-      </div>
-    `).join("");
-}
-
-function joinMatch(index) {
-  alert("This is a demo tournament. Registration backend is not connected yet.");
-}
-
-function saveProfile() {
-  const name = document.getElementById("playerName").value.trim();
-  if (!name) {
-    alert("Enter your player name");
-    return;
-  }
-  localStorage.setItem("bgrPlayerName", name);
-  alert("Profile saved on this device!");
-}
-
-function demoLogin() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (!email || !password) {
-    document.getElementById("loginMessage").innerText =
-      "Please enter email and password.";
-    return;
-  }
-
-  document.getElementById("loginMessage").innerText =
-    "Demo login only. Secure authentication is not connected.";
-}
-
-function toggleTheme() {
-  const root = document.documentElement;
-  const dark = getComputedStyle(root)
-    .getPropertyValue("--bg").trim() === "#0b1020";
-
-  root.style.setProperty("--bg", dark ? "#f2f5fb" : "#0b1020");
-  root.style.setProperty("--card", dark ? "#ffffff" : "#171f35");
-  root.style.setProperty("--text", dark ? "#17243a" : "#ffffff");
-}
-
-function updateDashboard() {
-  document.getElementById("players").innerText = playerCount;
-  document.getElementById("live").innerText = 0;
-  document.getElementById("upcoming").innerText = matches.length;
-  document.getElementById("coins").innerText = demoCoins;
-  document.getElementById("walletCoins").innerText = demoCoins;
-}
-
-renderMatches();
-updateDashboard();
+<!-- PLAYER HOME -->
+<div id="playerScreen" class="screen">
+<div class="card"><h3>🔥 <span class="appNameText">BGR_ESPORTS</span></h3><p>Coins: <b id="coinBalance">0</b> | <span id="playerInfo"></span> | Wallet: <b id="walletBalance">0</b></p><p id="appNotice">Aaj 8 PM Mega Match</p></div>
+<div class="card"><h3>📞 Support</h3><div class="supportGrid">
+<button class="green" onclick="openLink('whatsapp')">💬 WhatsApp</button><button class="blue" onclick="openLink('telegram')">✈️ Telegram</button><button style="background:#E1306C;color:#fff" onclick="openLink('instagram')">📸 Instagram</button><button style="background:#FF0000;color:#fff" onclick="openLink('youtube')">▶️ YouTube</button><button style="background:#333;color:#fff" onclick="openLink('email')">📧 Email</button><button onclick="openLink('website')">🌐 Website</button>
+</div></div>
+<div class="card"><h3>🔔 My Notifications</h3><div id="notifHome">Loading...</div></div>
+<div class="card"><h3>🏆 Tournaments</h3><div class="flex"><button onclick="filterMode('All')">All</button><button onclick="filterMode('Solo')">Solo</button><button onclick="filterMode('Duo')">Duo</button><button onclick="filterMode('Squad')">Squad</button></div><div id="tournamentList">Loading...</div></div>
+<div class="card"><h3>👥 My Team</h3><div id="myTeam">Loading...</div><input id="createTeamName" placeholder="New Team Name"><button class="blue" onclick="createTeam()">CREATE TEAM</button><input id="joinTeamCode" placeholder="Team Code"><button onclick="joinTeam()">JOIN TEAM</button></div>
+<div class="card"><h3>🏆 Leaderboard</h3><div id="leaderPlayer">Loading...</div></div>
+</div>
+<div id="matchesScreen" class="screen">
+<div class="card"><h3>🎮 My Matches - Room ID Yahi Milega</h3><div id="myMatches">Loading...</div></div>
+<div class="card"><h3>📜 My Results</h3><div id="myHistory">Loading...</div></div>
+</div>
+<div id="walletScreen" class="screen">
+<div class="card"><h3>💰 Deposit Request</h3><p class="muted">UPI: <b id="upiDisplay">Loading...</b> | Payment: <b id="payMode">UPI</b></p><input id="depAmount" type="number" placeholder="Rs Kitne Bheje?"><input id="depCoins" type="number" placeholder="Coins Kitne Chahiye?"><input id="depUtr" placeholder="UTR ID"><input id="depSSFile" type="file" accept="image/*"><button onclick="submitDeposit()">DEPOSIT REQUEST BHEJO</button><p class="muted">Agar payment fail ho to balance auto rollback hoga - Paisa kabhi nahi fasega.</p></div>
+<div class="card"><h3>🏧 Withdrawal Request</h3><input id="withCoins" type="number" placeholder="Coins - Min 100"><input id="withUpi" placeholder="Tumhara UPI"><input id="withName" placeholder="UPI Name"><button class="green" onclick="submitWithdraw()">WITHDRAW REQUEST BHEJO</button></div>
+<div class="card"><h3>💳 My Wallet</h3><div id="walletInfo">Loading...</div></div>
+<div class="card"><h3>📜 Transactions</h3><div id="txnHistory">Loading...</div></div>
+<div class="card"><h3>💸 My Deposit / Withdraw Status</h3><div id="myDepWith">Loading...</div></div>
+</div>
+<div id="profileScreen" class="screen">
+<div class="card"><h3>👤 My Profile - users/{uid}</h3><p id="profileInfo"></p><input id="editGameName" placeholder="New Game Name"><button onclick="updateProfile()">EDIT PROFILE</button><button class="danger" onclick="doLogout()">LOGOUT</button></div>
+<div class="card"><h3>📞 Support</h3><div class="supportGrid"><button class="green" onclick="openLink('whatsapp')">💬 WhatsApp</button><button class="blue" onclick="openLink('telegram')">✈️ Telegram</button><button style="background:#E1306C;color:#fff" onclick="openLink('instagram')">📸 Instagram</button><button style="background:#FF0000;color:#fff" onclick="openLink('youtube')">▶️ YouTube</button><button style="background:#333;color:#fff" onclick="openLink('email')">📧 Email</button><button onclick="openLink('website')">🌐 Website</button></div></div>
+<div class="card"><h3>🎧 Support Ticket</h3><input id="supSubject" placeholder="Problem?"><textarea id="supMsg" placeholder="Pura likho..."></textarea><button class="blue" onclick="sendSupport()">SUPPORT KO BHEJO</button><div id="mySupport"></div></div>
+<div class="card"><h3>📜 Rules</h3><p>No Hack, No Emulator, Level 40+.</p></div>
+</div>
+<!-- ADMIN -->
+<div id="adminScreen" class="screen">
+<div class="card"><h2>OWNER DASHBOARD - <span id="liveClock"></span></h2><p id="ownerEmail"></p><p class="muted">Phone se hi sab chalao - Laptop ki zarurat nahi.</p>
+<div class="flex"><button onclick="loadAllAdmin()">🔄 REFRESH</button><button class="danger" onclick="doLogout()">LOGOUT</button></div>
+<div class="stats">
+<div class="stat">Total Players<strong id="cUsers">0</strong></div><div class="stat">Live Matches<strong id="cLive">0</strong></div><div class="stat">Pending Requests<strong id="cPending">0</strong></div>
+<div class="stat">Collection (Rs)<strong id="cCollection">0</strong></div><div class="stat">Payouts (Rs)<strong id="cPayout">0</strong></div><div class="stat">Total Coins<strong id="cCoins">0</strong></div>
+</div><p class="muted">Total Players • Live Matches • Pending • Collection • Payouts - Sab ek nazar me.</p></div>
+<div class="card tabs">
+<button onclick="showAdminTab('aT')">🏆 Tournament</button><button onclick="showAdminTab('aM')">🎮 Matches + Room</button><button onclick="showAdminTab('aTeam')">👥 Teams</button><button onclick="showAdminTab('aD')">💰 Deposit</button><button onclick="showAdminTab('aW')">🏧 Withdraw</button><button onclick="showAdminTab('aP')">👥 Users - Ban/Reset</button><button onclick="showAdminTab('aR')">📋 Registrations + Results</button><button onclick="showAdminTab('aB')">📢 Announcements + Support</button><button onclick="showAdminTab('aTheme')">🎨 Make It Yours - Theme</button><button onclick="showAdminTab('aSet')">⚙️ Settings + Support Links + Roles + Audit</button>
+</div>
+<div id="aT" class="tab active"><div class="card"><h3>CREATE TOURNAMENT</h3><input id="tTitle" placeholder="Title"><input id="tMap" placeholder="Map"><input id="tDate" type="date"><input id="tTime" type="time"><select id="tMode"><option>Solo</option><option>Duo</option><option>Squad</option><option>Lone Wolf</option><option>Custom</option></select><input id="tSlots" type="number" placeholder="Max Players"><input id="tFee" type="number" placeholder="Entry Fee"><input id="tPrize" type="number" placeholder="Prize Pool"><input id="tPerKill" type="number" placeholder="Per Kill"><input id="tFirst" type="number" placeholder="1st Prize"><input id="tSecond" type="number" placeholder="2nd Prize"><input id="tThird" type="number" placeholder="3rd Prize"><select id="tStatus"><option value="upcoming">Upcoming</option><option value="live">LIVE</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select><textarea id="tRules" placeholder="Rules..."></textarea><button onclick="createTournament()">CREATE</button></div><div class="card"><h3>ALL TOURNAMENTS</h3><div id="adminTourList">Loading...</div></div></div>
+<div id="aM" class="tab"><div class="card"><h3>🎮 MATCHES - publicInfo + privateRoomDetails</h3><input id="mTourId" placeholder="Tournament ID"><input id="mTitle" placeholder="Match Title"><input id="mRoomId" placeholder="Room ID - Private"><input id="mRoomPass" placeholder="Room Password - Private"><input id="mSlot" placeholder="Slot / Time"><button class="blue" onclick="createMatch()">CREATE MATCH + ROOM</button></div><div id="matchList">Loading...</div></div>
+<div id="aTeam" class="tab"><div class="card"><h3>👥 TEAMS</h3><div id="teamList">Loading...</div></div></div>
+<div id="aD" class="tab"><div class="card"><h3>💰 depositRequests</h3><div id="depositList">Loading...</div></div></div>
+<div id="aW" class="tab"><div class="card"><h3>🏧 withdrawalRequests</h3><div id="withdrawList">Loading...</div></div></div>
+<div id="aP" class="tab">
+<div class="card"><h3>👥 users - Ban / Unban / Reset Password / Coin</h3><input id="searchPlayer" placeholder="Search Name / UID" oninput="loadAllAdmin()"><div id="playerList">Loading...</div></div>
+<div class="card"><h3>🛡️ adminRoles - Trusted Team ko Limited Access Do</h3><input id="newAdminUid" placeholder="User UID"><select id="newAdminRole"><option value="admin">admin - Sab kuch</option><option value="moderator">moderator - Sirf Matches chala sakta</option><option value="support">support - Sirf Support dekh sakta</option><option value="manager">manager - Deposit/Withdraw dekh sakta</option></select><button onclick="makeAdmin()">MAKE TEAM MEMBER</button><div id="adminRoleList"></div><p class="muted">Trusted logo ko limited access do - Wo tumhare liye matches chala sakte hain.</p></div>
+</div>
+<div id="aR" class="tab"><div class="card"><h3>📋 registrations</h3><div id="regList">Loading...</div></div><div class="card"><h3>🏆 ADD RESULT - Prize AUTO + Leaderboard AUTO</h3><input id="resTId" placeholder="Tournament ID"><input id="resUid" placeholder="Player Game UID"><input id="resKills" type="number" placeholder="Kills"><input id="resPlace" type="number" placeholder="Placement"><input id="resPrize" type="number" placeholder="Prize Coins"><button class="green" onclick="addResult()">ADD RESULT + AUTO PRIZE</button></div><div class="card"><h3>💸 REFUND - AUTO Rollback</h3><input id="refundTId" placeholder="Tournament ID"><input id="refundFee" type="number" placeholder="Fee"><button class="orange" onclick="doRefund()">SABKO AUTO REFUND</button></div><div class="card"><h3>🏆 Leaderboard</h3><div id="leaderAdmin">Loading...</div></div></div>
+<div id="aB" class="tab"><div class="card"><h3>📢 announcements</h3><input id="bTitle" placeholder="Title"><textarea id="bMsg" placeholder="Message"></textarea><button class="blue" onclick="sendAnnouncement()">SEND TO ALL</button><div id="annList"></div></div><div class="card"><h3>🎧 supportTickets</h3><div id="supportList">Loading...</div></div></div>
+<div id="aTheme" class="tab">
+<div class="card"><h3>🎨 Make It Look Like Yours - Ready-made Themes</h3><div class="flex"><button onclick="applyTheme('bgr')">🔥 BGR Orange</button><button onclick="applyTheme('neon')">💚 Neon Green</button><button onclick="applyTheme('royal')">👑 Royal Blue</button><button onclick="applyTheme('pink')">💖 Pink</button><button onclick="applyTheme('purple')">💜 Purple</button><button onclick="applyTheme('dark')">⚫ Dark Pro</button></div>
+<p class="muted">Ek click me pura look badal jayega. Light + Dark dono supported.</p>
+<div class="flex"><button onclick="toggleTheme()">🌙 Dark Mode</button><button onclick="toggleTheme()">☀️ Light Mode</button></div></div>
+<div class="card"><h3>🎨 12 Colour Controls</h3>
+<div class="themeRow"><span>Background</span><input type="color" id="cBg" value="#080808" oninput="setColor('--bg',this.value)"></div>
+<div class="themeRow"><span>Cards</span><input type="color" id="cCard" value="#151515" oninput="setColor('--card',this.value)"></div>
+<div class="themeRow"><span>Buttons</span><input type="color" id="cBtn" value="#FFA500" oninput="setColor('--btn',this.value)"></div>
+<div class="themeRow"><span>Text</span><input type="color" id="cText" value="#ffffff" oninput="setColor('--text',this.value)"></div>
+<div class="themeRow"><span>Muted Text</span><input type="color" id="cMuted" value="#aaaaaa" oninput="setColor('--muted',this.value)"></div>
+<div class="themeRow"><span>Border</span><input type="color" id="cBorder" value="#66521f" oninput="setColor('--border',this.value)"></div>
+<div class="themeRow"><span>Accent / Heading</span><input type="color" id="cAccent" value="#FFA500" oninput="setColor('--accent',this.value)"></div>
+<div class="themeRow"><span>Success Green</span><input type="color" id="cSuccess" value="#1faa55" oninput="setColor('--success',this.value)"></div>
+<div class="themeRow"><span>Danger Red</span><input type="color" id="cDanger" value="#b52b2b" oninput="setColor('--danger',this.value)"></div>
+<div class="themeRow"><span>Info Blue</span><input type="color" id="cInfo" value="#2563eb" oninput="setColor('--info',this.value)"></div>
+<div class="themeRow"><span>Bottom Bar</span><input type="color" id="cBottom" value="#151515" oninput="document.querySelector('.bottom').style.background=this.value"></div>
+<div class="themeRow"><span>Badge / Highlight</span><input type="color" id="cBadge" value="#FFA500" oninput="setColor('--accent',this.value)"></div>
+<p class="muted">✅ Auto-Correction: Agar tu aisa colour chune jo padha na jaye, to App khud usko sahi kar dega - App kabhi broken nahi lagega.</p>
+<button class="green" onclick="saveTheme()">SAVE MY THEME - Sabke liye Apply Hoga</button></div>
+<div class="card"><h3>🏷️ Your Own App Name & Web Address</h3><input id="appNameInput" placeholder="Apna App Name - Ex: BGR ESPORTS"><input id="appDomainInput" placeholder="Apna Web Address - Ex: bgr-esports.web.app"><input id="appLogoInput" placeholder="Logo Emoji - Ex: 🎮 / 🔥"><button onclick="saveBranding()">SAVE BRANDING</button><p class="muted">App Name + Domain sab jagah badal jayega.</p></div>
+</div>
+<div id="aSet" class="tab">
+<div class="card"><h3>📞 Support Links - WhatsApp, Telegram, Instagram, YouTube, Email, Website</h3>
+<input id="linkWhatsapp" placeholder="WhatsApp Link - Ex: https://wa.me/919999999999"><input id="linkTelegram" placeholder="Telegram Link - Ex: https://t.me/bgr"><input id="linkInstagram" placeholder="Instagram Link - Ex: https://instagram.com/bgr"><input id="linkYoutube" placeholder="YouTube Link - Ex: https://youtube.com/@bgr"><input id="linkEmail" placeholder="Email - Ex: support@bgr.com"><input id="linkWebsite" placeholder="Website - Ex: https://bgr-esports.web.app"><button class="green" onclick="saveSupportLinks()">SAVE SUPPORT LINKS</button></div>
+<div class="card"><h3>⚙️ systemSettings - Safe & Reliable</h3><input id="sMinWithdraw" type="number" placeholder="Min Withdraw 100"><input id="sUpi" placeholder="Your UPI ID - Payment isi pe aayega"><select id="sPayMode"><option value="UPI">UPI</option><option value="Payment Gateway">Payment Gateway - Razorpay / PhonePe</option></select><input id="sWhatsapp" placeholder="WhatsApp Number"><input id="sNotice" placeholder="App Notice"><input id="sMinLevel" type="number" placeholder="Min Level 40"><button onclick="saveSettings()">SAVE SETTINGS</button><p class="muted">Passwords encrypted rehte hain, plain text me kabhi nahi. Hosting, SSL, Backup - Sab handled.</p></div>
+<div class="card"><h3>📜 transactions + wallets</h3><div id="txnList">Loading...</div></div>
+<div class="card"><h3>📜 auditLogs</h3><div id="auditList">Loading...</div></div>
+</div>
+</div>
+<div class="bottom" id="playerNav" style="display:none">
+<button id="navHome" class="active" onclick="showPlayerScreen('playerScreen','navHome')">🏠 Home</button>
+<button id="navMatches" onclick="showPlayerScreen('matchesScreen','navMatches')">🎮 Matches</button>
+<button id="navWallet" onclick="showPlayerScreen('walletScreen','navWallet')">💰 Wallet</button>
+<button id="navProfile" onclick="showPlayerScreen('profileScreen','navProfile')">👤 Profile</button>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signInAnonymously, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, getDoc, setDoc, updateDoc, query, where, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-storage.js";
+// TERA FIREBASE - ALREADY ADD HAI
+const firebaseConfig = { apiKey: "AIzaSyDnYj8ht1gXigIWzj5K1W98mRLTOfmoXOU", authDomain: "clashadda-b3e57.firebaseapp.com", projectId: "clashadda-b3e57", storageBucket: "clashadda-b3e57.firebasestorage.app", messagingSenderId: "1046410116766", appId: "1:1046410116766:web:02fa3a28be10e39b28058f" };
+const OWNER_UID = "LMPbpNrgbpOSTd4xglwfAbZlGXE2";
+const app = initializeApp(firebaseConfig); const auth = getAuth(app); const db = getFirestore(app); const storage = getStorage(app);
+const $=(id)=>document.getElementById(id);
+let currentUser=null, userData=null, myUid="", myGameName="", myCoins=0, currentFilter='All', allTournaments=[], supportLinks={}, appSettings={}, currentTheme='bgr';
+function showMessage(m){ $("message").textContent=m; }
+function isLight(hex){ const c=hex.replace('#',''); const r=parseInt(c.substr(0,2),16), g=parseInt(c.substr(2,2),16), b=parseInt(c.substr(4,2),16); return (r*0.299+g*0.587+b*0.114)>186; }
+window.setColor=(prop,val)=>{ document.documentElement.style.setProperty(prop,val); if(prop==='--bg'){ const light=isLight(val); document.documentElement.style.setProperty('--text', light?'#111111':'#ffffff'); document.documentElement.style.setProperty('--muted', light?'#666666':'#aaaaaa'); if($('cText')) $('cText').value=light?'#111111':'#ffffff'; } };
+window.toggleTheme=()=>{ document.body.classList.toggle('light'); localStorage.setItem('bgr_theme_mode', document.body.classList.contains('light')?'light':'dark'); };
+window.applyTheme=(name)=>{ currentTheme=name; const themes={bgr:{'--bg':'#080808','--card':'#151515','--btn':'#FFA500','--accent':'#FFA500'},neon:{'--bg':'#02130a','--card':'#0a2a1a','--btn':'#00ff88','--accent':'#00ff88'},royal:{'--bg':'#050a1f','--card':'#0f1e4a','--btn':'#3b82f6','--accent':'#3b82f6'},pink:{'--bg':'#1a0a14','--card':'#2a1220','--btn':'#ff2d95','--accent':'#ff2d95'},purple:{'--bg':'#0f0a1f','--card':'#1e123a','--btn':'#a855f7','--accent':'#a855f7'},dark:{'--bg':'#000000','--card':'#111111','--btn':'#ffffff','--accent':'#ffffff'}}; const t=themes[name]||themes.bgr; for(const k in t){ document.documentElement.style.setProperty(k,t[k]); } showMessage("Theme Apply Ho Gaya ✅ "+name); };
+window.saveTheme=async()=>{ const theme={bg:$('cBg').value,card:$('cCard').value,btn:$('cBtn').value,text:$('cText').value,muted:$('cMuted').value,border:$('cBorder').value,accent:$('cAccent').value,mode:document.body.classList.contains('light')?'light':'dark',themeName:currentTheme}; try{ await addDoc(collection(db,"systemSettings"),{theme,updatedAt:serverTimestamp()}); alert("Theme Save Ho Gaya ✅ Sabke liye Apply Hoga"); }catch(e){ alert(e.message); } };
+window.saveBranding=async()=>{ const name=$('appNameInput').value.trim(), domain=$('appDomainInput').value.trim(), logo=$('appLogoInput').value.trim(); if(!name) { alert("App Name bharo"); return; } try{ await addDoc(collection(db,"systemSettings"),{appName:name,appDomain:domain,appLogo:logo,updatedAt:serverTimestamp()}); applyBranding(name,domain,logo); alert("Branding Save ✅"); }catch(e){ alert(e.message); } };
+function applyBranding(name,domain,logo){ if(name){ $('appNameDisplay').textContent=name; document.querySelectorAll('.appNameText').forEach(e=>e.textContent=name); $('appTitle').textContent=name; } if(domain) $('appDomainDisplay').textContent=domain+" • Made By You"; if(logo) $('appLogo').textContent=logo; }
+window.openLink=(type)=>{ const l=supportLinks[type]||appSettings[type]; if(!l){ alert("Link abhi set nahi hai. Admin se bolo Settings me daale."); return; } if(type==='email'){ window.location.href="mailto:"+l; } else window.open(l,'_blank'); };
+window.saveSupportLinks=async()=>{ const links={whatsapp:$('linkWhatsapp').value,telegram:$('linkTelegram').value,instagram:$('linkInstagram').value,youtube:$('linkYoutube').value,email:$('linkEmail').value,website:$('linkWebsite').value}; try{ await addDoc(collection(db,"systemSettings"),{supportLinks:links,updatedAt:serverTimestamp()}); supportLinks=links; alert("Support Links Save ✅"); }catch(e){ alert(e.message); } };
+window.showAdminTab=(id)=>{ document.querySelectorAll('#adminScreen .tab').forEach(x=>x.classList.remove('active')); $(id).classList.add('active'); };
+window.showPlayerScreen=(sid,nid)=>{ ['playerScreen','matchesScreen','walletScreen','profileScreen'].forEach(x=>$(x).classList.remove('active')); $(sid).classList.add('active'); document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active')); if(nid) $(nid).classList.add('active'); if(sid==='matchesScreen') loadMyMatches(); if(sid==='walletScreen') loadWallet(); };
+window.filterMode=(m)=>{ currentFilter=m; renderTournaments(); };
+setInterval(()=>{ const c=$("liveClock"); if(c) c.textContent=new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}); },1000);
+async function audit(action,detail){ try{ await addDoc(collection(db,"auditLogs"),{adminId:currentUser?.uid||"player",action,detail,createdAt:serverTimestamp()}); }catch(e){} }
+onAuthStateChanged(auth, async(u)=>{ if(u){ currentUser=u; if(u.uid===OWNER_UID){ showAdmin(); } else { await loadUserData(); } } if(localStorage.getItem('bgr_theme_mode')==='light') document.body.classList.add('light'); });
+function showAdmin(){ ['loginScreen','playerScreen','matchesScreen','walletScreen','profileScreen'].forEach(x=>$(x).classList.remove('active')); $("adminScreen").classList.add('active'); $("playerNav").style.display='none'; $("ownerEmail").textContent=currentUser.email||"Owner"; loadAllAdmin(); loadAnnouncements(); loadLeaderboard(); loadSettings(); }
+async function loadUserData(){ try{ const d=await getDoc(doc(db,"users",currentUser.uid)); if(d.exists()){ userData=d.data(); const prof=userData.profile||{}; myUid=userData.freeFireUID||userData.gameUid; myGameName=prof.gameName||userData.gameName; myCoins=userData.wallets?.coins||userData.coins||0; $("coinBalance").textContent=myCoins; $("walletBalance").textContent=myCoins; $("playerInfo").textContent=myGameName+" | Level "+(prof.level||"")+" | "+(prof.ageGroup||"")+" | Role: "+(userData.role||"player")+" | Status: "+(userData.status||"active"); $("profileInfo").innerHTML=`<b>users/${currentUser.uid}</b><br>profile: Game: <b>${myGameName}</b> | Level: <b>${prof.level}</b> | Age: <b>${prof.ageGroup}</b> | Phone: <b>${prof.phone||""}</b><br>freeFireUID: <b>${myUid}</b><br>role: <b>${userData.role||"player"}</b><br>status: <b>${userData.status||"active"}</b><br>Coins: <b>${myCoins}</b>`; $("editGameName").value=myGameName; $("loginScreen").classList.remove('active'); $("playerScreen").classList.add('active'); $("playerNav").style.display='flex'; loadPlayerAll(); } }catch(e){ console.log(e); } }
+window.ownerLogin=async()=>{ const email=$("loginEmail").value.trim(), pass=$("loginPass").value; if(!email||!pass){ alert("Owner Email + Pass bharo"); return; } try{ const r=await signInWithEmailAndPassword(auth,email,pass); if(r.user.uid!==OWNER_UID){ await signOut(auth); alert("Owner Only!"); } }catch(e){ alert(e.message); } };
+window.playerLogin=async()=>{
+  const phone=$("phone").value.trim(), name=$("gameName").value.trim(), uid=$("ffUid").value.trim(), level=Number($("ffLevel").value), age=$("ageGroup").value, teamCode=$("teamCode").value.trim();
+  if(!name||!uid){ alert("Game Name + UID bharo"); return; } if(!level||level<40){ alert("Level 40+ chahiye!"); return; }
+  try{ const q=query(collection(db,"users"), where("freeFireUID","==",uid)); const snap=await getDocs(q); if(!snap.empty && snap.docs[0].id!==currentUser?.uid){ alert("Ye UID pehle se use hai! Duplicate Block."); return; } if(!currentUser){ const r=await signInAnonymously(auth); currentUser=r.user; }
+  await setDoc(doc(db,"users",currentUser.uid),{profile:{gameName:name,phone,level,ageGroup:age,teamCode:teamCode||""},freeFireUID:uid,gameUid:uid,gameName:name,role:"player",status:"active",coins:0,wallets:{coins:0},createdAt:serverTimestamp()},{merge:true});
+  await setDoc(doc(db,"wallets",currentUser.uid),{userId:currentUser.uid,gameName:name,coins:0,totalEarned:0,totalSpent:0,createdAt:serverTimestamp()},{merge:true});
+  alert("Welcome "+name+" ✅"); await audit("player_register","Player "+name+" UID "+uid); await loadUserData(); }catch(e){ alert(e.message); }
+};
+window.doLogout=async()=>{ await signOut(auth); location.reload(); };
+async function loadPlayerAll(){ loadTournaments(); loadAnnouncements(); loadLeaderboard(); loadNotifications(); loadSettings(); loadMyTeam(); }
+async function loadTournaments(){ try{ const snap=await getDocs(collection(db,"tournaments")); allTournaments=[]; snap.forEach(d=>allTournaments.push({id:d.id,...d.data()})); renderTournaments(); }catch(e){ $("tournamentList").textContent="Load nahi hua"; } }
+function renderTournaments(){ const list=$("tournamentList"); list.innerHTML=""; let arr=allTournaments.filter(t=>currentFilter==='All'||t.mode===currentFilter); if(!arr.length){ list.textContent="Koi Tournament nahi."; return; } arr.forEach(t=>{ const div=document.createElement("div"); div.className="item"; div.innerHTML=`<b>${t.title||""}</b> <span class="badge ${t.status==='live'?'live':t.status==='completed'?'done':'up'}">${t.status||"upcoming"}</span><br><span class="muted">${t.map||""} | ${t.date||""} ${t.matchTime||""} | ${t.mode||""}</span><br>Slots: ${t.joined||0}/${t.maxPlayers||0} | Fee: ${t.fee||0} | Prize: ${t.prizePool||0} | Per Kill: ${t.perKill||0}<br><span class="muted">${t.rules||""}</span><br>`; const btn=document.createElement("button"); if(t.status==='completed'){ btn.textContent="COMPLETED"; btn.disabled=true; } else if((t.joined||0)>=(t.maxPlayers||999)){ btn.textContent="SLOT FULL ❌"; btn.disabled=true; } else { btn.textContent=`JOIN NOW - ${t.fee||0} Coins`; btn.onclick=()=>joinTournament(t); } div.appendChild(btn); list.appendChild(div); }); }
+async function joinTournament(t){ if(myCoins<(t.fee||0)){ alert("Coin kam hai! Deposit karo. Balance: "+myCoins); showPlayerScreen('walletScreen','navWallet'); return; } if(!confirm(t.title+" Join? "+t.fee+" Coins katenge.")) return; try{ const q=query(collection(db,"registrations"), where("userId","==",currentUser.uid), where("tournamentId","==",t.id)); const ex=await getDocs(q); if(!ex.empty){ alert("Pehle se Join ho!"); return; } await addDoc(collection(db,"registrations"),{userId:currentUser.uid,gameName:myGameName,gameUid:myUid,freeFireUID:myUid,tournamentId:t.id,tournamentTitle:t.title,paid:true,requestStatus:"joined",slot:(t.joined||0)+1,createdAt:serverTimestamp()}); await updateDoc(doc(db,"users",currentUser.uid),{coins:increment(-(t.fee||0)),"wallets.coins":increment(-(t.fee||0))}); await updateDoc(doc(db,"wallets",currentUser.uid),{coins:increment(-(t.fee||0)),totalSpent:increment(t.fee||0)}); await updateDoc(doc(db,"tournaments",t.id),{joined:increment(1)}); await addDoc(collection(db,"transactions"),{userId:currentUser.uid,gameName:myGameName,coins:-(t.fee||0),type:"join",note:"Joined "+t.title,createdAt:serverTimestamp()}); myCoins-=(t.fee||0); $("coinBalance").textContent=myCoins; alert("Join Ho Gaya ✅"); loadTournaments(); }catch(e){ alert(e.message); } }
+async function loadMyMatches(){ if(!currentUser) return; try{ const q=query(collection(db,"registrations"), where("userId","==",currentUser.uid)); const snap=await getDocs(q); const box=$("myMatches"); box.innerHTML=""; if(snap.empty) box.textContent="Koi match Join nahi kiya."; for(const d of snap.docs){ const r=d.data(); const tDoc=await getDoc(doc(db,"tournaments",r.tournamentId)); const t=tDoc.exists()?tDoc.data():{}; let roomId=t.roomId||"", roomPass=t.roomPass||""; const mQ=query(collection(db,"matches"), where("tournamentId","==",r.tournamentId)); const mSnap=await getDocs(mQ); mSnap.forEach(md=>{ const mdData=md.data(); if(mdData.privateRoomDetails){ roomId=mdData.privateRoomDetails.roomId||roomId; roomPass=mdData.privateRoomDetails.roomPass||roomPass; } }); const div=document.createElement("div"); div.className="item"; const showRoom=t.status==='live'||roomId; div.innerHTML=`<b>${r.tournamentTitle||t.title||""}</b><br><span class="muted">${t.date||""} ${t.matchTime||""} | ${t.status||""} | Slot: ${r.slot||""}</span><br>${showRoom?`<b style="color:var(--accent)">Room ID: ${roomId||"Wait"}</b><br><b>Pass: ${roomPass||"Wait"}</b><br><button class="blue" onclick="navigator.clipboard.writeText('${roomId}');alert('Copy Ho Gaya')">COPY ROOM ID</button>`:`<p>⏳ Room ID 10 min pehle yahi dikhega.</p>`}`; box.appendChild(div); } const rq=query(collection(db,"results"), where("gameUid","==",myUid)); const rsnap=await getDocs(rq); const hbox=$("myHistory"); hbox.innerHTML=""; if(rsnap.empty) hbox.textContent="Koi Result nahi."; rsnap.forEach(d=>{ const r=d.data(); hbox.innerHTML+=`<div class="item">Tournament: ${r.tournamentId}<br>Kills: ${r.kills} | Place: ${r.placement} | Prize: ${r.prize} Coins</div>`; }); }catch(e){ console.log(e); } }
+async function loadWallet(){ if(!currentUser) return; try{ const wDoc=await getDoc(doc(db,"wallets",currentUser.uid)); if(wDoc.exists()){ const w=wDoc.data(); $("walletInfo").innerHTML=`Coins: <b>${w.coins}</b> | Total Earned: <b>${w.totalEarned||0}</b> | Total Spent: <b>${w.totalSpent||0}</b>`; } const q=query(collection(db,"transactions"), where("userId","==",currentUser.uid)); const snap=await getDocs(q); const box=$("txnHistory"); box.innerHTML=""; if(snap.empty) box.textContent="Koi Transaction nahi."; snap.forEach(d=>{ const t=d.data(); box.innerHTML+=`<div class="item">${t.coins>0?"+":""}${t.coins} Coins | ${t.type} | ${t.note||""}</div>`; }); const dq=query(collection(db,"depositRequests"), where("userId","==",currentUser.uid)); const dsnap=await getDocs(dq); const wq=query(collection(db,"withdrawalRequests"), where("userId","==",currentUser.uid)); const wsnap=await getDocs(wq); const mbox=$("myDepWith"); mbox.innerHTML=""; dsnap.forEach(d=>{ const t=d.data(); mbox.innerHTML+=`<div class="item">Deposit: ${t.coins} Coins - ${t.status}</div>`; }); wsnap.forEach(d=>{ const t=d.data(); mbox.innerHTML+=`<div class="item">Withdraw: ${t.coins} Coins - UPI: ${t.upi} - ${t.status}</div>`; }); const sq=query(collection(db,"supportTickets"), where("userId","==",currentUser.uid)); const ssnap=await getDocs(sq); const sbox=$("mySupport"); sbox.innerHTML=""; ssnap.forEach(d=>{ const t=d.data(); sbox.innerHTML+=`<div class="item">${t.subject} - ${t.status}</div>`; }); }catch(e){} }
+window.submitDeposit=async()=>{ const amt=Number($("depAmount").value), coins=Number($("depCoins").value), utr=$("depUtr").value.trim(); const file=$("depSSFile").files[0]; if(!amt||!coins||!utr||!file){ alert("Amount, Coins, UTR aur SS Photo sab bharo"); return; } try{ alert("SS Upload ho raha hai..."); const sRef=ref(storage,"deposits/"+currentUser.uid+"/"+Date.now()+"_"+file.name); await uploadBytes(sRef,file); const ssUrl=await getDownloadURL(sRef); await addDoc(collection(db,"depositRequests"),{userId:currentUser.uid,gameName:myGameName,gameUid:myUid,freeFireUID:myUid,amount:amt,coins,utr,screenshotUrl:ssUrl,status:"pending",createdAt:serverTimestamp()}); alert("Deposit Bhej Diya ✅"); loadWallet(); }catch(e){ alert("Payment Fail - Balance Rollback Ho Gaya, Paisa Nahi Katega. Error: "+e.message); } };
+window.submitWithdraw=async()=>{ const coins=Number($("withCoins").value), upi=$("withUpi").value.trim(), name=$("withName").value.trim(); if(!coins||!upi){ alert("Coins + UPI bharo"); return; } if(coins<100){ alert("Min 100 Coins"); return; } if(coins>myCoins){ alert("Coin kam hai! Balance: "+myCoins); return; } try{ await addDoc(collection(db,"withdrawalRequests"),{userId:currentUser.uid,gameName:myGameName,gameUid:myUid,freeFireUID:myUid,coins,upi,upiName:name,status:"pending",createdAt:serverTimestamp()}); alert("Withdraw Bhej Diya ✅"); loadWallet(); }catch(e){ alert(e.message); } };
+window.updateProfile=async()=>{ const n=$("editGameName").value.trim(); if(!n) return; try{ await updateDoc(doc(db,"users",currentUser.uid),{"profile.gameName":n,gameName:n}); myGameName=n; alert("Profile Update ✅"); loadUserData(); }catch(e){ alert(e.message); } };
+window.sendSupport=async()=>{ const s=$("supSubject").value, m=$("supMsg").value; if(!s||!m){ alert("Subject + Message bharo"); return; } try{ await addDoc(collection(db,"supportTickets"),{userId:currentUser.uid,gameName:myGameName,gameUid:myUid,freeFireUID:myUid,subject:s,message:m,status:"open",createdAt:serverTimestamp()}); alert("Support Ticket Bhej Diya ✅"); }catch(e){ alert(e.message); } };
+window.createTeam=async()=>{ const name=$("createTeamName").value.trim(); if(!name){ alert("Team Name bharo"); return; } const code="BGR"+Math.floor(1000+Math.random()*9000); try{ await addDoc(collection(db,"teams"),{teamName:name,teamCode:code,leaderId:currentUser.uid,leaderName:myGameName,members:[{userId:currentUser.uid,gameName:myGameName,freeFireUID:myUid}],memberCount:1,createdAt:serverTimestamp()}); alert("Team Ban Gayi ✅ Code: "+code); loadMyTeam(); }catch(e){ alert(e.message); } };
+window.joinTeam=async()=>{ const code=$("joinTeamCode").value.trim(); if(!code){ alert("Team Code bharo"); return; } try{ const q=query(collection(db,"teams"), where("teamCode","==",code)); const snap=await getDocs(q); if(snap.empty){ alert("Galat Code!"); return; } const tDoc=snap.docs[0]; const t=tDoc.data(); if((t.members||[]).some(m=>m.userId===currentUser.uid)){ alert("Pehle se isi Team me ho"); return; } const newMembers=[...(t.members||[]),{userId:currentUser.uid,gameName:myGameName,freeFireUID:myUid}]; await updateDoc(doc(db,"teams",tDoc.id),{members:newMembers,memberCount:newMembers.length}); alert("Team Join Ho Gayi ✅ "+t.teamName); loadMyTeam(); }catch(e){ alert(e.message); } };
+async function loadMyTeam(){ if(!currentUser) return; try{ const snap=await getDocs(collection(db,"teams")); const box=$("myTeam"); box.innerHTML=""; let found=null; snap.forEach(d=>{ const t=d.data(); if((t.members||[]).some(m=>m.userId===currentUser.uid)) found={id:d.id,...t}; }); if(!found) box.textContent="Koi Team nahi. Banao ya Join karo."; else box.innerHTML=`<b>${found.teamName}</b> | Code: <b>${found.teamCode}</b> | Leader: ${found.leaderName}<br>Members: ${(found.members||[]).map(m=>m.gameName).join(", ")}`; }catch(e){} }
+async function loadAnnouncements(){ try{ const snap=await getDocs(collection(db,"announcements")); const box=$("annHome"); box.innerHTML=""; snap.forEach(d=>{ const b=d.data(); box.innerHTML+=`<div class="notif"><b>${b.title}</b><br>${b.message}</div>`; }); if(snap.empty) box.textContent="Koi Announcement nahi."; const list=$("annList"); if(list){ list.innerHTML=""; snap.forEach(d=>{ const b=d.data(); list.innerHTML+=`<div class="item"><b>${b.title}</b><br>${b.message}</div>`; }); } }catch(e){} }
+async function loadLeaderboard(){ try{ const snap=await getDocs(collection(db,"leaderboard")); const arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()})); arr.sort((a,b)=>(b.totalPrize||0)-(a.totalPrize||0)); const html=arr.slice(0,10).map((l,i)=>`<p>${i+1}. 🏆 ${l.gameName} - Prize: ${l.totalPrize||0} | Kills: ${l.totalKills||0} | Wins: ${l.totalWins||0}</p>`).join("")||"Abhi koi Leader nahi."; if($("leaderHome")) $("leaderHome").innerHTML=html; if($("leaderPlayer")) $("leaderPlayer").innerHTML=html; if($("leaderAdmin")) $("leaderAdmin").innerHTML=html; }catch(e){} }
+async function loadNotifications(){ if(!currentUser) return; try{ const q=query(collection(db,"notifications"), where("userId"
+                                                                                      window.loadAllAdmin=async()=>{
+  try{ const [uS,teamS,tS,mS,rS,resS,dS,wS,supS,txnS,auditS,roleS]=await Promise.all([getDocs(collection(db,"users")),getDocs(collection(db,"teams")),getDocs(collection(db,"tournaments")),getDocs(collection(db,"matches")),getDocs(collection(db,"registrations")),getDocs(collection(db,"results")),getDocs(collection(db,"depositRequests")),getDocs(collection(db,"withdrawalRequests")),getDocs(collection(db,"supportTickets")),getDocs(collection(db,"transactions")),getDocs(collection(db,"auditLogs")),getDocs(collection(db,"adminRoles"))]);
+  $("cUsers").textContent=uS.size; let live=0; tS.forEach(d=>{ if(d.data().status==='live') live++; }); $("cLive").textContent=live; let dp=0,wp=0, coll=0, payout=0, tc=0; dS.forEach(d=>{ if(d.data().status==="pending") dp++; if(d.data().status==="approved") coll+=(d.data().amount||0); }); wS.forEach(d=>{ if(d.data().status==="pending") wp++; if(d.data().status==="approved") payout+=(d.data().coins||0); }); uS.forEach(d=>{ tc+=((d.data().wallets?.coins)||d.data().coins||0); }); $("cPending").textContent=dp+wp; $("cCollection").textContent=coll; $("cPayout").textContent=payout; $("cCoins").textContent=tc;
+  const pl=$("playerList"); pl.innerHTML=""; const search=($("searchPlayer")?.value||"").toLowerCase(); uS.forEach(item=>{ const p=item.data(); const prof=p.profile||{}; const txt=((prof.gameName||"")+(p.freeFireUID||"")).toLowerCase(); if(search&&!txt.includes(search)) return; const div=document.createElement("div"); div.className="item"; div.innerHTML=`<b>${prof.gameName||p.gameName||""} | Level: ${prof.level||""} | Age: ${prof.ageGroup||""} | Coins: ${(p.wallets?.coins)||p.coins||0} | Role: ${p.role||"player"} | Status: ${p.status||"active"} | ${p.status==="blocked"?"🔴 BLOCKED":"✅ ACTIVE"}</b><br>freeFireUID: ${p.freeFireUID||""} | Phone: ${prof.phone||""} | users/${item.id}<br><span class="muted">Password Encrypted hai - Plain text me kabhi nahi dikhega.</span>`; const f=document.createElement("div"); f.className="flex"; const b1=document.createElement("button"); b1.className="green"; b1.textContent="+ COIN"; b1.onclick=async()=>{ const a=prompt("Kitne coins?"); if(!a) return; await updateDoc(doc(db,"users",item.id),{coins:increment(Number(a)),"wallets.coins":increment(Number(a))}); await updateDoc(doc(db,"wallets",item.id),{coins:increment(Number(a)),totalEarned:increment(Number(a))}).catch(()=>{}); await addDoc(collection(db,"transactions"),{userId:item.id,gameName:prof.gameName,coins:Number(a),type:"admin_add",createdAt:serverTimestamp()}); await audit("coin_add","User "+prof.gameName+" ko "+a+" coins"); await loadAllAdmin(); }; const b2=document.createElement("button"); b2.textContent="- COIN"; b2.onclick=async()=>{ const a=prompt("Kitne minus?"); if(!a) return; await updateDoc(doc(db,"users",item.id),{coins:increment(-Number(a)),"wallets.coins":increment(-Number(a))}); await loadAllAdmin(); }; const b3=document.createElement("button"); b3.className="danger"; b3.textContent=p.status==="blocked"?"UNBAN ✅":"BAN 🔴"; b3.onclick=async()=>{ await updateDoc(doc(db,"users",item.id),{status:p.status==="blocked"?"active":"blocked"}); await audit("user_ban","User "+prof.gameName+" status changed"); await loadAllAdmin(); }; const b4=document.createElement("button"); b4.className="blue"; b4.textContent="RESET PASSWORD"; b4.onclick=async()=>{ const email=prompt("Player ka Email daalo jisko Reset Link bhejna hai:"); if(!email) return; try{ await sendPasswordResetEmail(auth,email); alert("Password Reset Link bhej diya ✅ "+email); }catch(e){ alert("Error: "+e.message); } }; f.append(b1,b2,b3,b4); div.appendChild(f); pl.appendChild(div); });
+  const tlTeam=$("teamList"); tlTeam.innerHTML=""; teamS.forEach(item=>{ const t=item.data(); tlTeam.innerHTML+=`<div class="item"><b>${t.teamName}</b> | Code: ${t.teamCode} | Leader: ${t.leaderName}<br>Members: ${(t.members||[]).map(m=>m.gameName).join(", ")}</div>`; });
+  const tl=$("adminTourList"); tl.innerHTML=""; tS.forEach(item=>{ const t=item.data(); const div=document.createElement("div"); div.className="item"; div.innerHTML=`<b>${t.title||""} - ${t.status||""}</b><br>${t.map||""} | ${t.date||""} ${t.matchTime||""} | ${t.mode||""}<br>Players: ${t.joined||0}/${t.maxPlayers||0} | Fee: ${t.fee||0} | Prize: ${t.prizePool||0}<br>ID: ${item.id}`; const f=document.createElement("div"); f.className="flex"; const lb=document.createElement("button"); lb.textContent="LIVE"; lb.onclick=async()=>{ await updateDoc(doc(db,"tournaments",item.id),{status:"live"}); await audit("tournament_live",t.title); await loadAllAdmin(); }; const cb=document.createElement("button"); cb.className="green"; cb.textContent="COMPLETE"; cb.onclick=async()=>{ await updateDoc(doc(db,"tournaments",item.id),{status:"completed"}); await loadAllAdmin(); }; const dbtn=document.createElement("button"); dbtn.className="danger"; dbtn.textContent="DELETE"; dbtn.onclick=async()=>{ if(!confirm("Delete?")) return; await deleteDoc(doc(db,"tournaments",item.id)); await loadAllAdmin(); }; f.append(lb,cb,dbtn); div.appendChild(f); tl.appendChild(div); });
+  const ml=$("matchList"); ml.innerHTML=""; mS.forEach(item=>{ const m=item.data(); ml.innerHTML+=`<div class="item"><b>${m.publicInfo?.title||""}</b> | Tournament: ${m.tournamentId}<br>publicInfo: ${JSON.stringify(m.publicInfo||{})}<br>privateRoomDetails: Room: ${m.privateRoomDetails?.roomId||""} | Pass: ${m.privateRoomDetails?.roomPass||""}</div>`; });
+  const dl=$("depositList"); dl.innerHTML=""; if(dS.empty) dl.textContent="Koi Deposit nahi."; dS.forEach(item=>{ const d=item.data(); const div=document.createElement("div"); div.className="item"; div.innerHTML=`<b>${d.gameName||""} - ${d.coins||0} Coins - ${d.amount||""} Rs | ${d.status}</b><br>UID: ${d.freeFireUID||""} | UTR: ${d.utr||""}`; if(d.screenshotUrl){ const img=document.createElement("img"); img.className="ss"; img.src=d.screenshotUrl; img.onclick=()=>window.open(d.screenshotUrl,'_blank'); div.appendChild(img); } const f=document.createElement("div"); f.className="flex"; const ap=document.createElement("button"); ap.className="green"; ap.textContent="APPROVE + AUTO COIN ✅"; ap.onclick=async()=>{ if(!confirm("SS sahi hai?")) return; await updateDoc(doc(db,"depositRequests",item.id),{status:"approved"}); if(d.userId){ await updateDoc(doc(db,"users",d.userId),{coins:increment(d.coins||0),"wallets.coins":increment(d.coins||0)}); await updateDoc(doc(db,"wallets",d.userId),{coins:increment(d.coins||0),totalEarned:increment(d.coins||0)}).catch(()=>{}); await addDoc(collection(db,"transactions"),{userId:d.userId,gameName:d.gameName,coins:d.coins,type:"deposit_approved",createdAt:serverTimestamp()}); await addDoc(collection(db,"notifications"),{userId:d.userId,title:"Deposit Approved ✅",message:d.coins+" Coins add ho gaye!",createdAt:serverTimestamp()}); } await audit("deposit_approve",d.gameName+" "+d.coins); await loadAllAdmin(); }; const rj=document.createElement("button"); rj.className="danger"; rj.textContent="REJECT ❌ + ROLLBACK"; rj.onclick=async()=>{ await updateDoc(doc(db,"depositRequests",item.id),{status:"rejected"}); await addDoc(collection(db,"notifications"),{userId:d.userId,title:"Deposit Rejected ❌",message:"SS galat hai. Balance rollback.",createdAt:serverTimestamp()}); await loadAllAdmin(); }; f.append(ap,rj); div.appendChild(f); dl.appendChild(div); });
+  const wl=$("withdrawList"); wl.innerHTML=""; if(wS.empty) wl.textContent="Koi Withdraw nahi."; wS.forEach(item=>{ const w=item.data(); const div=document.createElement("div"); div.className="item"; div.innerHTML=`<b>${w.gameName||""} - ${w.coins||0} Coins | ${w.status}</b><br>UID: ${w.freeFireUID||""} | UPI: ${w.upi||""} | Name: ${w.upiName||""}`; const f=document.createElement("div"); f.className="flex"; const ap=document.createElement("button"); ap.className="green"; ap.textContent="PAID ✅ + COIN MINUS"; ap.onclick=async()=>{ if(!confirm("UPI pe paisa bhej diya?")) return; await updateDoc(doc(db,"withdrawalRequests",item.id),{status:"approved"}); if(w.userId){ await updateDoc(doc(db,"users",w.userId),{coins:increment(-(w.coins||0)),"wallets.coins":increment(-(w.coins||0))}); await updateDoc(doc(db,"wallets",w.userId),{coins:increment(-(w.coins||0))}).catch(()=>{}); await addDoc(collection(db,"transactions"),{userId:w.userId,gameName:w.gameName,coins:-(w.coins||0),type:"withdraw_approved",createdAt:serverTimestamp()}); await addDoc(collection(db,"notifications"),{userId:w.userId,title:"Withdraw Approved ✅",message:w.coins+" Coins ka paisa bhej diya.",createdAt:serverTimestamp()}); } await audit("withdraw_approve",w.gameName+" "+w.coins); await loadAllAdmin(); }; const rj=document.createElement("button"); rj.className="danger"; rj.textContent="REJECT"; rj.onclick=async()=>{ await updateDoc(doc(db,"withdrawalRequests",item.id),{status:"rejected"}); await loadAllAdmin(); }; f.append(ap,rj); div.appendChild(f); wl.appendChild(div); });
+  const rl=$("regList"); rl.innerHTML=""; rS.forEach(item=>{ const r=item.data(); rl.innerHTML+=`<div class="item"><b>${r.gameName||""}</b> | ${r.tournamentTitle||r.tournamentId} | UID: ${r.freeFireUID} | Slot: ${r.slot||""} | ${r.requestStatus}</div>`; });
+  const sl=$("supportList"); sl.innerHTML=""; supS.forEach(item=>{ const s=item.data(); const div=document.createElement("div"); div.className="item"; div.innerHTML=`<b>${s.gameName||""} - ${s.subject||""}</b><br>${s.message||""}<br>Status: ${s.status||""}`; const btn=document.createElement("button"); btn.className="green"; btn.textContent="SOLVED ✅"; btn.onclick=async()=>{ await updateDoc(doc(db,"supportTickets",item.id),{status:"solved"}); await loadAllAdmin(); }; div.appendChild(btn); sl.appendChild(div); });
+  const txl=$("txnList"); txl.innerHTML=""; txnS.forEach(item=>{ const t=item.data(); txl.innerHTML+=`<div class="item">${t.gameName||""} | ${t.coins>0?"+":""}${t.coins} | ${t.type||""}</div>`; });
+  const al=$("auditList"); al.innerHTML=""; auditS.forEach(item=>{ const a=item.data(); al.innerHTML+=`<div class="item">${a.action} - ${a.detail||""} | ${a.createdAt?.toDate?.()?.toLocaleString('en-IN')||""}</div>`; });
+  const arl=$("adminRoleList"); arl.innerHTML=""; roleS.forEach(item=>{ const a=item.data(); arl.innerHTML+=`<div class="item">UID: ${a.userId} | Role: ${a.role} | By: ${a.createdBy||""}</div>`; });
+  showMessage("✅ 100% Loaded - Sab aa gaya");
+  }catch(e){ showMessage("Error: "+e.message); console.log(e); }
+};
+window.createTournament=async()=>{ const title=$("tTitle").value.trim(), map=$("tMap").value.trim(), date=$("tDate").value, time=$("tTime").value; if(!title||!map||!date||!time){ alert("Sab bharo"); return; } try{ await addDoc(collection(db,"tournaments"),{title,map,date,matchTime:time,mode:$("tMode").value,maxPlayers:Number($("tSlots").value||48),fee:Number($("tFee").value||0),prizePool:Number($("tPrize").value||0),perKill:Number($("tPerKill").value||0),firstPrize:Number($("tFirst").value||0),secondPrize:Number($("tSecond").value||0),thirdPrize:Number($("tThird").value||0),status:$("tStatus").value,rules:$("tRules").value,joined:0,createdAt:serverTimestamp()}); await audit("tournament_create",title); alert("Tournament Created ✅"); loadAllAdmin(); }catch(e){ alert(e.message); } };
+window.createMatch=async()=>{ const tId=$("mTourId").value, title=$("mTitle").value, rid=$("mRoomId").value, rpass=$("mRoomPass").value; if(!tId||!title){ alert("Tournament ID + Title bharo"); return; } try{ await addDoc(collection(db,"matches"),{tournamentId:tId,publicInfo:{title,slot:$("mSlot").value,status:"upcoming",createdAt:serverTimestamp()},privateRoomDetails:{roomId:rid,roomPass:rpass},createdAt:serverTimestamp()}); await audit("match_create",title+" Room "+rid); alert("Match + Room Create ✅"); loadAllAdmin(); }catch(e){ alert(e.message); } };
+window.addResult=async()=>{ const tId=$("resTId").value, uid=$("resUid").value, kills=Number($("resKills").value||0), place=Number($("resPlace").value||0), prize=Number($("resPrize").value||0); if(!tId||!uid){ alert("Tournament ID + UID bharo"); return; } try{ await addDoc(collection(db,"results"),{tournamentId:tId,gameUid:uid,freeFireUID:uid,kills,placement:place,prize,createdAt:serverTimestamp()}); const q=query(collection(db,"users"), where("freeFireUID","==",uid)); const snap=await getDocs(q); if(!snap.empty){ const pDoc=snap.docs[0]; const pData=pDoc.data(); await updateDoc(doc(db,"users",pDoc.id),{coins:increment(prize),"wallets.coins":increment(prize)}); await updateDoc(doc(db,"wallets",pDoc.id),{coins:increment(prize),totalEarned:increment(prize)}).catch(()=>{}); await addDoc(collection(db,"transactions"),{userId:pDoc.id,gameName:pData.profile?.gameName,coins:prize,type:"prize_win",note:"Won "+tId,createdAt:serverTimestamp()}); await addDoc(collection(db,"notifications"),{userId:pDoc.id,title:"Prize Jeet Gaye 🏆",message:prize+" Coins Auto add ho gaye!",createdAt:serverTimestamp()}); const lbQ=query(collection(db,"leaderboard"), where("freeFireUID","==",uid)); const lbSnap=await getDocs(lbQ); if(lbSnap.empty){ await addDoc(collection(db,"leaderboard"),{userId:pDoc.id,gameName:pData.profile?.gameName,freeFireUID:uid,totalPrize:prize,totalKills:kills,totalWins:place===1?1:0,matchesPlayed:1,createdAt:serverTimestamp()}); } else { const lbDoc=lbSnap.docs[0]; await updateDoc(doc(db,"leaderboard",lbDoc.id),{totalPrize:increment(prize),totalKills:increment(kills),totalWins:increment(place===1?1:0),matchesPlayed:increment(1)}); } alert("Result + AUTO Prize "+prize+" ✅"); } else alert("Result save hua, Player nahi mila."); await audit("result_add",uid+" Prize "+prize); loadAllAdmin(); }catch(e){ alert(e.message); } };
+window.doRefund=async()=>{ const tId=$("refundTId").value, fee=Number($("refundFee").value||0); if(!tId||!fee){ alert("Tournament ID + Fee bharo"); return; } if(!confirm("Sabko "+fee+" AUTO Refund?")) return; try{ const regs=await getDocs(query(collection(db,"registrations"), where("tournamentId","==",tId))); for(const r of regs.docs){ const rd=r.data(); if(rd.userId){ await updateDoc(doc(db,"users",rd.userId),{coins:increment(fee),"wallets.coins":increment(fee)}); await addDoc(collection(db,"notifications"),{userId:rd.userId,title:"Refund Mil Gaya 💸",message:fee+" Coins wapas aa gaye.",createdAt:serverTimestamp()}); } } await audit("refund",tId+" Fee "+fee); alert("AUTO Refund ✅"); }catch(e){ alert(e.message); } };
+window.makeAdmin=async()=>{ const uid=$("newAdminUid").value.trim(), role=$("newAdminRole").value; if(!uid){ alert("UID bharo"); return; } try{ await addDoc(collection(db,"adminRoles"),{userId:uid,role,createdBy:currentUser.uid,createdAt:serverTimestamp()}); await updateDoc(doc(db,"users",uid),{role}); await audit("make_admin",uid+" -> "+role); alert("Team Member Bana Diya ✅ "+role); loadAllAdmin(); }catch(e){ alert(e.message); } };
+window.sendAnnouncement=async()=>{ const t=$("bTitle").value, m=$("bMsg").value; if(!t||!m){ alert("Title + Message bharo"); return; } try{ await addDoc(collection(db,"announcements"),{title:t,message:m,createdAt:serverTimestamp()}); await audit("announcement",t); alert("Announcement Bhej Diya ✅"); loadAnnouncements(); }catch(e){ alert(e.message); } };
+window.saveSettings=async()=>{ try{ await addDoc(collection(db,"systemSettings"),{minWithdraw:Number($("sMinWithdraw").value||100),upiId:$("sUpi").value,payMode:$("sPayMode").value,whatsapp:$("sWhatsapp").value,appNotice:$("sNotice").value,minLevel:Number($("sMinLevel").value||40),updatedAt:serverTimestamp()}); await audit("settings_update","System Settings"); alert("Settings Save ✅"); }catch(e){ alert(e.message); } };
 </script>
-
+<!-- FIRESTORE RULES - Firebase > Firestore > Rules me paste karo
+rules_version='2'; service cloud.firestore { match /databases/{database}/documents {
+match /users/{id} { allow read: if request.auth!=null && request.auth.uid==id; allow create: if request.auth!=null; allow update: if request.auth!=null && (request.auth.uid==id || request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'); allow read,write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /teams/{id} { allow read: if true; allow create: if request.auth!=null; allow update,delete: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /tournaments/{id} { allow read: if true; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /registrations/{id} { allow create: if request.auth!=null; allow read: if request.auth!=null; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /matches/{id} { allow read: if request.auth!=null; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /results/{id} { allow read: if true; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /leaderboard/{id} { allow read: if true; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /wallets/{id} { allow read: if request.auth!=null && request.auth.uid==id; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /transactions/{id} { allow create: if request.auth!=null; allow read: if request.auth!=null; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /depositRequests/{id} { allow create: if request.auth!=null; allow read: if request.auth!=null; allow update: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /withdrawalRequests/{id} { allow create: if request.auth!=null; allow read: if request.auth!=null; allow update: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /notifications/{id} { allow read: if request.auth!=null; allow create: if request.auth!=null; }
+match /announcements/{id} { allow read: if true; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /supportTickets/{id} { allow create: if request.auth!=null; allow read: if request.auth!=null; allow update: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /adminRoles/{id} { allow read: if request.auth!=null; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+match /auditLogs/{id} { allow read: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; allow create: if request.auth!=null; }
+match /systemSettings/{id} { allow read: if true; allow write: if request.auth!=null && request.auth.uid=='LMPbpNrgbpOSTd4xglwfAbZlGXE2'; }
+} }
+STORAGE RULES - Firebase > Storage > Rules
+rules_version='2'; service firebase.storage { match /b/{bucket}/o { match /deposits/{userId}/{fileName} { allow read: if request.auth!=null; allow write: if request.auth!=null && request.auth.uid==userId && request.resource.size < 5*1024*1024; } } }
+-->
 </body>
 </html>
