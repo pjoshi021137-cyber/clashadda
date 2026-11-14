@@ -1,337 +1,238 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BGR eSports | Owner Control</title>
+<title>BGR eSports Ultra Pro Max</title>
 <style>
-:root{--bg:#090909;--panel:#141414;--gold:#d6ad52;--gold2:#f5d98b;--muted:#999;--line:#292929;--red:#e45b5b;--green:#51c58a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f5f5;font-family:Arial,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer}
-.top{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;background:#101010;position:sticky;top:0;z-index:5}
-.brand{font-weight:900;letter-spacing:1.5px;color:var(--gold2)}.brand small{display:block;color:#888;font-size:10px;letter-spacing:3px;margin-top:5px}
-.wrap{max-width:1400px;margin:auto;padding:20px}
-.login{max-width:420px;margin:12vh auto;background:var(--panel);padding:28px;border:1px solid #4a3b1d;border-radius:16px}
-h1,h2,h3{margin-top:0}.gold{color:var(--gold2)}.muted{color:var(--muted)}
-input,select,textarea{width:100%;background:#090909;color:white;border:1px solid #393939;padding:12px;border-radius:8px;margin:6px 0 14px}
-button{border:0;border-radius:8px;padding:11px 15px;background:var(--gold);color:#111;font-weight:700}
-button.secondary{background:#292929;color:#eee;border:1px solid #444}
-button.danger{background:#542626;color:#ffdada}button:disabled{opacity:.4;cursor:not-allowed}
-.hidden{display:none!important}.layout{display:grid;grid-template-columns:220px 1fr;gap:18px}
-.side,.panel,.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px}
-.side{padding:12px;height:max-content;position:sticky;top:85px}
-.nav{display:block;width:100%;text-align:left;margin:5px 0;background:transparent;color:#ccc;border:1px solid transparent}
-.nav.active,.nav:hover{background:#292216;color:var(--gold2);border-color:#57451f}
-main{min-width:0}.panel{padding:18px;margin-bottom:16px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.stat{padding:17px}.stat strong{display:block;font-size:27px;color:var(--gold2);margin-top:10px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-table{width:100%;border-collapse:collapse;min-width:650px}th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;vertical-align:top}
-th{color:var(--gold2)}.tablewrap{overflow:auto}
-.tag{display:inline-block;padding:5px 8px;border-radius:20px;background:#333;font-size:11px}
-.tag.good{background:#153c2b;color:#8ce1b4}.tag.wait{background:#463719;color:#f5d98b}
-.tag.bad{background:#482323;color:#ffaaaa}.actions{display:flex;gap:6px;flex-wrap:wrap}
-.actions button{padding:7px 9px;font-size:12px}
-.notice{padding:12px;border:1px solid #57451f;background:#211b0e;color:#e9d49e;border-radius:8px;font-size:13px}
-#msg{position:fixed;bottom:18px;right:18px;background:#242424;border:1px solid var(--gold);padding:12px 16px;border-radius:8px;display:none;z-index:10}
-@media(max-width:800px){.layout{grid-template-columns:1fr}.side{position:static;display:grid;grid-template-columns:repeat(3,1fr)}.nav{text-align:center;font-size:12px;padding:9px 3px}.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.wrap{padding:12px}.top{padding:14px}}
+body{margin:0;background:#090a0d;color:white;font-family:Arial}
+header{padding:18px;background:#151515;color:#e8bd58;font-weight:bold}
+main{padding:18px;max-width:1000px;margin:auto}
+.panel{background:#171717;border:1px solid #57451f;border-radius:12px;padding:18px;margin:15px 0}
+input,button,select{box-sizing:border-box;width:100%;padding:12px;margin:7px 0;border-radius:8px}
+input,select{background:#080808;color:white;border:1px solid #444}
+button{background:#e8bd58;color:#111;font-weight:bold;border:0}
+.hidden{display:none}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+table{width:100%;border-collapse:collapse}
+td,th{text-align:left;padding:10px;border-bottom:1px solid #444}
+.gold{color:#e8bd58}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header class="top">
-  <div class="brand">BGR <span class="gold">eSPORTS</span><small>ULTRA PRO MAX • OWNER CONSOLE</small></div>
-  <button id="logoutBtn" class="secondary hidden">Logout</button>
-</header>
+<header>BGR eSPORTS — ULTRA PRO MAX OWNER PANEL</header>
 
-<section id="loginBox" class="login">
-  <h2 class="gold">OWNER ACCESS</h2>
-  <p class="muted">BGR eSports secure control panel</p>
-  <label>Email</label><input id="email" type="email" autocomplete="username" placeholder="Owner email">
-  <label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Password">
-  <button id="loginBtn" style="width:100%">SECURE LOGIN</button>
-  <p class="muted" style="font-size:12px">Only the registered Owner account can access this panel.</p>
+<main>
+<section id="login" class="panel">
+<h2 class="gold">OWNER LOGIN</h2>
+<input id="email" type="email" placeholder="Owner Email">
+<input id="password" type="password" placeholder="Password">
+<button id="loginBtn">SECURE LOGIN</button>
 </section>
 
-<div id="app" class="wrap hidden">
-  <div class="notice" style="margin-bottom:16px">Owner mode active. Wallet transactions are monitoring-only in this version; do not approve or transfer real money from this panel.</div>
-  <div class="layout">
-    <aside class="side">
-      <button class="nav active" data-page="dashboard">▦ Dashboard</button>
-      <button class="nav" data-page="tournaments">🏆 Tournaments</button>
-      <button class="nav" data-page="registrations">📋 Registrations</button>
-      <button class="nav" data-page="players">👥 Players</button>
-      <button class="nav" data-page="transactions">◈ Transactions</button>
-      <button class="nav" data-page="support">✉ Support</button>
-      <button class="nav" data-page="announcements">📢 Announcements</button>
-    </aside>
-
-    <main>
-      <section id="dashboard" class="page">
-        <h1 class="gold">Owner Dashboard</h1>
-        <p class="muted">Your tournament platform at a glance.</p>
-        <div class="stats">
-          <div class="stat">Players<strong id="sPlayers">—</strong></div>
-          <div class="stat">Tournaments<strong id="sTournaments">—</strong></div>
-          <div class="stat">Registrations<strong id="sRegistrations">—</strong></div>
-          <div class="stat">Pending Requests<strong id="sPending">—</strong></div>
-        </div>
-        <div class="panel"><h3>Recent Registrations</h3><div id="recentRegs" class="muted">Loading…</div></div>
-        <div class="panel"><h3>Platform Status</h3><p class="muted">Firebase connection is active when your data loads successfully. Use the menu to manage each section.</p></div>
-      </section>
-
-      <section id="tournaments" class="page hidden">
-        <h1 class="gold">Tournament Control</h1>
-        <div class="panel">
-          <h3>Create Tournament</h3>
-          <form id="tournamentForm" class="grid2">
-            <div><label>Tournament title</label><input id="tTitle" required placeholder="e.g. BGR Sunday Battle"></div>
-            <div><label>Game / Map</label><input id="tMap" required placeholder="e.g. Bermuda"></div>
-            <div><label>Date</label><input id="tDate" type="date" required></div>
-            <div><label>Match time</label><input id="tTime" type="time" required></div>
-            <div><label>Mode</label><select id="tMode"><option>Solo</option><option>Duo</option><option>Squad</option></select></div>
-            <div><label>Maximum players</label><input id="tSlots" type="number" min="1" required value="48"></div>
-            <div><label>Entry fee (display value)</label><input id="tFee" type="number" min="0" value="0"></div>
-            <div><label>Prize pool (display value)</label><input id="tPrize" type="number" min="0" value="0"></div>
-            <div><label>Status</label><select id="tStatus"><option value="upcoming">Upcoming</option><option value="live">Live</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select></div>
-            <div style="display:flex;align-items:end"><button type="submit" style="width:100%">＋ Create Tournament</button></div>
-          </form>
-          <p class="muted" style="font-size:12px">Fee and prize are stored as display values only. This form does not collect payments.</p>
-        </div>
-        <div class="panel"><h3>All Tournaments</h3><div id="tournamentList" class="tablewrap">Loading…</div></div>
-      </section>
-
-      <section id="registrations" class="page hidden">
-        <h1 class="gold">Registration Desk</h1>
-        <div class="panel"><div id="registrationList" class="tablewrap">Loading…</div></div>
-      </section>
-
-      <section id="players" class="page hidden">
-        <h1 class="gold">Player Management</h1>
-        <div class="panel"><input id="playerSearch" placeholder="Search by game name or email…"><div id="playerList" class="tablewrap">Loading…</div></div>
-      </section>
-
-      <section id="transactions" class="page hidden">
-        <h1 class="gold">Transaction Monitor</h1>
-        <div class="notice">Read-only monitoring. Do not mark requests paid or change wallet balances from browser-side code. Secure settlement needs a trusted server function.</div>
-        <div class="panel" style="margin-top:14px"><div id="transactionList" class="tablewrap">Loading…</div></div>
-      </section>
-
-      <section id="support" class="page hidden">
-        <h1 class="gold">Support Center</h1>
-        <div class="panel"><div id="supportList" class="tablewrap">Loading…</div></div>
-      </section>
-
-      <section id="announcements" class="page hidden">
-        <h1 class="gold">Public Announcements</h1>
-        <div class="panel">
-          <form id="announcementForm">
-            <label>Announcement title</label><input id="aTitle" required maxlength="100">
-            <label>Message</label><textarea id="aMessage" required rows="4" maxlength="1000"></textarea>
-            <button type="submit">Publish Announcement</button>
-          </form>
-          <p class="muted" style="font-size:12px">Announcements are visible to all signed-in users if your Firestore rules allow it.</p>
-        </div>
-      </section>
-    </main>
-  </div>
+<section id="dashboard" class="hidden">
+<h2 class="gold">OWNER DASHBOARD</h2>
+<button id="logoutBtn">Logout</button>
+<div class="grid">
+<div class="panel">Players <h2 id="players">0</h2></div>
+<div class="panel">Tournaments <h2 id="tournamentsCount">0</h2></div>
+<div class="panel">Registrations <h2 id="registrationsCount">0</h2></div>
 </div>
-<div id="msg"></div>
 
+<div class="panel">
+<h3 class="gold">Create Tournament</h3>
+<form id="tournamentForm">
+<input id="title" placeholder="Tournament Name" required>
+<input id="map" placeholder="Map Name" required>
+<input id="date" type="date" required>
+<input id="time" type="time" required>
+<select id="mode">
+<option>Solo</option><option>Duo</option><option>Squad</option>
+</select>
+<input id="slots" type="number" placeholder="Maximum Players" value="48">
+<input id="fee" type="number" placeholder="Entry Fee" value="0">
+<input id="prize" type="number" placeholder="Prize Pool" value="0">
+<button type="submit">CREATE TOURNAMENT</button>
+</form>
+</div>
+
+<div class="panel">
+<h3 class="gold">Tournament List</h3>
+<div id="tournamentList"></div>
+</div>
+
+<div class="panel">
+<h3 class="gold">Player List</h3>
+<div id="playerList"></div>
+</div>
+</section>
+</main>
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+
 import {
-  getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
 import {
-  getFirestore, collection, doc, getDocs, addDoc, updateDoc,
-  deleteDoc, query, orderBy, limit, serverTimestamp
+  getFirestore,
+  collection,
+  doc,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  query,
+  limit,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-/* IMPORTANT:
-   Replace this object with the exact firebaseConfig object
-   already used by your existing index.html. */
+/* यहाँ index.html वाला Firebase config डालना है */
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_EXISTING_API_KEY",
+  apiKey: "YOUR_API_KEY",
   authDomain: "clashadda-b3e57.firebaseapp.com",
   projectId: "clashadda-b3e57",
-  storageBucket: "PASTE_YOUR_EXISTING_STORAGE_BUCKET",
-  messagingSenderId: "PASTE_YOUR_EXISTING_MESSAGING_SENDER_ID",
-  appId: "PASTE_YOUR_EXISTING_APP_ID"
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
+/* Owner UID */
 const OWNER_UID = "LMPbpNrgbpOSTd4xglwfAbZlGXE2";
-const appFirebase = initializeApp(firebaseConfig);
-const auth = getAuth(appFirebase);
-const db = getFirestore(appFirebase);
+
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
 
 const $ = id => document.getElementById(id);
-let cache = {users:[],tournaments:[],registrations:[],transactions:[],support:[]};
 
-function toast(message){
-  $("msg").textContent = message;
-  $("msg").style.display = "block";
-  setTimeout(()=>$("msg").style.display="none",3000);
-}
-function safe(value){
-  return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function dateText(value){
-  if(!value) return "—";
-  if(value.toDate) return value.toDate().toLocaleString();
-  return safe(value);
-}
-function statusTag(value){
-  const s=String(value||"pending").toLowerCase();
-  const cls=["approved","completed","resolved","paid"].includes(s)?"good":
-    ["rejected","cancelled","closed"].includes(s)?"bad":"wait";
-  return `<span class="tag ${cls}">${safe(s)}</span>`;
-}
-function table(headers,rows){
-  return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.length?rows.join(""):`<tr><td colspan="${headers.length}" class="muted">No records found.</td></tr>`}</tbody></table>`;
-}
-function showPage(page){
-  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
-  $(page).classList.remove("hidden");
-  document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
-}
-document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
-
-$("loginBtn").onclick=async()=>{
-  try{
-    await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
-  }catch(e){toast("Login failed: "+e.message);}
+$("loginBtn").onclick = async () => {
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      $("email").value.trim(),
+      $("password").value
+    );
+  } catch (error) {
+    alert("Login Error: " + error.message);
+  }
 };
-$("logoutBtn").onclick=()=>signOut(auth);
 
-onAuthStateChanged(auth,async user=>{
-  if(!user){
-    $("app").classList.add("hidden");
-    $("loginBox").classList.remove("hidden");
-    $("logoutBtn").classList.add("hidden");
+$("logoutBtn").onclick = () => signOut(auth);
+
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    $("login").classList.remove("hidden");
+    $("dashboard").classList.add("hidden");
     return;
   }
-  if(user.uid!==OWNER_UID){
+
+  if (user.uid !== OWNER_UID) {
     await signOut(auth);
-    toast("Access denied: Owner account only.");
+    alert("Access Denied: Owner account only!");
     return;
   }
-  $("loginBox").classList.add("hidden");
-  $("app").classList.remove("hidden");
-  $("logoutBtn").classList.remove("hidden");
-  await loadAll();
+
+  $("login").classList.add("hidden");
+  $("dashboard").classList.remove("hidden");
+
+  await loadDashboard();
 });
 
-async function readCollection(name,max=200){
-  const snap=await getDocs(query(collection(db,name),limit(max)));
-  return snap.docs.map(d=>({id:d.id,...d.data()}));
-}
-async function loadAll(){
-  try{
-    const names=["users","tournaments","registrations","transactions","support"];
-    const results=await Promise.all(names.map(n=>readCollection(n)));
-    names.forEach((n,i)=>cache[n]=results[i]);
-    renderAll();
-  }catch(e){toast("Data load error: "+e.message);}
-}
-function renderAll(){
-  $("sPlayers").textContent=cache.users.length;
-  $("sTournaments").textContent=cache.tournaments.length;
-  $("sRegistrations").textContent=cache.registrations.length;
-  $("sPending").textContent=cache.registrations.filter(r=>(r.requestStatus||"pending")==="pending").length;
-  renderTournaments();renderRegistrations();renderPlayers();
-  renderTransactions();renderSupport();renderRecent();
-}
-function renderRecent(){
-  const rows=cache.registrations.slice(0,6);
-  $("recentRegs").innerHTML=rows.length?table(["Player","Tournament","Status"],rows.map(r=>
-    `<tr><td>${safe(r.gameName||r.uid)}</td><td>${safe(r.tournamentId)}</td><td>${statusTag(r.requestStatus)}</td></tr>`)):"No registrations yet.";
-}
-function renderTournaments(){
-  $("tournamentList").innerHTML=table(["Tournament","Date / Time","Mode","Slots","Status","Actions"],
-    cache.tournaments.map(t=>`<tr>
-      <td><b>${safe(t.title)}</b><br><small class="muted">${safe(t.map)}</small></td>
-      <td>${safe(t.date)}<br>${safe(t.matchTime)}</td>
-      <td>${safe(t.mode||"—")}</td><td>${safe(t.joined||0)} / ${safe(t.maxPlayers||0)}</td>
-      <td>${statusTag(t.status)}</td>
-      <td><div class="actions">
-        <button class="secondary" data-status="${safe(t.id)}" data-value="live">Go Live</button>
-        <button class="secondary" data-status="${safe(t.id)}" data-value="completed">Complete</button>
-        <button class="danger" data-delete="${safe(t.id)}">Delete</button>
-      </div></td></tr>`));
-  document.querySelectorAll("[data-status]").forEach(b=>b.onclick=()=>changeTournamentStatus(b.dataset.status,b.dataset.value));
-  document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>removeTournament(b.dataset.delete));
-}
-$("tournamentForm").onsubmit=async e=>{
-  e.preventDefault();
-  try{
-    await addDoc(collection(db,"tournaments"),{
-      title:$("tTitle").value.trim(),map:$("tMap").value.trim(),
-      date:$("tDate").value,matchTime:$("tTime").value,
-      mode:$("tMode").value,maxPlayers:Number($("tSlots").value),
-      fee:Number($("tFee").value),prizePool:Number($("tPrize").value),
-      status:$("tStatus").value,joined:0,createdAt:serverTimestamp()
+async function loadDashboard() {
+  try {
+    const [players, tournaments, registrations] =
+      await Promise.all([
+        getDocs(query(collection(db, "users"), limit(200))),
+        getDocs(query(collection(db, "tournaments"), limit(200))),
+        getDocs(query(collection(db, "registrations"), limit(200)))
+      ]);
+
+    $("players").textContent = players.size;
+    $("tournamentsCount").textContent = tournaments.size;
+    $("registrationsCount").textContent = registrations.size;
+
+    $("tournamentList").innerHTML =
+      tournaments.docs.map(item => {
+        const t = item.data();
+        return `
+          <p>
+            <b>${escapeHTML(t.title || "Tournament")}</b>
+            — ${escapeHTML(t.date || "")}
+            <button data-delete="${item.id}">Delete</button>
+          </p>`;
+      }).join("") || "No tournaments found";
+
+    $("playerList").innerHTML =
+      players.docs.map(item => {
+        const p = item.data();
+        return `<p>${escapeHTML(p.gameName || p.email || item.id)}</p>`;
+      }).join("") || "No players found";
+
+    document.querySelectorAll("[data-delete]").forEach(button => {
+      button.onclick = async () => {
+        if (!confirm("Delete this tournament?")) return;
+
+        try {
+          await deleteDoc(
+            doc(db, "tournaments", button.dataset.delete)
+          );
+          alert("Tournament deleted");
+          await loadDashboard();
+        } catch (error) {
+          alert("Delete failed: " + error.message);
+        }
+      };
     });
-    e.target.reset();$("tSlots").value=48;$("tFee").value=0;$("tPrize").value=0;
-    toast("Tournament created.");await loadAll();
-  }catch(err){toast("Create failed: "+err.message);}
-};
-async function changeTournamentStatus(id,status){
-  try{await updateDoc(doc(db,"tournaments",id),{status});toast("Tournament status updated.");await loadAll();}
-  catch(e){toast("Update failed: "+e.message);}
+
+  } catch (error) {
+    alert("Database Error: " + error.message);
+  }
 }
-async function removeTournament(id){
-  if(!confirm("Delete this tournament? Existing registrations will not be deleted."))return;
-  try{await deleteDoc(doc(db,"tournaments",id));toast("Tournament deleted.");await loadAll();}
-  catch(e){toast("Delete failed: "+e.message);}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
 }
-function renderRegistrations(){
-  $("registrationList").innerHTML=table(["Player","Tournament ID","Game UID","Request","Action"],
-    cache.registrations.map(r=>`<tr>
-      <td>${safe(r.gameName||r.uid)}<br><small class="muted">${safe(r.uid)}</small></td>
-      <td>${safe(r.tournamentId)}</td><td>${safe(r.gameUid||"—")}</td>
-      <td>${statusTag(r.requestStatus)}</td>
-      <td><div class="actions">
-        <button data-reg="${safe(r.id)}" data-value="approved">Approve</button>
-        <button class="danger" data-reg="${safe(r.id)}" data-value="rejected">Reject</button>
-      </div></td></tr>`));
-  document.querySelectorAll("[data-reg]").forEach(b=>b.onclick=()=>updateRegistration(b.dataset.reg,b.dataset.value));
-}
-async function updateRegistration(id,status){
-  try{await updateDoc(doc(db,"registrations",id),{requestStatus:status});toast("Registration updated.");await loadAll();}
-  catch(e){toast("Action failed: "+e.message);}
-}
-function renderPlayers(){
-  const q=$("playerSearch").value.toLowerCase();
-  const users=cache.users.filter(u=>(u.gameName||"").toLowerCase().includes(q)||(u.email||"").toLowerCase().includes(q));
-  $("playerList").innerHTML=table(["Player","Email","UID","Joined"],users.map(u=>
-    `<tr><td>${safe(u.gameName||"Unnamed")}</td><td>${safe(u.email)}</td><td><small>${safe(u.id)}</small></td><td>${dateText(u.createdAt)}</td></tr>`));
-}
-$("playerSearch").addEventListener("input",renderPlayers);
-function renderTransactions(){
-  $("transactionList").innerHTML=table(["Player","Type","Amount","Status","Date"],
-    cache.transactions.map(t=>`<tr><td>${safe(t.gameName||t.uid)}</td><td>${safe(t.type)}</td><td>${safe(t.amount)}</td><td>${statusTag(t.status)}</td><td>${dateText(t.at)}</td></tr>`));
-}
-function renderSupport(){
-  $("supportList").innerHTML=table(["Player","Subject","Message","Status","Action"],
-    cache.support.map(s=>`<tr><td>${safe(s.gameName||s.uid)}</td><td>${safe(s.subject)}</td><td>${safe(s.message)}</td><td>${statusTag(s.status)}</td>
-    <td><div class="actions"><button data-ticket="${safe(s.id)}" data-value="resolved">Resolve</button><button class="secondary" data-ticket="${safe(s.id)}" data-value="open">Reopen</button></div></td></tr>`));
-  document.querySelectorAll("[data-ticket]").forEach(b=>b.onclick=()=>updateTicket(b.dataset.ticket,b.dataset.value));
-}
-async function updateTicket(id,status){
-  try{await updateDoc(doc(db,"support",id),{status});toast("Support ticket updated.");await loadAll();}
-  catch(e){toast("Update failed: "+e.message);}
-}
-$("announcementForm").onsubmit=async e=>{
-  e.preventDefault();
-  try{
-    await addDoc(collection(db,"notifications"),{
-      title:$("aTitle").value.trim(),message:$("aMessage").value.trim(),
-      createdAt:serverTimestamp(),type:"announcement"
+
+$("tournamentForm").onsubmit = async event => {
+  event.preventDefault();
+
+  try {
+    await addDoc(collection(db, "tournaments"), {
+      title: $("title").value.trim(),
+      map: $("map").value.trim(),
+      date: $("date").value,
+      matchTime: $("time").value,
+      mode: $("mode").value,
+      maxPlayers: Number($("slots").value),
+      fee: Number($("fee").value),
+      prizePool: Number($("prize").value),
+      joined: 0,
+      status: "upcoming",
+      createdAt: serverTimestamp()
     });
-    e.target.reset();toast("Announcement published."); 
-  }catch(err){toast("Publish failed: "+err.message);}
+
+    alert("Tournament created successfully!");
+    event.target.reset();
+    $("slots").value = 48;
+    $("fee").value = 0;
+    $("prize").value = 0;
+    await loadDashboard();
+
+  } catch (error) {
+    alert("Tournament Error: " + error.message);
+  }
 };
-</script>
-</body>
+  </script>
+  </body>
 </html>
