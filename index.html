@@ -4301,6 +4301,97 @@ function bgrGetJoinButton(t, docId){
 }
 
 console.log("%c🔒 SLOT LOCK DONE - Jitne Space Utne Hi Player","color:#FF6B00;font-size:18px;font-weight:bold");
-                </script>
+             <!-- ===== BGR - EK HI CODE - UPI + QR + DEPOSIT - FULL ===== -->
+<div id="bgrAddCoinsBox" class="card" style="border:1px solid #FFD700;background:#111;padding:14px;border-radius:14px">
+  <h3 style="margin:0;color:#fff">💰 Add Coins - UPI Payment</h3>
+  <p style="font-size:12px;color:#999;margin:4px 0">1 Rs = 1 Coin • Min ₹10 • No Bonus • Owner 5 Min me Approve karega</p>
+
+  <!-- UPI + QR BOX -->
+  <div style="background:#fff;padding:14px;border-radius:14px;text-align:center;margin:12px 0">
+    <p style="color:#000;font-size:12px;margin:0;font-weight:bold">SCAN KARO - GPay / PhonePe / Paytm se</p>
+    <img id="bgrQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=piyush021137@fam%26pn=BGR%20eSports%26cu=INR"
+      style="width:170px;height:170px;margin:10px auto;display:block;border:2px solid #000;border-radius:10px"
+      onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=piyush021137@fam'">
+    <p style="color:#000;font-size:11px;margin:0">QR Scan karke paisa bhejo</p>
+    <h2 style="color:#000;margin:8px 0 2px 0;word-break:break-all;font-size:20px">piyush021137@fam</h2>
+    <p style="color:#666;font-size:12px;margin:0">Name: Piyush - BGR eSports</p>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+      <button onclick="bgrCopyUPI()" style="background:#000;color:#fff;border:none;padding:10px 16px;border-radius:10px;font-size:13px">📋 UPI Copy Karo</button>
+      <button onclick="window.open('upi://pay?pa=piyush021137@fam&pn=BGR%20eSports&cu=INR','_blank')" style="background:#7C4DFF;color:#fff;border:none;padding:10px 16px;border-radius:10px;font-size:13px">📱 App Kholo</button>
+    </div>
+  </div>
+
+  <!-- AMOUNT - 1 Rs = 1 Coin -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+    <button onclick="bgrSetAmt(50)" style="background:#1D212B;color:#fff;border:1px solid #333;padding:10px;border-radius:10px">₹50<br><span style="font-size:11px;color:#FFD700">Get 50 Coin</span></button>
+    <button onclick="bgrSetAmt(100)" style="background:#1D212B;color:#fff;border:1px solid #333;padding:10px;border-radius:10px">₹100<br><span style="font-size:11px;color:#FFD700">Get 100 Coin</span></button>
+    <button onclick="bgrSetAmt(200)" style="background:#1D212B;color:#fff;border:1px solid #333;padding:10px;border-radius:10px">₹200<br><span style="font-size:11px;color:#FFD700">Get 200 Coin</span></button>
+    <button onclick="bgrSetAmt(500)" style="background:#1D212B;color:#fff;border:1px solid #333;padding:10px;border-radius:10px">₹500<br><span style="font-size:11px;color:#FFD700">Get 500 Coin</span></button>
+    <button onclick="bgrSetAmt(1000)" style="background:#1D212B;color:#fff;border:1px solid #333;padding:10px;border-radius:10px">₹1000<br><span style="font-size:11px;color:#FFD700">Get 1000 Coin</span></button>
+    <button onclick="bgrSetAmt(2000)" style="background:#1D212B;color:#fff;border:1px solid #333;padding:10px;border-radius:10px">₹2000<br><span style="font-size:11px;color:#FFD700">Get 2000 Coin</span></button>
+  </div>
+
+  <input id="depAmt" type="number" value="50" placeholder="Amount - ex: 50" style="width:100%;padding:12px;border-radius:10px;background:#1D212B;border:1px solid #333;color:#fff;margin-top:10px;box-sizing:border-box">
+  <p id="bgrCoinPreview" style="font-size:13px;color:#00C853;margin:6px 0;text-align:center">Tu payega ₹50 = Milega 50 Coin</p>
+  <input id="depUtr" placeholder="UTR / Transaction ID (12 Digit)" style="width:100%;padding:12px;border-radius:10px;background:#1D212B;border:1px solid #333;color:#fff;margin-top:8px;box-sizing:border-box">
+  <p style="font-size:11px;color:#999;margin:6px 0">GPay > History > Payment > UTR / UPI Transaction ID<br>STEP: 1. QR Scan karo → 2. UTR daalo → 3. Request bhejo</p>
+  <label style="display:block;background:#1D212B;padding:10px;border-radius:10px;font-size:13px;color:#fff">📸 Payment Screenshot: <input type="file" id="depShot" accept="image/*" style="margin-top:6px;color:#fff"></label>
+  <button onclick="bgrSubmitDeposit2()" style="width:100%;background:#00C853;color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:bold;margin-top:10px">✅ Maine Paisa Bhej Diya - Request Bhejo</button>
+</div>
+
+<script>
+// ===== EK HI CODE - SCRIPT PART - UPI + QR + DEPOSIT =====
+const BGR_UPI = "piyush021137@fam";
+function bgrCopyUPI(){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(BGR_UPI).then(()=> toast("✅ UPI Copy ho gaya: " + BGR_UPI));
+  }else{
+    let t=document.createElement('textarea'); t.value=BGR_UPI; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove();
+    toast("✅ UPI Copy ho gaya!");
+  }
+}
+function bgrSetAmt(v){
+  let el=document.getElementById('depAmt'); if(el) el.value=v;
+  let p=document.getElementById('bgrCoinPreview'); if(p) p.textContent="Tu payega ₹"+v+" = Milega "+v+" Coin";
+  let qr=document.getElementById('bgrQrImg');
+  if(qr) qr.src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="+encodeURIComponent("upi://pay?pa="+BGR_UPI+"&pn=BGR eSports&am="+v+"&cu=INR");
+}
+document.addEventListener('input', (e)=>{
+  if(e.target && e.target.id==='depAmt'){
+    let v=Number(e.target.value)||0;
+    let p=document.getElementById('bgrCoinPreview');
+    if(p) p.textContent = v>0 ? "Tu payega ₹"+v+" = Milega "+v+" Coin" : "Amount daalo";
+  }
+});
+async function bgrSubmitDeposit2(){
+  let amt = Number(document.getElementById('depAmt')?.value);
+  let utr = document.getElementById('depUtr')?.value.trim() || "";
+  let shot = document.getElementById('depShot')?.files[0];
+  if(!amt || amt < 10) return toast("❌ Min Deposit ₹10 hai!");
+  if(amt > 5000) return toast("❌ Max Deposit ₹5000 hai!");
+  if(!utr || utr.length < 10) return toast("❌ Sahi UTR daalo! 12 Digit ka hota hai!");
+  if(!/^[0-9]+$/.test(utr)) return toast("❌ UTR me sirf Number hote hai!");
+  try{
+    let check = await db.collection('deposits').where('utr','==',utr).get();
+    if(!check.empty) return toast("❌ Ye UTR pehle se use ho chuka hai!");
+  }catch(e){}
+  if(!confirm("Pakka?\n\nAmount: ₹"+amt+" = "+amt+" Coin\nUTR: "+utr+"\nUPI: "+BGR_UPI+" pe bheja hai?\n\nOwner check karke Approve karega!")) return;
+  await db.collection('deposits').add({
+    userId: me.uid,
+    gameName: myData?.gameName || "",
+    email: me.email,
+    amount: amt,
+    coins: amt,
+    utr: utr,
+    hasScreenshot: !!shot,
+    screenshotName: shot ? shot.name : "",
+    upiTo: BGR_UPI,
+    status: "pending",
+    createdAt: new Date()
+  });
+  toast("✅ Deposit Request bhej di! Owner 5 Min me Coin dega!");
+  let u=document.getElementById('depUtr'); if(u) u.value="";
+}
+   </script>
 </body>
 </html>
