@@ -1,167 +1,337 @@
+
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BGR eSports - Play Tournament</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
+<title>BGR eSports | Owner Control</title>
+<style>
+:root{--bg:#090909;--panel:#141414;--gold:#d6ad52;--gold2:#f5d98b;--muted:#999;--line:#292929;--red:#e45b5b;--green:#51c58a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f5f5;font-family:Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;background:#101010;position:sticky;top:0;z-index:5}
+.brand{font-weight:900;letter-spacing:1.5px;color:var(--gold2)}.brand small{display:block;color:#888;font-size:10px;letter-spacing:3px;margin-top:5px}
+.wrap{max-width:1400px;margin:auto;padding:20px}
+.login{max-width:420px;margin:12vh auto;background:var(--panel);padding:28px;border:1px solid #4a3b1d;border-radius:16px}
+h1,h2,h3{margin-top:0}.gold{color:var(--gold2)}.muted{color:var(--muted)}
+input,select,textarea{width:100%;background:#090909;color:white;border:1px solid #393939;padding:12px;border-radius:8px;margin:6px 0 14px}
+button{border:0;border-radius:8px;padding:11px 15px;background:var(--gold);color:#111;font-weight:700}
+button.secondary{background:#292929;color:#eee;border:1px solid #444}
+button.danger{background:#542626;color:#ffdada}button:disabled{opacity:.4;cursor:not-allowed}
+.hidden{display:none!important}.layout{display:grid;grid-template-columns:220px 1fr;gap:18px}
+.side,.panel,.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px}
+.side{padding:12px;height:max-content;position:sticky;top:85px}
+.nav{display:block;width:100%;text-align:left;margin:5px 0;background:transparent;color:#ccc;border:1px solid transparent}
+.nav.active,.nav:hover{background:#292216;color:var(--gold2);border-color:#57451f}
+main{min-width:0}.panel{padding:18px;margin-bottom:16px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{padding:17px}.stat strong{display:block;font-size:27px;color:var(--gold2);margin-top:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+table{width:100%;border-collapse:collapse;min-width:650px}th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;vertical-align:top}
+th{color:var(--gold2)}.tablewrap{overflow:auto}
+.tag{display:inline-block;padding:5px 8px;border-radius:20px;background:#333;font-size:11px}
+.tag.good{background:#153c2b;color:#8ce1b4}.tag.wait{background:#463719;color:#f5d98b}
+.tag.bad{background:#482323;color:#ffaaaa}.actions{display:flex;gap:6px;flex-wrap:wrap}
+.actions button{padding:7px 9px;font-size:12px}
+.notice{padding:12px;border:1px solid #57451f;background:#211b0e;color:#e9d49e;border-radius:8px;font-size:13px}
+#msg{position:fixed;bottom:18px;right:18px;background:#242424;border:1px solid var(--gold);padding:12px 16px;border-radius:8px;display:none;z-index:10}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.side{position:static;display:grid;grid-template-columns:repeat(3,1fr)}.nav{text-align:center;font-size:12px;padding:9px 3px}.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.wrap{padding:12px}.top{padding:14px}}
+</style>
 </head>
-<body class="bg-[#070a10] text-white min-h-screen">
-<header class="p-4 bg-black border-b border-white/10 flex justify-between items-center sticky top-0 z-10">
-<div><b class="text-lg">🔥 BGR eSports</b><p class="text-[11px] text-gray-400">TEST MODE ONLY | NO REAL MONEY</p></div>
-<div class="flex gap-2 items-center"><span id="walletTop" class="bg-yellow-500 text-black text-xs font-bold px-3 py-2 rounded">🪙 0</span><button id="logoutBtn" onclick="logout()" class="hidden bg-red-600 px-2 py-2 rounded text-xs">Logout</button></div>
+<body>
+<header class="top">
+  <div class="brand">BGR <span class="gold">eSPORTS</span><small>ULTRA PRO MAX • OWNER CONSOLE</small></div>
+  <button id="logoutBtn" class="secondary hidden">Logout</button>
 </header>
-<div id="winnerBanner" class="hidden mx-3 mt-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-black p-3 rounded-xl font-bold text-center"></div>
-<div id="announceBox" class="mx-3 mt-3 space-y-2"></div>
-<div id="notifyBox" class="mx-3 mt-3 space-y-2"></div>
 
-<section id="authBox" class="max-w-md mx-auto mt-6 p-5 bg-white/5 rounded-xl">
-<h2 class="text-xl font-bold mb-1">Login / Register</h2>
-<input id="gameName" placeholder="Game Name" class="w-full bg-black p-3 rounded mb-2 border border-white/10">
-<input id="gameUid" placeholder="Free Fire UID" class="w-full bg-black p-3 rounded mb-2 border border-white/10">
-<input id="email" type="email" placeholder="Email" class="w-full bg-black p-3 rounded mb-2 border border-white/10">
-<input id="password" type="password" placeholder="Password" class="w-full bg-black p-3 rounded mb-3 border border-white/10">
-<button onclick="login()" class="w-full bg-blue-600 p-3 rounded font-bold mb-2">Login</button>
-<button onclick="register()" class="w-full bg-green-600 p-3 rounded font-bold">New Account Banao</button>
-<p id="authMsg" class="text-xs text-yellow-300 mt-3"></p>
+<section id="loginBox" class="login">
+  <h2 class="gold">OWNER ACCESS</h2>
+  <p class="muted">BGR eSports secure control panel</p>
+  <label>Email</label><input id="email" type="email" autocomplete="username" placeholder="Owner email">
+  <label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Password">
+  <button id="loginBtn" style="width:100%">SECURE LOGIN</button>
+  <p class="muted" style="font-size:12px">Only the registered Owner account can access this panel.</p>
 </section>
 
-<main id="mainApp" class="hidden p-3 max-w-6xl mx-auto">
-<div class="grid grid-cols-3 gap-2 mb-4">
-<div class="bg-white/5 p-3 rounded text-center"><p class="text-[11px] text-gray-400">Test Coins</p><b id="myCoins" class="text-yellow-400 text-lg">0</b></div>
-<div class="bg-white/5 p-3 rounded text-center"><p class="text-[11px] text-gray-400">My Matches</p><b id="myMatchCount">0</b></div>
-<div class="bg-white/5 p-3 rounded text-center"><p class="text-[11px] text-gray-400">My Kills</p><b id="myKills">0</b></div>
+<div id="app" class="wrap hidden">
+  <div class="notice" style="margin-bottom:16px">Owner mode active. Wallet transactions are monitoring-only in this version; do not approve or transfer real money from this panel.</div>
+  <div class="layout">
+    <aside class="side">
+      <button class="nav active" data-page="dashboard">▦ Dashboard</button>
+      <button class="nav" data-page="tournaments">🏆 Tournaments</button>
+      <button class="nav" data-page="registrations">📋 Registrations</button>
+      <button class="nav" data-page="players">👥 Players</button>
+      <button class="nav" data-page="transactions">◈ Transactions</button>
+      <button class="nav" data-page="support">✉ Support</button>
+      <button class="nav" data-page="announcements">📢 Announcements</button>
+    </aside>
+
+    <main>
+      <section id="dashboard" class="page">
+        <h1 class="gold">Owner Dashboard</h1>
+        <p class="muted">Your tournament platform at a glance.</p>
+        <div class="stats">
+          <div class="stat">Players<strong id="sPlayers">—</strong></div>
+          <div class="stat">Tournaments<strong id="sTournaments">—</strong></div>
+          <div class="stat">Registrations<strong id="sRegistrations">—</strong></div>
+          <div class="stat">Pending Requests<strong id="sPending">—</strong></div>
+        </div>
+        <div class="panel"><h3>Recent Registrations</h3><div id="recentRegs" class="muted">Loading…</div></div>
+        <div class="panel"><h3>Platform Status</h3><p class="muted">Firebase connection is active when your data loads successfully. Use the menu to manage each section.</p></div>
+      </section>
+
+      <section id="tournaments" class="page hidden">
+        <h1 class="gold">Tournament Control</h1>
+        <div class="panel">
+          <h3>Create Tournament</h3>
+          <form id="tournamentForm" class="grid2">
+            <div><label>Tournament title</label><input id="tTitle" required placeholder="e.g. BGR Sunday Battle"></div>
+            <div><label>Game / Map</label><input id="tMap" required placeholder="e.g. Bermuda"></div>
+            <div><label>Date</label><input id="tDate" type="date" required></div>
+            <div><label>Match time</label><input id="tTime" type="time" required></div>
+            <div><label>Mode</label><select id="tMode"><option>Solo</option><option>Duo</option><option>Squad</option></select></div>
+            <div><label>Maximum players</label><input id="tSlots" type="number" min="1" required value="48"></div>
+            <div><label>Entry fee (display value)</label><input id="tFee" type="number" min="0" value="0"></div>
+            <div><label>Prize pool (display value)</label><input id="tPrize" type="number" min="0" value="0"></div>
+            <div><label>Status</label><select id="tStatus"><option value="upcoming">Upcoming</option><option value="live">Live</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select></div>
+            <div style="display:flex;align-items:end"><button type="submit" style="width:100%">＋ Create Tournament</button></div>
+          </form>
+          <p class="muted" style="font-size:12px">Fee and prize are stored as display values only. This form does not collect payments.</p>
+        </div>
+        <div class="panel"><h3>All Tournaments</h3><div id="tournamentList" class="tablewrap">Loading…</div></div>
+      </section>
+
+      <section id="registrations" class="page hidden">
+        <h1 class="gold">Registration Desk</h1>
+        <div class="panel"><div id="registrationList" class="tablewrap">Loading…</div></div>
+      </section>
+
+      <section id="players" class="page hidden">
+        <h1 class="gold">Player Management</h1>
+        <div class="panel"><input id="playerSearch" placeholder="Search by game name or email…"><div id="playerList" class="tablewrap">Loading…</div></div>
+      </section>
+
+      <section id="transactions" class="page hidden">
+        <h1 class="gold">Transaction Monitor</h1>
+        <div class="notice">Read-only monitoring. Do not mark requests paid or change wallet balances from browser-side code. Secure settlement needs a trusted server function.</div>
+        <div class="panel" style="margin-top:14px"><div id="transactionList" class="tablewrap">Loading…</div></div>
+      </section>
+
+      <section id="support" class="page hidden">
+        <h1 class="gold">Support Center</h1>
+        <div class="panel"><div id="supportList" class="tablewrap">Loading…</div></div>
+      </section>
+
+      <section id="announcements" class="page hidden">
+        <h1 class="gold">Public Announcements</h1>
+        <div class="panel">
+          <form id="announcementForm">
+            <label>Announcement title</label><input id="aTitle" required maxlength="100">
+            <label>Message</label><textarea id="aMessage" required rows="4" maxlength="1000"></textarea>
+            <button type="submit">Publish Announcement</button>
+          </form>
+          <p class="muted" style="font-size:12px">Announcements are visible to all signed-in users if your Firestore rules allow it.</p>
+        </div>
+      </section>
+    </main>
+  </div>
 </div>
-<div class="flex flex-wrap gap-2 mb-4">
-<button onclick="showTab('home')" class="bg-green-600 px-4 py-2 rounded text-sm">Home</button>
-<button onclick="showTab('myMatches')" class="bg-blue-600 px-4 py-2 rounded text-sm">My Matches</button>
-<button onclick="showTab('leader')" class="bg-yellow-600 text-black px-4 py-2 rounded text-sm">Leaderboard</button>
-<button onclick="showTab('wallet')" class="bg-purple-600 px-4 py-2 rounded text-sm">Wallet</button>
-<button onclick="showTab('support')" class="bg-pink-600 px-4 py-2 rounded text-sm">Support</button>
-<button onclick="showTab('profile')" class="bg-gray-600 px-4 py-2 rounded text-sm">Profile</button>
-</div>
+<div id="msg"></div>
 
-<section id="home" class="tab">
-<h2 class="font-bold text-lg mb-2">🔥 Upcoming Tournaments</h2>
-<input id="searchTour" oninput="renderTournaments()" placeholder="Search Tournament..." class="w-full bg-black p-3 rounded mb-3 border border-white/10">
-<div id="tournamentList" class="space-y-3"></div>
-<h2 class="font-bold text-lg mt-6 mb-2">🏆 Recent Results</h2><div id="recentResults" class="space-y-2"></div>
-</section>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import {
+  getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import {
+  getFirestore, collection, doc, getDocs, addDoc, updateDoc,
+  deleteDoc, query, orderBy, limit, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-<section id="myMatches" class="tab hidden"><h2 class="font-bold text-lg mb-3">My Joined Matches</h2><div id="myMatchesList" class="space-y-3"></div></section>
-<section id="leader" class="tab hidden"><h2 class="font-bold text-lg mb-3">🏆 Leaderboard</h2><div id="leaderList" class="space-y-2"></div></section>
+/* IMPORTANT:
+   Replace this object with the exact firebaseConfig object
+   already used by your existing index.html. */
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_EXISTING_API_KEY",
+  authDomain: "clashadda-b3e57.firebaseapp.com",
+  projectId: "clashadda-b3e57",
+  storageBucket: "PASTE_YOUR_EXISTING_STORAGE_BUCKET",
+  messagingSenderId: "PASTE_YOUR_EXISTING_MESSAGING_SENDER_ID",
+  appId: "PASTE_YOUR_EXISTING_APP_ID"
+};
 
-<section id="wallet" class="tab hidden">
-<div class="bg-white/5 p-4 rounded-xl mb-4"><h2 class="font-bold text-lg">🪙 My Wallet</h2><p class="text-3xl font-bold text-yellow-400 mt-2" id="walletCoins">0 Test Coins</p></div>
-<div class="bg-white/5 p-4 rounded-xl mb-4"><h3 class="font-bold mb-2">Test Coins Request Karo</h3>
-<select id="reqType" class="w-full bg-black p-3 rounded mb-2 border border-white/10"><option value="test_deposit">Test Coins Add Karo</option><option value="test_withdraw">Test Coins Kam Karo</option></select>
-<input id="reqAmount" type="number" placeholder="Amount - ex: 100" class="w-full bg-black p-3 rounded mb-2 border border-white/10">
-<input id="reqNote" placeholder="Note" class="w-full bg-black p-3 rounded mb-2 border border-white/10">
-<button onclick="createRequest()" class="bg-purple-600 p-3 rounded w-full font-bold">Request Bhejo</button><p id="reqMsg" class="text-xs mt-2"></p></div>
-<div class="bg-white/5 p-4 rounded-xl"><h3 class="font-bold mb-2">My Requests</h3><div id="myReqList" class="space-y-2"></div></div>
-<div class="bg-white/5 p-4 rounded-xl mt-4"><h3 class="font-bold mb-2">My Transactions</h3><div id="myTxList" class="space-y-2"></div></div>
-</section>
+const OWNER_UID = "LMPbpNrgbpOSTd4xglwfAbZlGXE2";
+const appFirebase = initializeApp(firebaseConfig);
+const auth = getAuth(appFirebase);
+const db = getFirestore(appFirebase);
 
-<section id="support" class="tab hidden"><h2 class="font-bold text-lg mb-3">Support</h2><textarea id="supportMsg" placeholder="Apni problem likho..." class="w-full bg-black p-3 rounded mb-2 border border-white/10"></textarea><button onclick="sendSupport()" class="bg-pink-600 p-3 rounded w-full font-bold">Ticket Bhejo</button><p id="supportMsgOut" class="text-xs mt-2"></p><div id="mySupportList" class="mt-4 space-y-2"></div></section>
-<section id="profile" class="tab hidden"><h2 class="font-bold text-lg mb-3">My Profile</h2><div id="profileBox" class="bg-white/5 p-4 rounded"></div><h3 class="font-bold mt-4 mb-2">App Rules</h3><p id="rulesBox" class="text-sm text-gray-300 bg-white/5 p-4 rounded">No hack, No abuse, Room ID sirf joined player ko milega.</p></section>
-</main>
-<script src="firebase-config.js"></script>
-<script>
-const app = firebase.apps.length ? firebase.app() : firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-const functions = firebase.app().functions();
-let currentUser=null, me=null, tournaments=[], myJoins=[], myResults=[], allUsers=[], myReqs=[], notifications=[], announcements=[];
-const $=id=>document.getElementById(id);
-function safe(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+const $ = id => document.getElementById(id);
+let cache = {users:[],tournaments:[],registrations:[],transactions:[],support:[]};
 
-async function register(){
-const email=$('email').value.trim(),pass=$('password').value,gn=$('gameName').value.trim(),gu=$('gameUid').value.trim();
-if(!email||!pass||!gn||!gu){$('authMsg').textContent='Sab bharein';return;}
-try{
-const cred=await auth.createUserWithEmailAndPassword(email,pass);
-await db.collection('users').doc(cred.user.uid).set({gameName:gn,gameUid:gu,email,testCoins:100,points:0,banned:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-$('authMsg').textContent='Account ban gaya! 100 Test Coins mil gaya.';
-}catch(e){$('authMsg').textContent='Error: '+e.message;}
+function toast(message){
+  $("msg").textContent = message;
+  $("msg").style.display = "block";
+  setTimeout(()=>$("msg").style.display="none",3000);
 }
-
-async function login(){
-const email=$('email').value.trim(),pass=$('password').value;
-if(!email||!pass){$('authMsg').textContent='Email aur Password bharein.';return;}
-try{await auth.signInWithEmailAndPassword(email,pass);}catch(e){$('authMsg').textContent='Error: '+e.message;}
+function safe(value){
+  return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-async function logout(){await auth.signOut();}
+function dateText(value){
+  if(!value) return "—";
+  if(value.toDate) return value.toDate().toLocaleString();
+  return safe(value);
+}
+function statusTag(value){
+  const s=String(value||"pending").toLowerCase();
+  const cls=["approved","completed","resolved","paid"].includes(s)?"good":
+    ["rejected","cancelled","closed"].includes(s)?"bad":"wait";
+  return `<span class="tag ${cls}">${safe(s)}</span>`;
+}
+function table(headers,rows){
+  return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.length?rows.join(""):`<tr><td colspan="${headers.length}" class="muted">No records found.</td></tr>`}</tbody></table>`;
+}
+function showPage(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+  $(page).classList.remove("hidden");
+  document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+}
+document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 
-auth.onAuthStateChanged(async user=>{
-currentUser=user;
-if(!user){$('authBox').classList.remove('hidden');$('mainApp').classList.add('hidden');$('logoutBtn').classList.add('hidden');return;}
-$('authBox').classList.add('hidden');$('mainApp').classList.remove('hidden');$('logoutBtn').classList.remove('hidden');
-startListeners();
+$("loginBtn").onclick=async()=>{
+  try{
+    await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
+  }catch(e){toast("Login failed: "+e.message);}
+};
+$("logoutBtn").onclick=()=>signOut(auth);
+
+onAuthStateChanged(auth,async user=>{
+  if(!user){
+    $("app").classList.add("hidden");
+    $("loginBox").classList.remove("hidden");
+    $("logoutBtn").classList.add("hidden");
+    return;
+  }
+  if(user.uid!==OWNER_UID){
+    await signOut(auth);
+    toast("Access denied: Owner account only.");
+    return;
+  }
+  $("loginBox").classList.add("hidden");
+  $("app").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden");
+  await loadAll();
 });
 
-function startListeners(){
-db.collection('users').doc(currentUser.uid).onSnapshot(s=>{me=s.data(); if(me){$('myCoins').textContent=Number(me.testCoins||0);$('walletCoins').textContent=Number(me.testCoins||0)+' Test Coins';$('walletTop').textContent='🪙 '+Number(me.testCoins||0); renderProfile();}});
-db.collection('tournaments').orderBy('createdAt','desc').onSnapshot(s=>{tournaments=s.docs.map(d=>({id:d.id,...d.data()})); renderTournaments();});
-db.collection('joins').where('uid','==',currentUser.uid).onSnapshot(s=>{myJoins=s.docs.map(d=>({id:d.id,...d.data()})); $('myMatchCount').textContent=myJoins.length; renderMyMatches();});
-db.collection('results').where('uid','==',currentUser.uid).onSnapshot(s=>{myResults=s.docs.map(d=>({id:d.id,...d.data()})); let k=0; myResults.forEach(r=>k+=Number(r.kills||0)); $('myKills').textContent=k; renderRecentResults();});
-db.collection('users').orderBy('testCoins','desc').limit(50).onSnapshot(s=>{allUsers=s.docs.map(d=>({id:d.id,...d.data()})); renderLeader();});
-db.collection('transactions').where('uid','==',currentUser.uid).orderBy('at','desc').limit(50).onSnapshot(s=>{myReqs=s.docs.map(d=>({id:d.id,...d.data()})); renderMyReqs();});
-db.collection('notifications').orderBy('at','desc').limit(5).onSnapshot(s=>{notifications=s.docs.map(d=>({id:d.id,...d.data()})); renderNotify();});
-db.collection('announcements').orderBy('at','desc').limit(5).onSnapshot(s=>{announcements=s.docs.map(d=>({id:d.id,...d.data()})); renderAnnounce();});
-db.collection('winnerBanner').doc('current').onSnapshot(s=>{if(s.exists){const w=s.data(); $('winnerBanner').classList.remove('hidden'); $('winnerBanner').textContent='🏆 Winner: '+w.name+' - '+w.tournament;}});
-db.collection('support').where('uid','==',currentUser.uid).orderBy('at','desc').limit(20).onSnapshot(s=>{const list=s.docs.map(d=>({id:d.id,...d.data()})); $('mySupportList').innerHTML=list.map(x=>`<div class="bg-white/5 p-3 rounded"><p>${safe(x.message)}</p>${x.reply?`<p class="text-green-300 text-sm">Reply: ${safe(x.reply)}</p>`:''}<span class="text-xs">${x.resolved?'✅ Resolved':'⏳ Open'}</span></div>`).join('')||'No Tickets';});
-db.collection('settings').doc('app').onSnapshot(s=>{if(s.exists){$('rulesBox').textContent=s.data().rules||'';}});
+async function readCollection(name,max=200){
+  const snap=await getDocs(query(collection(db,name),limit(max)));
+  return snap.docs.map(d=>({id:d.id,...d.data()}));
 }
-
-function showTab(tab){document.querySelectorAll('.tab').forEach(e=>e.classList.add('hidden')); $(tab).classList.remove('hidden');}
-
+async function loadAll(){
+  try{
+    const names=["users","tournaments","registrations","transactions","support"];
+    const results=await Promise.all(names.map(n=>readCollection(n)));
+    names.forEach((n,i)=>cache[n]=results[i]);
+    renderAll();
+  }catch(e){toast("Data load error: "+e.message);}
+}
+function renderAll(){
+  $("sPlayers").textContent=cache.users.length;
+  $("sTournaments").textContent=cache.tournaments.length;
+  $("sRegistrations").textContent=cache.registrations.length;
+  $("sPending").textContent=cache.registrations.filter(r=>(r.requestStatus||"pending")==="pending").length;
+  renderTournaments();renderRegistrations();renderPlayers();
+  renderTransactions();renderSupport();renderRecent();
+}
+function renderRecent(){
+  const rows=cache.registrations.slice(0,6);
+  $("recentRegs").innerHTML=rows.length?table(["Player","Tournament","Status"],rows.map(r=>
+    `<tr><td>${safe(r.gameName||r.uid)}</td><td>${safe(r.tournamentId)}</td><td>${statusTag(r.requestStatus)}</td></tr>`)):"No registrations yet.";
+}
 function renderTournaments(){
-$('tournamentList').innerHTML=tournaments.map(t=>{
-const joined=myJoins.some(j=>j.tournamentId===t.id);
-return `<div class="bg-white/5 border border-white/10 p-4 rounded-xl"><div class="flex justify-between"><b>${safe(t.title)}</b><span class="text-xs px-2 py-1 rounded ${t.status==='upcoming'?'bg-green-600':t.status==='live'?'bg-red-600':'bg-gray-600'}">${safe(t.status)}</span></div><p class="text-xs text-gray-400 mt-2">📅 ${safe(t.date)} | ⏰ ${safe(t.matchTime)} | 🎮 ${safe(t.mode)} | 🗺️ ${safe(t.map)}<br>👥 ${Number(t.joined||0)}/${Number(t.maxPlayers||48)} | 🏆 Prize: ${Number(t.prizePool||0)} | 🎯 Per Kill: ${Number(t.perKill||0)} | 💰 Entry: ${Number(t.fee||0)} Coins</p><p class="text-xs text-gray-500 mt-1">${safe(t.rules||'')}</p>${t.status==='upcoming'?`<button onclick="joinTournament('${t.id}')" class="mt-3 w-full p-3 rounded font-bold ${joined?'bg-gray-600':'bg-yellow-500 text-black'}">${joined?'✅ Joined - My Matches me Room ID dekho':'JOIN NOW'}</button>`:'<p class="text-xs text-gray-400 mt-2">Ye tournament ab join nahi ho sakta.</p>'}</div>`}).join('')||'Koi Tournament nahi hai.';
+  $("tournamentList").innerHTML=table(["Tournament","Date / Time","Mode","Slots","Status","Actions"],
+    cache.tournaments.map(t=>`<tr>
+      <td><b>${safe(t.title)}</b><br><small class="muted">${safe(t.map)}</small></td>
+      <td>${safe(t.date)}<br>${safe(t.matchTime)}</td>
+      <td>${safe(t.mode||"—")}</td><td>${safe(t.joined||0)} / ${safe(t.maxPlayers||0)}</td>
+      <td>${statusTag(t.status)}</td>
+      <td><div class="actions">
+        <button class="secondary" data-status="${safe(t.id)}" data-value="live">Go Live</button>
+        <button class="secondary" data-status="${safe(t.id)}" data-value="completed">Complete</button>
+        <button class="danger" data-delete="${safe(t.id)}">Delete</button>
+      </div></td></tr>`));
+  document.querySelectorAll("[data-status]").forEach(b=>b.onclick=()=>changeTournamentStatus(b.dataset.status,b.dataset.value));
+  document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>removeTournament(b.dataset.delete));
 }
-
-async function joinTournament(tid){
-if(!confirm('Join karna hai? Entry Fee Test Coins se katega.'))return;
-try{const fn=functions.httpsCallable('joinTournament'); await fn({tournamentId:tid}); alert('Join ho gaya!'); showTab('myMatches');}catch(e){alert('Join Error: '+e.message);}
+$("tournamentForm").onsubmit=async e=>{
+  e.preventDefault();
+  try{
+    await addDoc(collection(db,"tournaments"),{
+      title:$("tTitle").value.trim(),map:$("tMap").value.trim(),
+      date:$("tDate").value,matchTime:$("tTime").value,
+      mode:$("tMode").value,maxPlayers:Number($("tSlots").value),
+      fee:Number($("tFee").value),prizePool:Number($("tPrize").value),
+      status:$("tStatus").value,joined:0,createdAt:serverTimestamp()
+    });
+    e.target.reset();$("tSlots").value=48;$("tFee").value=0;$("tPrize").value=0;
+    toast("Tournament created.");await loadAll();
+  }catch(err){toast("Create failed: "+err.message);}
+};
+async function changeTournamentStatus(id,status){
+  try{await updateDoc(doc(db,"tournaments",id),{status});toast("Tournament status updated.");await loadAll();}
+  catch(e){toast("Update failed: "+e.message);}
 }
-
-function renderMyMatches(){
-$('myMatchesList').innerHTML=myJoins.map(j=>{
-const t=tournaments.find(x=>x.id===j.tournamentId); if(!t) return '';
-const showRoom=t.status==='live'||t.status==='upcoming';
-return `<div class="bg-white/5 p-4 rounded-xl"><b>${safe(t.title)}</b> - ${safe(t.status)}<p class="text-xs text-gray-400 mt-2">📅 ${safe(t.date)} | ⏰ ${safe(t.matchTime)}</p>${showRoom?`<div class="mt-3 bg-yellow-500/10 border border-yellow-500/30 p-3 rounded"><p class="text-sm">Room ID: <b class="text-yellow-300">${safe(t.roomId||'Abhi nahi aaya')}</b></p><p class="text-sm">Password: <b class="text-yellow-300">${safe(t.roomPass||'Abhi nahi aaya')}</b></p><button onclick="copyText('${safe(t.roomId)}')" class="bg-white/10 px-3 py-1 rounded text-xs mt-2">Copy Room ID</button></div>`:'<p class="text-xs text-gray-400">Room ID sirf Upcoming / Live me dikhega.</p>'}</div>`}).join('')||'Abhi koi match join nahi kiya.';
+async function removeTournament(id){
+  if(!confirm("Delete this tournament? Existing registrations will not be deleted."))return;
+  try{await deleteDoc(doc(db,"tournaments",id));toast("Tournament deleted.");await loadAll();}
+  catch(e){toast("Delete failed: "+e.message);}
 }
-
-function renderLeader(){
-$('leaderList').innerHTML=allUsers.map((u,i)=>`<div class="bg-white/5 p-3 rounded flex justify-between"><span><b>#${i+1}</b> ${safe(u.gameName||'Player')} ${u.id===currentUser.uid?'(Tu)':''}</span><b class="text-yellow-400">${Number(u.testCoins||0)} Coins</b></div>`).join('')||'No Players';
+function renderRegistrations(){
+  $("registrationList").innerHTML=table(["Player","Tournament ID","Game UID","Request","Action"],
+    cache.registrations.map(r=>`<tr>
+      <td>${safe(r.gameName||r.uid)}<br><small class="muted">${safe(r.uid)}</small></td>
+      <td>${safe(r.tournamentId)}</td><td>${safe(r.gameUid||"—")}</td>
+      <td>${statusTag(r.requestStatus)}</td>
+      <td><div class="actions">
+        <button data-reg="${safe(r.id)}" data-value="approved">Approve</button>
+        <button class="danger" data-reg="${safe(r.id)}" data-value="rejected">Reject</button>
+      </div></td></tr>`));
+  document.querySelectorAll("[data-reg]").forEach(b=>b.onclick=()=>updateRegistration(b.dataset.reg,b.dataset.value));
 }
-
-async function createRequest(){
-const type=$('reqType').value,amt=Number($('reqAmount').value)||0,note=$('reqNote').value.trim();
-if(amt<=0){$('reqMsg').textContent='Amount bharein.';return;}
-try{const fn=functions.httpsCallable('createTestRequest'); await fn({type,amount:amt,note,proofUrl:''}); $('reqMsg').textContent='Request bhej di gayi.';}catch(e){$('reqMsg').textContent='Error: '+e.message;}
+async function updateRegistration(id,status){
+  try{await updateDoc(doc(db,"registrations",id),{requestStatus:status});toast("Registration updated.");await loadAll();}
+  catch(e){toast("Action failed: "+e.message);}
 }
-
-function renderMyReqs(){
-$('myReqList').innerHTML=myReqs.map(r=>`<div class="bg-white/5 p-3 rounded flex justify-between"><span>${safe(r.type)} - ${Number(r.amount)} Coins</span><span class="text-xs px-2 py-1 rounded ${r.status==='pending'?'bg-yellow-600':r.status==='approved'?'bg-green-600':'bg-red-600'}">${safe(r.status)}</span></div>`).join('')||'No Requests';
-$('myTxList').innerHTML=myReqs.map(r=>`<div class="bg-white/5 p-3 rounded text-sm">${safe(r.type)} | ${Number(r.amount)} Coins | ${safe(r.status)}</div>`).join('')||'';
+function renderPlayers(){
+  const q=$("playerSearch").value.toLowerCase();
+  const users=cache.users.filter(u=>(u.gameName||"").toLowerCase().includes(q)||(u.email||"").toLowerCase().includes(q));
+  $("playerList").innerHTML=table(["Player","Email","UID","Joined"],users.map(u=>
+    `<tr><td>${safe(u.gameName||"Unnamed")}</td><td>${safe(u.email)}</td><td><small>${safe(u.id)}</small></td><td>${dateText(u.createdAt)}</td></tr>`));
 }
-
-async function sendSupport(){
-const m=$('supportMsg').value.trim(); if(!m){$('supportMsgOut').textContent='Message likho.';return;}
-try{await db.collection('support').add({uid:currentUser.uid,gameName:me?.gameName||'',message:m,at:firebase.firestore.FieldValue.serverTimestamp(),resolved:false}); $('supportMsg').value='';$('supportMsgOut').textContent='Ticket bhej diya.';}catch(e){$('supportMsgOut').textContent='Error: '+e.message;}
+$("playerSearch").addEventListener("input",renderPlayers);
+function renderTransactions(){
+  $("transactionList").innerHTML=table(["Player","Type","Amount","Status","Date"],
+    cache.transactions.map(t=>`<tr><td>${safe(t.gameName||t.uid)}</td><td>${safe(t.type)}</td><td>${safe(t.amount)}</td><td>${statusTag(t.status)}</td><td>${dateText(t.at)}</td></tr>`));
 }
-
-function renderNotify(){$('notifyBox').innerHTML=notifications.map(n=>`<div class="bg-blue-500/20 border border-blue-500/30 p-3 rounded text-sm">📢 ${safe(n.message)} ${n.roomId?`<br>Room: <b>${safe(n.roomId)} / ${safe(n.roomPass)}</b>`:''}</div>`).join('');}
-function renderAnnounce(){$('announceBox').innerHTML=announcements.map(a=>`<div class="bg-cyan-500/20 border border-cyan-500/30 p-3 rounded"><b>${safe(a.title)}</b><p class="text-sm">${safe(a.text)}</p></div>`).join('');}
-function renderRecentResults(){$('recentResults').innerHTML=myResults.map(r=>`<div class="bg-white/5 p-3 rounded text-sm">+${Number(r.total||0)} Coins | Kills: ${Number(r.kills||0)} | Placement: ${safe(r.placement)}</div>`).join('')||'Abhi koi result nahi.';}
-function renderProfile(){if(!me)return; $('profileBox').innerHTML=`<p><b>Game Name:</b> ${safe(me.gameName)}</p><p><b>Game UID:</b> ${safe(me.gameUid)}</p><p><b>Email:</b> ${safe(me.email)}</p><p><b>Test Coins:</b> ${Number(me.testCoins||0)}</p><p><b>Status:</b> ${me.banned?'Banned':'Active'}</p>`;}
-function copyText(v){if(!v)return; navigator.clipboard.writeText(v).then(()=>alert('Copied!'));}
+function renderSupport(){
+  $("supportList").innerHTML=table(["Player","Subject","Message","Status","Action"],
+    cache.support.map(s=>`<tr><td>${safe(s.gameName||s.uid)}</td><td>${safe(s.subject)}</td><td>${safe(s.message)}</td><td>${statusTag(s.status)}</td>
+    <td><div class="actions"><button data-ticket="${safe(s.id)}" data-value="resolved">Resolve</button><button class="secondary" data-ticket="${safe(s.id)}" data-value="open">Reopen</button></div></td></tr>`));
+  document.querySelectorAll("[data-ticket]").forEach(b=>b.onclick=()=>updateTicket(b.dataset.ticket,b.dataset.value));
+}
+async function updateTicket(id,status){
+  try{await updateDoc(doc(db,"support",id),{status});toast("Support ticket updated.");await loadAll();}
+  catch(e){toast("Update failed: "+e.message);}
+}
+$("announcementForm").onsubmit=async e=>{
+  e.preventDefault();
+  try{
+    await addDoc(collection(db,"notifications"),{
+      title:$("aTitle").value.trim(),message:$("aMessage").value.trim(),
+      createdAt:serverTimestamp(),type:"announcement"
+    });
+    e.target.reset();toast("Announcement published."); 
+  }catch(err){toast("Publish failed: "+err.message);}
+};
 </script>
 </body>
 </html>
